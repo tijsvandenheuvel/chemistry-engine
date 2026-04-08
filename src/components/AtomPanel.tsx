@@ -3,6 +3,9 @@ import { ArrowRight, Atom as AtomIcon } from "lucide-react";
 import type { AtomRecord, MoleculeRecord, ReactionRecord } from "../types/chemistry";
 import { AtomModelScene, type AtomVisualizationMode } from "./AtomModelScene";
 import { estimateNeutronCount, getElectronShellOccupancy, getValenceElectronCount } from "../lib/atom-models";
+import { DisclosureSection } from "./DisclosureSection";
+import { SourcesSection } from "./SourcesSection";
+import { getAtomSourceEntries } from "../lib/sources";
 
 interface AtomPanelProps {
   atom: AtomRecord;
@@ -26,6 +29,7 @@ export function AtomPanel({
     () => estimateNeutronCount(atom.atomicWeight, atom.atomicNumber),
     [atom.atomicNumber, atom.atomicWeight]
   );
+  const sourceEntries = useMemo(() => getAtomSourceEntries(atom), [atom]);
 
   return (
     <>
@@ -114,9 +118,12 @@ export function AtomPanel({
 
         <p className="detail-intro">{atom.description}</p>
 
-        <div className="detail-columns">
-          <article className="subpanel">
-            <h3>Electronic profile</h3>
+        <div className="detail-stack">
+          <DisclosureSection
+            title="Electronic profile"
+            count={4}
+            preview="Open the electron configuration, shell model and oxidation-state summary."
+          >
             <ul className="plain-list">
               <li>Electron configuration: {atom.electronConfiguration}</li>
               <li>Modelled shell occupancy: {shellOccupancy.join(" / ")}</li>
@@ -124,72 +131,83 @@ export function AtomPanel({
               <li>Common oxidation states: {atom.oxidationStates.join(", ")}</li>
               <li>Category: {atom.category}</li>
             </ul>
-          </article>
+          </DisclosureSection>
 
-          <article className="subpanel">
-            <h3>Visual honesty</h3>
+          <DisclosureSection
+            title="Model notes"
+            count={3}
+            preview="Open the modelling notes that explain what is exact metadata and what is visual interpretation."
+          >
             <ul className="plain-list">
               <li>Shell and valence views are modelled educational visualisations.</li>
               <li>Exact claims are limited here to atomic metadata and electron configuration text.</li>
               <li>Estimated neutrons are derived from rounded atomic weight, not isotope-resolved data.</li>
             </ul>
-          </article>
+          </DisclosureSection>
 
-          <article className="subpanel">
-            <h3>System context</h3>
+          <DisclosureSection
+            title="System context"
+            count={3}
+            preview="Open the current chemistry-graph coverage for this element."
+          >
             <ul className="plain-list">
               <li>{relatedMolecules.length} molecules currently include this atom.</li>
               <li>{relatedReactions.length} reactions currently traverse molecules that contain this atom.</li>
               <li>Current atom data is limited to elements present in the loaded catalog.</li>
             </ul>
-          </article>
+          </DisclosureSection>
+
+          <SourcesSection
+            entries={sourceEntries}
+            preview="Open the atom reference list and external research entry points."
+          />
+
+          <DisclosureSection
+            title="Linked molecules"
+            count={relatedMolecules.length}
+            preview="Open the molecule list that currently contains this element."
+          >
+            <div className="browser-link-list">
+              {relatedMolecules.slice(0, 18).map((molecule) => (
+                <button
+                  key={molecule.id}
+                  type="button"
+                  className="browser-link-card"
+                  onClick={() => onSelectMolecule(molecule.id)}
+                >
+                  <div>
+                    <strong>{molecule.name}</strong>
+                    <p>{molecule.formula}</p>
+                  </div>
+                  <ArrowRight size={14} />
+                </button>
+              ))}
+            </div>
+          </DisclosureSection>
+
+          <DisclosureSection
+            title="Linked reactions"
+            count={relatedReactions.length}
+            preview="Open the reaction list that traverses molecules containing this atom."
+          >
+            <div className="browser-link-list">
+              {relatedReactions.map((reaction) => (
+                <button
+                  key={reaction.id}
+                  type="button"
+                  className="browser-link-card"
+                  onClick={() => onSelectReaction(reaction.id)}
+                >
+                  <div>
+                    <strong>{reaction.name}</strong>
+                    <p>{reaction.summary}</p>
+                  </div>
+                  <ArrowRight size={14} />
+                </button>
+              ))}
+            </div>
+          </DisclosureSection>
         </div>
-
-        <article className="subpanel">
-          <div className="subpanel-head">
-            <h3>Linked molecules</h3>
-            <AtomIcon size={16} />
-          </div>
-          <div className="browser-link-list">
-            {relatedMolecules.slice(0, 18).map((molecule) => (
-              <button
-                key={molecule.id}
-                type="button"
-                className="browser-link-card"
-                onClick={() => onSelectMolecule(molecule.id)}
-              >
-                <div>
-                  <strong>{molecule.name}</strong>
-                  <p>{molecule.formula}</p>
-                </div>
-                <ArrowRight size={14} />
-              </button>
-            ))}
-          </div>
-        </article>
-
-        <article className="subpanel">
-          <div className="subpanel-head">
-            <h3>Linked reactions</h3>
-            <AtomIcon size={16} />
-          </div>
-          <div className="browser-link-list">
-            {relatedReactions.map((reaction) => (
-              <button
-                key={reaction.id}
-                type="button"
-                className="browser-link-card"
-                onClick={() => onSelectReaction(reaction.id)}
-              >
-                <div>
-                  <strong>{reaction.name}</strong>
-                  <p>{reaction.summary}</p>
-                </div>
-                <ArrowRight size={14} />
-              </button>
-            ))}
-          </div>
-        </article>
       </section>
     </>
   );

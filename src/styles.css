@@ -55,18 +55,55 @@ input {
 .app-shell {
   width: min(1440px, calc(100vw - 48px));
   margin: 0 auto;
-  padding: 32px 0 48px;
+  padding: 18px 0 40px;
 }
 
-.hero {
+.app-header {
   display: grid;
-  grid-template-columns: 1.45fr 1fr;
+  grid-template-columns: auto minmax(240px, 1fr) auto;
+  align-items: center;
   gap: 24px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
+  padding: 14px 18px;
+  border-radius: 24px;
+  border: 1px solid var(--line);
+  background: rgba(6, 20, 27, 0.86);
+  backdrop-filter: blur(22px);
+  box-shadow: var(--shadow);
 }
 
-.hero-copy,
-.hero-metrics,
+.app-brand {
+  min-width: 0;
+}
+
+.app-brand h1 {
+  margin: 6px 0 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(1.35rem, 2vw, 1.8rem);
+  letter-spacing: -0.05em;
+}
+
+.app-nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.app-nav-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding-inline: 14px;
+}
+
+.app-header-metrics {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
 .panel {
   border: 1px solid var(--line);
   background: var(--panel);
@@ -74,34 +111,6 @@ input {
   box-shadow: var(--shadow);
 }
 
-.hero-copy {
-  position: relative;
-  overflow: hidden;
-  border-radius: 28px;
-  padding: 32px;
-}
-
-.hero-copy::after {
-  content: "";
-  position: absolute;
-  right: -40px;
-  top: -50px;
-  width: 220px;
-  height: 220px;
-  border-radius: 999px;
-  background: radial-gradient(circle, rgba(243, 189, 98, 0.28), transparent 68%);
-}
-
-.hero h1 {
-  margin: 8px 0 16px;
-  max-width: 16ch;
-  font-family: "Space Grotesk", sans-serif;
-  font-size: clamp(2.2rem, 5vw, 4.6rem);
-  line-height: 0.96;
-  letter-spacing: -0.05em;
-}
-
-.hero-text,
 .reaction-summary,
 .detail-intro,
 .molecule-card p,
@@ -114,25 +123,12 @@ input {
   color: var(--muted);
 }
 
-.hero-text {
-  max-width: 56ch;
-  font-size: 1.04rem;
-  line-height: 1.7;
-}
-
-.hero-metrics {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  border-radius: 28px;
-  padding: 20px;
-}
-
 .metric-card {
   display: grid;
-  gap: 8px;
-  border-radius: 20px;
-  padding: 18px;
+  gap: 4px;
+  min-width: 118px;
+  border-radius: 18px;
+  padding: 12px 14px;
   background: linear-gradient(180deg, rgba(10, 31, 39, 0.95), rgba(8, 22, 29, 0.75));
   border: 1px solid rgba(137, 240, 218, 0.12);
 }
@@ -364,6 +360,8 @@ input {
   max-height: 100%;
   overflow-y: auto;
   padding-right: 6px;
+  scrollbar-gutter: stable;
+  overscroll-behavior: contain;
 }
 
 .browser-empty {
@@ -387,16 +385,18 @@ input {
 
 .molecule-card {
   display: grid;
-  gap: 14px;
-  padding: 16px;
+  gap: 10px;
+  padding: 14px;
   text-align: left;
-  border-radius: 22px;
+  border-radius: 18px;
   border: 1px solid rgba(137, 240, 218, 0.1);
   background:
     linear-gradient(180deg, rgba(7, 22, 29, 0.85), rgba(6, 18, 24, 0.82)),
     radial-gradient(circle at right top, rgba(137, 240, 218, 0.12), transparent 40%);
   cursor: pointer;
   transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+  content-visibility: auto;
+  contain-intrinsic-size: 110px;
 }
 
 .molecule-card:hover,
@@ -405,7 +405,7 @@ input {
   border-color: rgba(137, 240, 218, 0.34);
 }
 
-.molecule-card-top,
+.molecule-card-head,
 .molecule-metrics,
 .reaction-meta,
 .viewer-caption,
@@ -422,10 +422,6 @@ input {
   font-size: 1.04rem;
 }
 
-.browser-card-copy {
-  min-width: 0;
-}
-
 .molecule-card strong {
   display: block;
   overflow: hidden;
@@ -433,9 +429,18 @@ input {
   white-space: nowrap;
 }
 
+.molecule-card-head span,
+.compact-metrics span {
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .molecule-card p {
-  margin: 6px 0 0;
-  line-height: 1.45;
+  margin: 0;
+  line-height: 1.4;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -509,6 +514,21 @@ button.equation-node,
 
 .viewer-caption {
   margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.viewer-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.viewer-toolbar .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .stats-grid,
@@ -530,6 +550,10 @@ button.equation-node,
 .stats-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   margin: 18px 0;
+}
+
+.compact-stats-grid {
+  margin-bottom: 14px;
 }
 
 .stat-card,
@@ -562,6 +586,15 @@ button.equation-node,
 
 .detail-columns {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.detail-columns.single-column {
+  grid-template-columns: 1fr;
+}
+
+.detail-stack {
+  display: grid;
+  gap: 14px;
 }
 
 .browser-link-list {
@@ -618,6 +651,11 @@ button.equation-node,
   color: var(--red);
 }
 
+.availability-neutral {
+  background: rgba(137, 240, 218, 0.08);
+  color: var(--text);
+}
+
 .link-grid {
   margin-top: 14px;
 }
@@ -653,6 +691,10 @@ button.equation-node,
 .browser-link-card p {
   margin: 6px 0 0;
   color: var(--muted);
+}
+
+.open-dossier-button {
+  margin-top: 14px;
 }
 
 .spectral-panel {
@@ -1070,6 +1112,161 @@ button.equation-node,
   background: rgba(255, 255, 255, 0.03);
 }
 
+.disclosure-block {
+  border-radius: 20px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(8, 25, 32, 0.72);
+}
+
+.disclosure-toggle {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  width: 100%;
+  padding: 16px 18px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.disclosure-copy {
+  min-width: 0;
+}
+
+.disclosure-copy h3 {
+  margin: 0;
+}
+
+.disclosure-copy p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.disclosure-meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--muted);
+}
+
+.disclosure-content {
+  padding: 0 18px 18px;
+}
+
+.disclosure-tag-row {
+  margin-top: 0;
+}
+
+.compact-intro {
+  margin: 0;
+}
+
+.detail-reaction-meta {
+  margin: 0 0 16px;
+}
+
+.periodic-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) 360px;
+  gap: 24px;
+}
+
+.periodic-panel {
+  min-width: 0;
+}
+
+.periodic-grid {
+  display: grid;
+  grid-template-columns: repeat(18, minmax(0, 1fr));
+  grid-auto-rows: 72px;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.element-tile {
+  display: grid;
+  gap: 3px;
+  align-content: start;
+  padding: 8px;
+  border-radius: 16px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.025);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.element-tile span,
+.periodic-focus-top span,
+.periodic-focus-top small {
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.element-tile strong,
+.periodic-focus-top strong {
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.element-tile strong {
+  font-size: 1.05rem;
+}
+
+.element-tile small {
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.element-tile.curated {
+  border-color: rgba(137, 240, 218, 0.24);
+}
+
+.element-tile.selected {
+  border-color: rgba(243, 189, 98, 0.42);
+  background: rgba(243, 189, 98, 0.11);
+}
+
+.element-tile.selected.curated {
+  border-color: rgba(137, 240, 218, 0.44);
+  background:
+    linear-gradient(180deg, rgba(12, 35, 44, 0.94), rgba(9, 24, 31, 0.88)),
+    radial-gradient(circle at top right, rgba(137, 240, 218, 0.16), transparent 46%);
+}
+
+.periodic-detail-panel {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+}
+
+.periodic-focus-card {
+  padding: 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background:
+    linear-gradient(180deg, rgba(10, 31, 39, 0.95), rgba(8, 22, 29, 0.8)),
+    radial-gradient(circle at top right, rgba(243, 189, 98, 0.12), transparent 42%);
+}
+
+.periodic-focus-top {
+  display: grid;
+  gap: 6px;
+}
+
+.periodic-focus-top strong {
+  font-size: clamp(3.5rem, 8vw, 5rem);
+  line-height: 0.92;
+}
+
 .reaction-flow-scene {
   margin-top: 20px;
   padding: 18px;
@@ -1305,8 +1502,9 @@ button.equation-node,
 }
 
 @media (max-width: 1100px) {
-  .hero,
+  .app-header,
   .workspace-grid,
+  .periodic-layout,
   .reaction-stage,
   .reaction-flow-grid,
   .stats-grid,
@@ -1322,6 +1520,10 @@ button.equation-node,
   .app-shell {
     width: min(100vw - 28px, 1440px);
     padding-top: 16px;
+  }
+
+  .app-header-metrics {
+    justify-content: flex-start;
   }
 
   .spectral-summary-card {
@@ -1340,18 +1542,23 @@ button.equation-node,
 }
 
 @media (max-width: 720px) {
-  .hero-copy,
-  .hero-metrics,
+  .app-header,
   .panel {
     border-radius: 22px;
     padding: 18px;
   }
 
-  .hero h1 {
-    max-width: 100%;
-  }
-
   .viewer-shell {
     height: 320px;
+  }
+
+  .periodic-grid {
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    grid-auto-rows: 74px;
+  }
+
+  .element-tile {
+    grid-column: auto !important;
+    grid-row: auto !important;
   }
 }

@@ -1,6 +1,19 @@
 export type SpectrumKind = "1H NMR" | "13C NMR" | "IR" | "MS" | "MS/MS" | "UV/Vis" | "Record";
 export type BrowserSection = "molecules" | "atoms" | "reactions";
 
+export interface PeriodicElementRecord {
+  atomicNumber: number;
+  symbol: string;
+  name: string;
+  period: number;
+  group: number;
+  tableColumn: number;
+  tableRow: number;
+  category: string;
+  phase: string;
+  atomicWeight: number;
+}
+
 export interface SpectrumPeak {
   position: number;
   intensity: number;

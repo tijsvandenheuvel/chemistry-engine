@@ -1,6 +1,8 @@
-import { ArrowRight, ExternalLink, Sparkles } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import type { MoleculeRecord, ReactionRecord } from "../types/chemistry";
-import { getMoleculeExternalLinks } from "../lib/pubchem";
+import { DisclosureSection } from "./DisclosureSection";
+import { SourcesSection } from "./SourcesSection";
+import { getMoleculeSourceEntries } from "../lib/sources";
 
 interface MoleculeDetailsProps {
   molecule: MoleculeRecord;
@@ -9,7 +11,7 @@ interface MoleculeDetailsProps {
 }
 
 export function MoleculeDetails({ molecule, relatedReactions = [], onSelectReaction }: MoleculeDetailsProps) {
-  const links = getMoleculeExternalLinks(molecule);
+  const sourceEntries = getMoleculeSourceEntries(molecule);
 
   return (
     <section className="panel detail-panel">
@@ -29,12 +31,12 @@ export function MoleculeDetails({ molecule, relatedReactions = [], onSelectReact
           <strong>{molecule.molecularWeight.toFixed(2)}</strong>
         </article>
         <article className="stat-card">
-          <span>XLogP</span>
-          <strong>{molecule.xlogp ?? "n/a"}</strong>
+          <span>Exact mass</span>
+          <strong>{molecule.exactMass?.toFixed(3) ?? "n/a"}</strong>
         </article>
         <article className="stat-card">
-          <span>TPSA</span>
-          <strong>{molecule.tpsa ?? "n/a"}</strong>
+          <span>Complexity</span>
+          <strong>{molecule.complexity ?? "n/a"}</strong>
         </article>
         <article className="stat-card">
           <span>H-bond profile</span>
@@ -44,9 +46,12 @@ export function MoleculeDetails({ molecule, relatedReactions = [], onSelectReact
         </article>
       </div>
 
-      <div className="detail-columns">
-        <article className="subpanel">
-          <h3>Use cases</h3>
+      <div className="detail-stack">
+        <DisclosureSection
+          title="Use cases"
+          count={molecule.uses.length}
+          preview="Open the applied use list for this molecule."
+        >
           <div className="tag-row">
             {molecule.uses.map((useCase) => (
               <span key={useCase} className="tag muted">
@@ -54,57 +59,30 @@ export function MoleculeDetails({ molecule, relatedReactions = [], onSelectReact
               </span>
             ))}
           </div>
-        </article>
+        </DisclosureSection>
 
-        <article className="subpanel">
-          <h3>Hazard notes</h3>
+        <DisclosureSection
+          title="Hazard notes"
+          count={molecule.hazardNotes.length}
+          preview="Open the current hazard summary and caution notes."
+        >
           <ul className="plain-list">
             {molecule.hazardNotes.map((hazard) => (
               <li key={hazard}>{hazard}</li>
             ))}
           </ul>
-        </article>
-      </div>
+        </DisclosureSection>
 
-      <article className="subpanel">
-        <div className="subpanel-head">
-          <h3>Spectra & records</h3>
-          <Sparkles size={16} />
-        </div>
-        <div className="reference-list">
-          {molecule.spectralReferences.map((reference) => (
-            <a key={`${reference.source}-${reference.label}`} href={reference.url} target="_blank" rel="noreferrer" className="reference-card">
-              <div>
-                <span className="reference-kind">{reference.kind}</span>
-                <strong>{reference.label}</strong>
-                <p>{reference.notes}</p>
-              </div>
-              <span className={`availability availability-${reference.availability}`}>
-                {reference.availability}
-              </span>
-            </a>
-          ))}
-        </div>
-      </article>
+        <SourcesSection
+          entries={sourceEntries}
+          preview="Spectra records and external research links are combined into one closed source list."
+        />
 
-      <article className="subpanel">
-        <h3>External research links</h3>
-        <div className="link-grid">
-          {links.map((link) => (
-            <a key={link.label} href={link.url} target="_blank" rel="noreferrer" className="external-link">
-              <span>{link.label}</span>
-              <ExternalLink size={14} />
-            </a>
-          ))}
-        </div>
-      </article>
-
-      {relatedReactions.length > 0 ? (
-        <article className="subpanel">
-          <div className="subpanel-head">
-            <h3>Related reactions</h3>
-            <Sparkles size={16} />
-          </div>
+        <DisclosureSection
+          title="Related reactions"
+          count={relatedReactions.length}
+          preview="Open the linked reaction list for this molecule."
+        >
           <div className="browser-link-list">
             {relatedReactions.map((reaction) => (
               <button
@@ -121,8 +99,8 @@ export function MoleculeDetails({ molecule, relatedReactions = [], onSelectReact
               </button>
             ))}
           </div>
-        </article>
-      ) : null}
+        </DisclosureSection>
+      </div>
     </section>
   );
 }

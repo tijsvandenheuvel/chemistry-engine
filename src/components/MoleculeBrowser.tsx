@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Atom, ChevronDown, ChevronRight, FlaskConical, GitBranch, Search } from "lucide-react";
+import { ChevronDown, ChevronRight, Search } from "lucide-react";
 import type { AtomRecord, BrowserSection, MoleculeRecord, ReactionRecord } from "../types/chemistry";
 
 interface MoleculeBrowserProps {
@@ -38,9 +38,9 @@ export function MoleculeBrowser({
   onSelectReaction
 }: MoleculeBrowserProps) {
   const [collapsedSections, setCollapsedSections] = useState<Record<BrowserSection, boolean>>({
-    molecules: false,
-    atoms: false,
-    reactions: false
+    molecules: true,
+    atoms: true,
+    reactions: true
   });
   const activeCount =
     activeSection === "atoms" ? atoms.length : activeSection === "reactions" ? reactions.length : molecules.length;
@@ -126,24 +126,14 @@ export function MoleculeBrowser({
                   className={molecule.id === selectedIds.molecules ? "molecule-card active" : "molecule-card"}
                   onClick={() => onSelectMolecule(molecule.id)}
                 >
-                  <div className="molecule-card-top">
-                    <div className="browser-card-copy">
-                      <strong>{molecule.name}</strong>
-                      <p>{molecule.iupac}</p>
-                    </div>
-                    <FlaskConical size={16} />
-                  </div>
-                  <div className="molecule-metrics">
+                  <div className="molecule-card-head">
+                    <strong>{molecule.name}</strong>
                     <span>{molecule.formula}</span>
-                    <span>{molecule.molecularWeight.toFixed(2)} g/mol</span>
                   </div>
-                  <div className="tag-row">
-                    {molecule.categories.slice(0, 3).map((category) => (
-                      <span key={category} className="tag">
-                        {category}
-                      </span>
-                    ))}
-                    {molecule.categories.length > 3 ? <span className="tag muted">+{molecule.categories.length - 3}</span> : null}
+                  <p>{molecule.iupac}</p>
+                  <div className="molecule-metrics compact-metrics">
+                    <span>{molecule.categories[0] ?? "molecule"}</span>
+                    <span>{molecule.molecularWeight.toFixed(2)} g/mol</span>
                   </div>
                 </button>
               ))
@@ -157,23 +147,16 @@ export function MoleculeBrowser({
                   className={atom.id === selectedIds.atoms ? "molecule-card active" : "molecule-card"}
                   onClick={() => onSelectAtom(atom.id)}
                 >
-                  <div className="molecule-card-top">
-                    <div className="browser-card-copy">
-                      <strong>
-                        {atom.name} <span className="inline-symbol">({atom.symbol})</span>
-                      </strong>
-                      <p>{atom.description}</p>
-                    </div>
-                    <Atom size={16} />
+                  <div className="molecule-card-head">
+                    <strong>{atom.name}</strong>
+                    <span>{atom.symbol}</span>
                   </div>
-                  <div className="molecule-metrics">
+                  <p>{atom.category}</p>
+                  <div className="molecule-metrics compact-metrics">
                     <span>Z {atom.atomicNumber}</span>
-                    <span>{atom.atomicWeight.toFixed(3)} u</span>
-                  </div>
-                  <div className="tag-row">
-                    <span className="tag">{atom.category}</span>
-                    <span className="tag muted">period {atom.period}</span>
-                    <span className="tag muted">group {atom.group}</span>
+                    <span>
+                      P{atom.period} / G{atom.group}
+                    </span>
                   </div>
                 </button>
               ))
@@ -187,24 +170,14 @@ export function MoleculeBrowser({
                   className={reaction.id === selectedIds.reactions ? "molecule-card active" : "molecule-card"}
                   onClick={() => onSelectReaction(reaction.id)}
                 >
-                  <div className="molecule-card-top">
-                    <div className="browser-card-copy">
-                      <strong>{reaction.name}</strong>
-                      <p>{reaction.summary}</p>
-                    </div>
-                    <GitBranch size={16} />
+                  <div className="molecule-card-head">
+                    <strong>{reaction.name}</strong>
+                    <span>{reaction.categories[0] ?? "reaction"}</span>
                   </div>
-                  <div className="molecule-metrics">
+                  <p>{reaction.summary}</p>
+                  <div className="molecule-metrics compact-metrics">
                     <span>{reaction.reactants.length} reactants</span>
                     <span>{reaction.products.length} products</span>
-                  </div>
-                  <div className="tag-row">
-                    {reaction.categories.slice(0, 3).map((category) => (
-                      <span key={category} className="tag">
-                        {category}
-                      </span>
-                    ))}
-                    {reaction.categories.length > 3 ? <span className="tag muted">+{reaction.categories.length - 3}</span> : null}
                   </div>
                 </button>
               ))

@@ -6,10 +6,12 @@ import { getPubChemSdfUrl } from "../lib/pubchem";
 interface StructureSceneProps {
   molecule: MoleculeRecord;
   compact?: boolean;
+  spinning?: boolean;
 }
 
-export function StructureScene({ molecule, compact = false }: StructureSceneProps) {
+export function StructureScene({ molecule, compact = false, spinning = true }: StructureSceneProps) {
   const rootRef = useRef<HTMLDivElement | null>(null);
+  const spinningRef = useRef(spinning);
   const viewerRef = useRef<{
     clear: () => void;
     removeAllModels: () => void;
@@ -21,6 +23,10 @@ export function StructureScene({ molecule, compact = false }: StructureSceneProp
     setBackgroundColor: (color: string, alpha?: number) => void;
   } | null>(null);
   const [status, setStatus] = useState<"loading" | "ready" | "error">("loading");
+
+  useEffect(() => {
+    spinningRef.current = spinning;
+  }, [spinning]);
 
   useEffect(() => {
     let cancelled = false;
@@ -77,7 +83,7 @@ export function StructureScene({ molecule, compact = false }: StructureSceneProp
         );
         viewerRef.current.setBackgroundColor("#07131a", 0);
         viewerRef.current.zoomTo();
-        viewerRef.current.spin(true);
+        viewerRef.current.spin(spinningRef.current);
         viewerRef.current.render();
         setStatus("ready");
       } catch (error) {
@@ -95,6 +101,15 @@ export function StructureScene({ molecule, compact = false }: StructureSceneProp
       viewerRef.current?.spin(false);
     };
   }, [compact, molecule.id, molecule.name, molecule.pubchemCid]);
+
+  useEffect(() => {
+    if (!viewerRef.current || status !== "ready") {
+      return;
+    }
+
+    viewerRef.current.spin(spinning);
+    viewerRef.current.render();
+  }, [spinning, status]);
 
   return (
     <div className={compact ? "structure-scene compact" : "structure-scene"}>
