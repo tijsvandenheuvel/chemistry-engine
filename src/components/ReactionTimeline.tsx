@@ -7,12 +7,32 @@ import { StructureScene } from "./StructureScene";
 interface ReactionTimelineProps {
   reactions: ReactionRecord[];
   molecules: Map<string, MoleculeRecord>;
+  selectedReactionId?: string;
+  onSelectReaction?: (reactionId: string) => void;
+  onSelectMolecule?: (moleculeId: string) => void;
 }
 
-export function ReactionTimeline({ reactions, molecules }: ReactionTimelineProps) {
+export function ReactionTimeline({
+  reactions,
+  molecules,
+  selectedReactionId,
+  onSelectReaction,
+  onSelectMolecule
+}: ReactionTimelineProps) {
   const [reactionIndex, setReactionIndex] = useState(0);
   const [stepIndex, setStepIndex] = useState(0);
   const reaction = reactions[reactionIndex];
+
+  useEffect(() => {
+    if (!selectedReactionId) {
+      return;
+    }
+
+    const nextIndex = reactions.findIndex((item) => item.id === selectedReactionId);
+    if (nextIndex >= 0) {
+      setReactionIndex(nextIndex);
+    }
+  }, [reactions, selectedReactionId]);
 
   useEffect(() => {
     setStepIndex(0);
@@ -45,7 +65,10 @@ export function ReactionTimeline({ reactions, molecules }: ReactionTimelineProps
               key={item.id}
               type="button"
               className={index === reactionIndex ? "chip active" : "chip"}
-              onClick={() => setReactionIndex(index)}
+              onClick={() => {
+                setReactionIndex(index);
+                onSelectReaction?.(item.id);
+              }}
             >
               {item.name}
             </button>
@@ -55,18 +78,44 @@ export function ReactionTimeline({ reactions, molecules }: ReactionTimelineProps
 
       <p className="reaction-summary">{reaction.summary}</p>
 
+      <div className="tag-row reaction-tag-row">
+        {reaction.categories.map((category) => (
+          <span key={category} className="tag">
+            {category}
+          </span>
+        ))}
+      </div>
+
       <div className="equation-row">
         <div className="equation-group">
           {reaction.reactants.map((reactantId) => {
             const molecule = molecules.get(reactantId);
-            return molecule ? <span key={reactantId} className="equation-node">{molecule.name}</span> : null;
+            return molecule ? (
+              <button
+                key={reactantId}
+                type="button"
+                className="equation-node"
+                onClick={() => onSelectMolecule?.(reactantId)}
+              >
+                {molecule.name}
+              </button>
+            ) : null;
           })}
         </div>
         <ArrowRight size={20} />
         <div className="equation-group">
           {reaction.products.map((productId) => {
             const molecule = molecules.get(productId);
-            return molecule ? <span key={productId} className="equation-node product">{molecule.name}</span> : null;
+            return molecule ? (
+              <button
+                key={productId}
+                type="button"
+                className="equation-node product"
+                onClick={() => onSelectMolecule?.(productId)}
+              >
+                {molecule.name}
+              </button>
+            ) : null;
           })}
         </div>
       </div>
@@ -91,12 +140,16 @@ export function ReactionTimeline({ reactions, molecules }: ReactionTimelineProps
             <h3>{reaction.steps[stepIndex].title}</h3>
             <p>{reaction.steps[stepIndex].description}</p>
             {focusMolecule ? (
-              <div className="focus-molecule">
+              <button
+                type="button"
+                className="focus-molecule focus-molecule-button"
+                onClick={() => onSelectMolecule?.(focusMolecule.id)}
+              >
                 <FlaskConical size={16} />
                 <span>
                   Focus: {focusMolecule.name} · {focusMolecule.formula}
                 </span>
-              </div>
+              </button>
             ) : null}
           </motion.article>
         </AnimatePresence>
@@ -118,6 +171,7 @@ export function ReactionTimeline({ reactions, molecules }: ReactionTimelineProps
                 De 3D loop volgt de actieve reaction step en schakelt automatisch tussen
                 reactants, transformation focus en product state.
               </p>
+              <p className="reaction-3d-note">{reaction.notes}</p>
             </div>
           ) : null}
 

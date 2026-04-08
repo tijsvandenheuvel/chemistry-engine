@@ -2,7 +2,7 @@
 
 Een compacte chemistry workbench MVP met:
 
-- een mooie molecule browser
+- een compacte chemistry browser voor molecules, atoms en reactions
 - een 3D viewer voor bekende moleculen
 - een spectral panel met structure-derived spectrum previews
 - geanimeerde reaction views
@@ -53,7 +53,8 @@ Gedetailleerde procesdocumentatie staat in:
 De huidige versie focust op:
 
 - renderen van basis-moleculen met bekende structuur
-- overzichtelijke molecule catalogus, nu met honderden PubChem compounds
+- overzichtelijke chemistry catalogus met scrollbare browserkolom en type-afhankelijke filters
+- molecule, atom en reaction browsing in dezelfde interface
 - detailpaneel met properties, bronnen en spectra-ingangen
 - structure-derived spectral diagrams onder de 3D viewer
 - reaction storyboards met 3D loop playback

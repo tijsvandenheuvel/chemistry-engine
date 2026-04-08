@@ -158,6 +158,56 @@ Per `2026-04-08` bevat de MVP:
   - reaction 3D loop context
 - `docs/research-notes.md` verduidelijkt nu expliciet dat spectra momenteel structure-derived previews zijn.
 
+#### Browser en navigatie herwerkt
+
+- De browser-sidebar is herwerkt zodat ze binnen haar panel blijft en een interne scrollzone gebruikt in plaats van de volledige pagina te verlengen.
+- `src/components/MoleculeBrowser.tsx` ondersteunt nu drie browse-modi:
+  - molecules
+  - atoms
+  - reactions
+- De categorie-filters zijn nu type-afhankelijk:
+  - molecule categories
+  - atom families
+  - reaction categories
+- Cards zijn ingekort met clamped tekst zodat lange IUPAC- of summary-velden de lay-out niet meer openbreken.
+- De categoriezone is nu inklapbaar per browse-modus:
+  - molecule categories
+  - atom families
+  - reaction categories
+
+#### Atomen toegevoegd als browse-entiteit
+
+- Nieuw atoomdatamodel toegevoegd in `src/types/chemistry.ts`.
+- Nieuwe seed-dataset toegevoegd in `src/data/atoms.seed.ts` voor alle elementen die momenteel in de geladen catalogus voorkomen.
+- Atomen worden gelinkt aan:
+  - molecules die hun elementsymbool in de formule bevatten
+  - reactions waarin die linked molecules voorkomen
+
+#### Reaction browsing verbeterd
+
+- `src/data/reactions.seed.json` is gecorrigeerd en uitgebreid met categories:
+  - aspirin synthesis
+  - ethyl acetate esterification
+  - ethanol combustion
+- Ethyl acetate is nu correct als product opgenomen in de esterificatie.
+- Oxygen is nu correct opgenomen als reactant in de ethanol combustion flow.
+- `src/components/ReactionTimeline.tsx` kan nu:
+  - een geselecteerde reaction volgen
+  - van reaction naar molecule browsen via clickable participants
+  - reaction categories tonen
+
+#### Cross-navigation toegevoegd
+
+- Molecules linken nu door naar gerelateerde reactions.
+- Atomen linken nu door naar linked molecules en linked reactions.
+- Reaction views linken door naar molecules en betrokken atoms.
+
+#### Verificatie
+
+- `npm run build`
+- Build succesvol na deze browser/herstructureringspass.
+- Playwright-visuele controle kon niet afgerond worden omdat de lokale Playwright MCP geen `/.playwright-mcp` directory kon aanmaken.
+
 ## Belangrijke technische keuzes
 
 ### Waarom PubChem als primaire databron
@@ -235,9 +285,10 @@ Prioriteit voor volgende development rondes:
 1. Echte spectral ingest uit PubChem-linked records, nmrshiftdb2, MassBank en HMDB.
 2. Catalogus verplaatsen naar runtime JSON fetch in plaats van bundling in de JS entry.
 3. Paginatie of virtualized rendering voor de molecule browser.
-4. Backend service voor ingest, refresh en provenance.
-5. Reaction mechanism layer met mapped intermediates en geometrische overgangsanimaties.
-6. Koppeling van papers, patents en reaction provenance per molecule en reaction.
+4. Uitbreiding van de atom dataset naar de volledige periodic table in plaats van alleen de momenteel gebruikte elementen.
+5. Backend service voor ingest, refresh en provenance.
+6. Reaction mechanism layer met mapped intermediates en geometrische overgangsanimaties.
+7. Koppeling van papers, patents en reaction provenance per molecule en reaction.
 
 ## Werkafspraak voor toekomstige updates
 

@@ -2,6 +2,7 @@
   {
     "id": "aspirin-synthesis",
     "name": "Aspirin Synthesis",
+    "categories": ["synthesis", "acetylation", "pharma", "organic"],
     "summary": "Acetylation of salicylic acid with acetic anhydride to produce aspirin and acetic acid as a by-product.",
     "reactants": ["salicylic-acid", "acetic-anhydride"],
     "products": ["aspirin", "acetic-acid"],
@@ -35,9 +36,10 @@
   {
     "id": "ethyl-acetate-esterification",
     "name": "Ethyl Acetate Esterification",
+    "categories": ["synthesis", "esterification", "solvent", "equilibrium"],
     "summary": "Fischer esterification of acetic acid and ethanol into the solvent ethyl acetate with water as coproduct.",
     "reactants": ["acetic-acid", "ethanol"],
-    "products": ["water"],
+    "products": ["ethyl-acetate", "water"],
     "catalysts": ["sulfuric acid"],
     "solvent": "Reactive mixture",
     "temperature": "Reflux",
@@ -63,8 +65,9 @@
   {
     "id": "ethanol-combustion",
     "name": "Ethanol Combustion",
+    "categories": ["combustion", "oxidation", "process", "energy"],
     "summary": "A process-side example showing ethanol oxidized to carbon dioxide and water under combustion conditions.",
-    "reactants": ["ethanol"],
+    "reactants": ["ethanol", "oxygen"],
     "products": ["carbon-dioxide", "water"],
     "catalysts": [],
     "solvent": "Gas phase / flame front",

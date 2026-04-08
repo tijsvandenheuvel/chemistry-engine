@@ -1,4 +1,5 @@
 export type SpectrumKind = "1H NMR" | "13C NMR" | "IR" | "MS" | "MS/MS" | "UV/Vis" | "Record";
+export type BrowserSection = "molecules" | "atoms" | "reactions";
 
 export interface SpectrumPeak {
   position: number;
@@ -54,6 +55,23 @@ export interface MoleculeRecord {
   spectra: SpectrumProfile[];
 }
 
+export interface AtomRecord {
+  id: string;
+  symbol: string;
+  name: string;
+  atomicNumber: number;
+  atomicWeight: number;
+  category: string;
+  phase: string;
+  period: number;
+  group: number;
+  electronConfiguration: string;
+  oxidationStates: string[];
+  description: string;
+  relatedMoleculeIds: string[];
+  relatedReactionIds: string[];
+}
+
 export interface ReactionStep {
   title: string;
   description: string;
@@ -63,6 +81,7 @@ export interface ReactionStep {
 export interface ReactionRecord {
   id: string;
   name: string;
+  categories: string[];
   summary: string;
   reactants: string[];
   products: string[];

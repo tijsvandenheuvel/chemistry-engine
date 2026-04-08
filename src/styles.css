@@ -152,11 +152,34 @@ input {
 .main-column {
   display: grid;
   gap: 24px;
+  min-width: 0;
 }
 
 .panel {
   border-radius: 26px;
   padding: 22px;
+}
+
+.browser-panel {
+  position: sticky;
+  top: 18px;
+  display: grid;
+  grid-template-rows: auto auto auto auto auto minmax(0, 1fr);
+  max-height: calc(100vh - 36px);
+  overflow: hidden;
+}
+
+.browser-panel .panel-head {
+  align-items: center;
+}
+
+.browser-panel .panel-head > div:first-child {
+  display: grid;
+  gap: 8px;
+}
+
+.browser-panel .panel-head h2 {
+  margin: 0;
 }
 
 .panel-head,
@@ -217,6 +240,7 @@ input {
   background: transparent;
   border: 0;
   outline: none;
+  min-width: 0;
 }
 
 .category-strip,
@@ -244,6 +268,75 @@ input {
   cursor: pointer;
 }
 
+.browser-section-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.browser-tab {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  padding: 10px 10px;
+  overflow: hidden;
+}
+
+.browser-tab span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.92rem;
+}
+
+.browser-tab strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.82rem;
+  line-height: 1;
+}
+
+.browser-category-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-top: 2px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.browser-section-label {
+  display: inline-block;
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.browser-category-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.browser-category-toggle small {
+  font: inherit;
+}
+
 .chip.active,
 .timeline-stop.active {
   border-color: rgba(243, 189, 98, 0.5);
@@ -254,6 +347,42 @@ input {
   display: grid;
   gap: 12px;
   margin-top: 18px;
+}
+
+.browser-list-shell {
+  min-height: 0;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.category-strip.collapsed {
+  display: none;
+}
+
+.browser-list {
+  min-height: 0;
+  max-height: 100%;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+
+.browser-empty {
+  padding: 20px 16px;
+  border-radius: 18px;
+  border: 1px dashed rgba(137, 240, 218, 0.16);
+  color: var(--muted);
+  text-align: center;
+}
+
+.browser-list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.browser-list::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(137, 240, 218, 0.18);
+  border: 2px solid transparent;
+  background-clip: padding-box;
 }
 
 .molecule-card {
@@ -293,9 +422,46 @@ input {
   font-size: 1.04rem;
 }
 
+.browser-card-copy {
+  min-width: 0;
+}
+
+.molecule-card strong {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.molecule-card p {
+  margin: 6px 0 0;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.inline-symbol {
+  color: var(--muted);
+  font-weight: 500;
+}
+
 .tag,
 .equation-node {
   padding: 8px 10px;
+}
+
+button.equation-node,
+.focus-molecule-button,
+.browser-link-card {
+  font: inherit;
+}
+
+.equation-node,
+.focus-molecule-button,
+.browser-link-card {
+  cursor: pointer;
 }
 
 .tag.muted {
@@ -349,7 +515,9 @@ input {
 .detail-columns,
 .reference-list,
 .spectrum-tabs,
-.peak-strip {
+.peak-strip,
+.browser-link-list,
+.atom-stage-grid {
   display: grid;
   gap: 14px;
 }
@@ -394,6 +562,10 @@ input {
 
 .detail-columns {
   grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.browser-link-list {
+  margin-top: 14px;
 }
 
 .subpanel {
@@ -458,6 +630,29 @@ input {
   border-radius: 16px;
   border: 1px solid rgba(137, 240, 218, 0.1);
   background: rgba(255, 255, 255, 0.02);
+}
+
+.browser-link-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 16px;
+  text-align: left;
+  color: var(--text);
+  border-radius: 18px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.browser-link-card strong {
+  display: block;
+}
+
+.browser-link-card p {
+  margin: 6px 0 0;
+  color: var(--muted);
 }
 
 .spectral-panel {
@@ -607,6 +802,10 @@ input {
   max-width: 72ch;
 }
 
+.reaction-tag-row {
+  margin-bottom: 18px;
+}
+
 .equation-row {
   display: flex;
   align-items: center;
@@ -651,6 +850,53 @@ input {
   margin-top: 16px;
   justify-content: flex-start;
   color: var(--teal);
+}
+
+.focus-molecule-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.atom-viewer-panel .viewer-status {
+  min-width: 72px;
+  justify-content: center;
+}
+
+.atom-stage {
+  display: grid;
+  gap: 20px;
+  margin-top: 18px;
+}
+
+.atom-core {
+  display: grid;
+  place-items: center;
+  gap: 8px;
+  min-height: 260px;
+  border-radius: 24px;
+  border: 1px solid rgba(137, 240, 218, 0.12);
+  background:
+    radial-gradient(circle at center, rgba(137, 240, 218, 0.16), transparent 34%),
+    radial-gradient(circle at center, rgba(243, 189, 98, 0.12), transparent 58%),
+    linear-gradient(180deg, rgba(5, 14, 19, 0.98), rgba(8, 20, 27, 0.9));
+}
+
+.atom-core-symbol {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(4rem, 10vw, 6.2rem);
+  line-height: 0.95;
+}
+
+.atom-core small {
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.atom-stage-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .reaction-sidecar {
@@ -721,7 +967,9 @@ input {
   .reaction-stage,
   .stats-grid,
   .detail-columns,
-  .spectral-summary-card {
+  .spectral-summary-card,
+  .atom-stage-grid,
+  .browser-section-tabs {
     grid-template-columns: 1fr;
   }
 
@@ -732,6 +980,16 @@ input {
 
   .spectral-summary-card {
     display: grid;
+  }
+
+  .browser-panel {
+    position: static;
+    max-height: none;
+  }
+
+  .browser-list-shell,
+  .browser-list {
+    max-height: none;
   }
 }
 

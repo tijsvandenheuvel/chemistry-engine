@@ -1,12 +1,14 @@
-import { ExternalLink, Sparkles } from "lucide-react";
-import type { MoleculeRecord } from "../types/chemistry";
+import { ArrowRight, ExternalLink, Sparkles } from "lucide-react";
+import type { MoleculeRecord, ReactionRecord } from "../types/chemistry";
 import { getMoleculeExternalLinks } from "../lib/pubchem";
 
 interface MoleculeDetailsProps {
   molecule: MoleculeRecord;
+  relatedReactions?: ReactionRecord[];
+  onSelectReaction?: (reactionId: string) => void;
 }
 
-export function MoleculeDetails({ molecule }: MoleculeDetailsProps) {
+export function MoleculeDetails({ molecule, relatedReactions = [], onSelectReaction }: MoleculeDetailsProps) {
   const links = getMoleculeExternalLinks(molecule);
 
   return (
@@ -96,6 +98,31 @@ export function MoleculeDetails({ molecule }: MoleculeDetailsProps) {
           ))}
         </div>
       </article>
+
+      {relatedReactions.length > 0 ? (
+        <article className="subpanel">
+          <div className="subpanel-head">
+            <h3>Related reactions</h3>
+            <Sparkles size={16} />
+          </div>
+          <div className="browser-link-list">
+            {relatedReactions.map((reaction) => (
+              <button
+                key={reaction.id}
+                type="button"
+                className="browser-link-card"
+                onClick={() => onSelectReaction?.(reaction.id)}
+              >
+                <div>
+                  <strong>{reaction.name}</strong>
+                  <p>{reaction.summary}</p>
+                </div>
+                <ArrowRight size={14} />
+              </button>
+            ))}
+          </div>
+        </article>
+      ) : null}
     </section>
   );
 }
