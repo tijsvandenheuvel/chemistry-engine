@@ -1,0 +1,253 @@
+[
+  {
+    "id": "water",
+    "name": "Water",
+    "iupac": "oxidane",
+    "formula": "H2O",
+    "pubchemCid": 962,
+    "smiles": "O",
+    "description": "Universal polar solvent and the backbone medium for aqueous chemistry, hydrolysis and biochemical systems.",
+    "categories": ["solvent", "inorganic", "process"],
+    "uses": ["Reaction medium", "Cooling", "Extraction", "Reference solvent"],
+    "hazardNotes": ["Low intrinsic hazard", "Process risk comes mainly from contamination or temperature/pressure conditions"],
+    "molecularWeight": 18.015,
+    "xlogp": -1.4,
+    "tpsa": 31.5,
+    "hBondDonors": 2,
+    "hBondAcceptors": 2,
+    "spectralReferences": [
+      {
+        "kind": "IR",
+        "label": "PubChem compound record",
+        "source": "PubChem",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/962",
+        "availability": "open",
+        "notes": "Compound identity, linked annotations and downloadable records."
+      }
+    ]
+  },
+  {
+    "id": "ethanol",
+    "name": "Ethanol",
+    "iupac": "ethanol",
+    "formula": "C2H6O",
+    "pubchemCid": 702,
+    "smiles": "CCO",
+    "description": "A protic solvent and commodity alcohol used in synthesis, purification and fuel-related process chemistry.",
+    "categories": ["solvent", "organic", "feedstock"],
+    "uses": ["Solvent", "Extraction", "Fuel blending", "Esterification feedstock"],
+    "hazardNotes": ["Highly flammable liquid", "Vapor management required in process design"],
+    "molecularWeight": 46.069,
+    "xlogp": -0.3,
+    "tpsa": 20.2,
+    "hBondDonors": 1,
+    "hBondAcceptors": 1,
+    "spectralReferences": [
+      {
+        "kind": "1H NMR",
+        "label": "PubChem compound record",
+        "source": "PubChem",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/702",
+        "availability": "open",
+        "notes": "Compound record with linked properties and source references."
+      }
+    ]
+  },
+  {
+    "id": "acetic-acid",
+    "name": "Acetic Acid",
+    "iupac": "acetic acid",
+    "formula": "C2H4O2",
+    "pubchemCid": 176,
+    "smiles": "CC(=O)O",
+    "description": "Simple carboxylic acid widely used in esterification, buffering and acetylation chemistry.",
+    "categories": ["organic", "acid", "feedstock"],
+    "uses": ["Acid feedstock", "Buffer preparation", "Esterification"],
+    "hazardNotes": ["Corrosive in concentrated form", "Strong odor and vapor control required"],
+    "molecularWeight": 60.052,
+    "xlogp": -0.3,
+    "tpsa": 37.3,
+    "hBondDonors": 1,
+    "hBondAcceptors": 2,
+    "spectralReferences": [
+      {
+        "kind": "IR",
+        "label": "PubChem compound record",
+        "source": "PubChem",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/176",
+        "availability": "open",
+        "notes": "Useful as a central identity anchor for downstream spectral linking."
+      }
+    ]
+  },
+  {
+    "id": "benzene",
+    "name": "Benzene",
+    "iupac": "benzene",
+    "formula": "C6H6",
+    "pubchemCid": 241,
+    "smiles": "c1ccccc1",
+    "description": "Canonical aromatic ring system used as a reference motif for aromatic chemistry and substitution reactions.",
+    "categories": ["organic", "aromatic", "reference"],
+    "uses": ["Aromatic reference", "Teaching structure", "Feedstock context"],
+    "hazardNotes": ["Carcinogenic", "Industrial use demands strict exposure control"],
+    "molecularWeight": 78.114,
+    "xlogp": 2.1,
+    "tpsa": 0,
+    "hBondDonors": 0,
+    "hBondAcceptors": 0,
+    "spectralReferences": [
+      {
+        "kind": "Record",
+        "label": "PubChem compound record",
+        "source": "PubChem",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/241",
+        "availability": "open",
+        "notes": "Central reference entry for aromatic structure data."
+      }
+    ]
+  },
+  {
+    "id": "salicylic-acid",
+    "name": "Salicylic Acid",
+    "iupac": "2-hydroxybenzoic acid",
+    "formula": "C7H6O3",
+    "pubchemCid": 338,
+    "smiles": "C1=CC=C(C(=C1)C(=O)O)O",
+    "description": "Aromatic hydroxy acid used as a key precursor in aspirin synthesis and functional group teaching examples.",
+    "categories": ["organic", "precursor", "aromatic"],
+    "uses": ["Aspirin precursor", "Functional group exemplar", "Analytical reference"],
+    "hazardNotes": ["Irritant", "Handle as a fine powder with dust control"],
+    "molecularWeight": 138.121,
+    "xlogp": 2.3,
+    "tpsa": 57.5,
+    "hBondDonors": 2,
+    "hBondAcceptors": 3,
+    "spectralReferences": [
+      {
+        "kind": "1H NMR",
+        "label": "PubChem compound record",
+        "source": "PubChem",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/338",
+        "availability": "open",
+        "notes": "Base structure record for aspirin route planning."
+      }
+    ]
+  },
+  {
+    "id": "acetic-anhydride",
+    "name": "Acetic Anhydride",
+    "iupac": "acetic anhydride",
+    "formula": "C4H6O3",
+    "pubchemCid": 7918,
+    "smiles": "CC(=O)OC(=O)C",
+    "description": "Strong acetylating reagent used in aspirin synthesis and a classic example of activated carboxylic acid chemistry.",
+    "categories": ["organic", "reagent", "process"],
+    "uses": ["Acetylation", "Aspirin synthesis", "Reagent benchmark"],
+    "hazardNotes": ["Corrosive", "Reacts with water", "Requires dry handling and ventilation"],
+    "molecularWeight": 102.089,
+    "xlogp": -0.3,
+    "tpsa": 43.4,
+    "hBondDonors": 0,
+    "hBondAcceptors": 3,
+    "spectralReferences": [
+      {
+        "kind": "IR",
+        "label": "PubChem compound record",
+        "source": "PubChem",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/7918",
+        "availability": "open",
+        "notes": "Identity anchor for acetylation reagent tracking."
+      }
+    ]
+  },
+  {
+    "id": "aspirin",
+    "name": "Aspirin",
+    "iupac": "2-acetyloxybenzoic acid",
+    "formula": "C9H8O4",
+    "pubchemCid": 2244,
+    "smiles": "CC(=O)OC1=CC=CC=C1C(=O)O",
+    "description": "Flagship small molecule for synthesis routes, purification workflows and structure-property demonstrations.",
+    "categories": ["organic", "product", "pharma"],
+    "uses": ["Reaction demo target", "Pharmaceutical example", "Crystal purification teaching"],
+    "hazardNotes": ["Irritant at laboratory scale", "Process quality matters more than acute hazard in this MVP context"],
+    "molecularWeight": 180.159,
+    "xlogp": 1.2,
+    "tpsa": 63.6,
+    "hBondDonors": 1,
+    "hBondAcceptors": 4,
+    "spectralReferences": [
+      {
+        "kind": "Record",
+        "label": "PubChem compound record",
+        "source": "PubChem",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/2244",
+        "availability": "open",
+        "notes": "Core compound page with downloadable structure records."
+      },
+      {
+        "kind": "1H NMR",
+        "label": "nmrshiftdb2 home",
+        "source": "nmrshiftdb2",
+        "url": "https://nmrshiftdb.nmr.uni-koeln.de/",
+        "availability": "open",
+        "notes": "Use as an open source for NMR lookup and later ingestion."
+      }
+    ]
+  },
+  {
+    "id": "caffeine",
+    "name": "Caffeine",
+    "iupac": "1,3,7-trimethylpurine-2,6-dione",
+    "formula": "C8H10N4O2",
+    "pubchemCid": 2519,
+    "smiles": "CN1C=NC2=C1C(=O)N(C(=O)N2C)C",
+    "description": "Well-known heterocycle with enough complexity to show off 3D rendering, aromaticity and heteroatom-rich topology.",
+    "categories": ["organic", "heterocycle", "reference"],
+    "uses": ["3D viewer showcase", "Analytical chemistry demos", "Reference compound"],
+    "hazardNotes": ["Low process relevance in this MVP", "Useful mainly as a rich structural demo"],
+    "molecularWeight": 194.19,
+    "xlogp": -0.1,
+    "tpsa": 61.8,
+    "hBondDonors": 0,
+    "hBondAcceptors": 6,
+    "spectralReferences": [
+      {
+        "kind": "MS/MS",
+        "label": "PubChem compound record",
+        "source": "PubChem",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/2519",
+        "availability": "open",
+        "notes": "A strong showcase molecule for structure search and linked annotation."
+      }
+    ]
+  },
+  {
+    "id": "carbon-dioxide",
+    "name": "Carbon Dioxide",
+    "iupac": "carbon dioxide",
+    "formula": "CO2",
+    "pubchemCid": 280,
+    "smiles": "O=C=O",
+    "description": "Simple linear molecule that helps benchmark the viewer for inorganic geometry and process emissions context.",
+    "categories": ["inorganic", "gas", "process"],
+    "uses": ["Process emissions", "Gas handling", "Geometry benchmark"],
+    "hazardNotes": ["Asphyxiation risk at scale", "Pressure and ventilation dominate process safety"],
+    "molecularWeight": 44.009,
+    "xlogp": -0.4,
+    "tpsa": 34.1,
+    "hBondDonors": 0,
+    "hBondAcceptors": 2,
+    "spectralReferences": [
+      {
+        "kind": "IR",
+        "label": "PubChem compound record",
+        "source": "PubChem",
+        "url": "https://pubchem.ncbi.nlm.nih.gov/compound/280",
+        "availability": "open",
+        "notes": "Reference entry for linear small-molecule geometry."
+      }
+    ]
+  }
+]

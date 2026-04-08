@@ -1,0 +1,86 @@
+[
+  {
+    "id": "aspirin-synthesis",
+    "name": "Aspirin Synthesis",
+    "summary": "Acetylation of salicylic acid with acetic anhydride to produce aspirin and acetic acid as a by-product.",
+    "reactants": ["salicylic-acid", "acetic-anhydride"],
+    "products": ["aspirin", "acetic-acid"],
+    "catalysts": ["acid catalyst"],
+    "solvent": "Often solvent-light or acetic acid rich conditions",
+    "temperature": "Warm reaction, then crystallization",
+    "notes": "Great MVP reaction because it has a clear transformation, familiar product and clean reaction storytelling.",
+    "steps": [
+      {
+        "title": "Charge Reactants",
+        "description": "Salicylic acid and acetic anhydride are combined to create an acetylation-ready mixture.",
+        "focusMoleculeId": "salicylic-acid"
+      },
+      {
+        "title": "Activate and Heat",
+        "description": "A catalytic acid and gentle heating accelerate acetyl transfer onto the phenolic oxygen.",
+        "focusMoleculeId": "acetic-anhydride"
+      },
+      {
+        "title": "Form Product",
+        "description": "Aspirin forms while acetic acid appears as a by-product in the reaction matrix.",
+        "focusMoleculeId": "aspirin"
+      },
+      {
+        "title": "Crystallize",
+        "description": "The mixture is cooled and diluted to isolate aspirin crystals for washing and drying.",
+        "focusMoleculeId": "aspirin"
+      }
+    ]
+  },
+  {
+    "id": "ethyl-acetate-esterification",
+    "name": "Ethyl Acetate Esterification",
+    "summary": "Fischer esterification of acetic acid and ethanol into the solvent ethyl acetate with water as coproduct.",
+    "reactants": ["acetic-acid", "ethanol"],
+    "products": ["water"],
+    "catalysts": ["sulfuric acid"],
+    "solvent": "Reactive mixture",
+    "temperature": "Reflux",
+    "notes": "This storyboard represents acid-catalyzed equilibrium chemistry and solvent manufacturing logic.",
+    "steps": [
+      {
+        "title": "Mix Feedstocks",
+        "description": "Acetic acid and ethanol establish the equilibrium mixture before catalysis.",
+        "focusMoleculeId": "ethanol"
+      },
+      {
+        "title": "Catalyze",
+        "description": "Acid catalysis activates the carbonyl and enables ester bond formation.",
+        "focusMoleculeId": "acetic-acid"
+      },
+      {
+        "title": "Shift Equilibrium",
+        "description": "Removing water or using excess feed helps drive the equilibrium toward product.",
+        "focusMoleculeId": "water"
+      }
+    ]
+  },
+  {
+    "id": "ethanol-combustion",
+    "name": "Ethanol Combustion",
+    "summary": "A process-side example showing ethanol oxidized to carbon dioxide and water under combustion conditions.",
+    "reactants": ["ethanol"],
+    "products": ["carbon-dioxide", "water"],
+    "catalysts": [],
+    "solvent": "Gas phase / flame front",
+    "temperature": "High temperature",
+    "notes": "Useful to visualize process chemistry, energy release and emission products even without full reaction engineering detail.",
+    "steps": [
+      {
+        "title": "Fuel Feed",
+        "description": "Ethanol enters a high-energy oxidative zone where bonds are rapidly redistributed.",
+        "focusMoleculeId": "ethanol"
+      },
+      {
+        "title": "Oxidation",
+        "description": "Carbon is converted into carbon dioxide and hydrogen into water.",
+        "focusMoleculeId": "carbon-dioxide"
+      }
+    ]
+  }
+]

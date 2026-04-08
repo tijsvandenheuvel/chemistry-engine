@@ -1,0 +1,753 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap");
+
+:root {
+  color-scheme: dark;
+  font-family: "IBM Plex Sans", sans-serif;
+  --bg: #031117;
+  --bg-2: #0b1f28;
+  --panel: rgba(7, 24, 31, 0.82);
+  --panel-strong: rgba(12, 37, 48, 0.9);
+  --line: rgba(124, 192, 186, 0.16);
+  --text: #eff7f2;
+  --muted: #9db5b0;
+  --teal: #89f0da;
+  --acid: #f3bd62;
+  --red: #ff8873;
+  --shadow: 0 20px 80px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    radial-gradient(circle at top left, rgba(137, 240, 218, 0.18), transparent 28%),
+    radial-gradient(circle at top right, rgba(243, 189, 98, 0.16), transparent 24%),
+    linear-gradient(180deg, #021016 0%, #031117 48%, #07151d 100%);
+  color: var(--text);
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(137, 240, 218, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(137, 240, 218, 0.04) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.65), transparent);
+  pointer-events: none;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input {
+  font: inherit;
+}
+
+.app-shell {
+  width: min(1440px, calc(100vw - 48px));
+  margin: 0 auto;
+  padding: 32px 0 48px;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.45fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.hero-copy,
+.hero-metrics,
+.panel {
+  border: 1px solid var(--line);
+  background: var(--panel);
+  backdrop-filter: blur(22px);
+  box-shadow: var(--shadow);
+}
+
+.hero-copy {
+  position: relative;
+  overflow: hidden;
+  border-radius: 28px;
+  padding: 32px;
+}
+
+.hero-copy::after {
+  content: "";
+  position: absolute;
+  right: -40px;
+  top: -50px;
+  width: 220px;
+  height: 220px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(243, 189, 98, 0.28), transparent 68%);
+}
+
+.hero h1 {
+  margin: 8px 0 16px;
+  max-width: 16ch;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: clamp(2.2rem, 5vw, 4.6rem);
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+}
+
+.hero-text,
+.reaction-summary,
+.detail-intro,
+.molecule-card p,
+.reference-card p,
+.external-link,
+.viewer-caption,
+.reaction-meta,
+.plain-list,
+.search-box input {
+  color: var(--muted);
+}
+
+.hero-text {
+  max-width: 56ch;
+  font-size: 1.04rem;
+  line-height: 1.7;
+}
+
+.hero-metrics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  border-radius: 28px;
+  padding: 20px;
+}
+
+.metric-card {
+  display: grid;
+  gap: 8px;
+  border-radius: 20px;
+  padding: 18px;
+  background: linear-gradient(180deg, rgba(10, 31, 39, 0.95), rgba(8, 22, 29, 0.75));
+  border: 1px solid rgba(137, 240, 218, 0.12);
+}
+
+.metric-card strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.8rem;
+}
+
+.workspace-grid {
+  display: grid;
+  grid-template-columns: 380px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.main-column {
+  display: grid;
+  gap: 24px;
+}
+
+.panel {
+  border-radius: 26px;
+  padding: 22px;
+}
+
+.panel-head,
+.subpanel-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: start;
+}
+
+.eyebrow,
+.viewer-caption span,
+.count-chip,
+.stage-index,
+.reference-kind {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.74rem;
+}
+
+.eyebrow {
+  color: var(--teal);
+}
+
+.panel h2,
+.panel h3 {
+  margin: 4px 0 0;
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: -0.04em;
+}
+
+.count-chip,
+.viewer-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: rgba(137, 240, 218, 0.08);
+  border: 1px solid rgba(137, 240, 218, 0.14);
+  color: var(--text);
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 16px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(137, 240, 218, 0.08);
+}
+
+.search-box input {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  outline: none;
+}
+
+.category-strip,
+.tag-row,
+.reaction-switcher,
+.link-grid,
+.equation-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip,
+.tag,
+.equation-node,
+.timeline-stop {
+  border-radius: 999px;
+  border: 1px solid rgba(137, 240, 218, 0.12);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text);
+}
+
+.chip {
+  padding: 9px 12px;
+  cursor: pointer;
+}
+
+.chip.active,
+.timeline-stop.active {
+  border-color: rgba(243, 189, 98, 0.5);
+  background: rgba(243, 189, 98, 0.14);
+}
+
+.molecule-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.molecule-card {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  text-align: left;
+  border-radius: 22px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background:
+    linear-gradient(180deg, rgba(7, 22, 29, 0.85), rgba(6, 18, 24, 0.82)),
+    radial-gradient(circle at right top, rgba(137, 240, 218, 0.12), transparent 40%);
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.molecule-card:hover,
+.molecule-card.active {
+  transform: translateY(-1px);
+  border-color: rgba(137, 240, 218, 0.34);
+}
+
+.molecule-card-top,
+.molecule-metrics,
+.reaction-meta,
+.viewer-caption,
+.focus-molecule {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: center;
+}
+
+.molecule-card strong,
+.stat-card strong,
+.stage-card h3 {
+  font-size: 1.04rem;
+}
+
+.tag,
+.equation-node {
+  padding: 8px 10px;
+}
+
+.tag.muted {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.viewer-shell {
+  position: relative;
+  height: 420px;
+  margin-top: 18px;
+  border-radius: 24px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(137, 240, 218, 0.12), transparent 30%),
+    radial-gradient(circle at 80% 30%, rgba(243, 189, 98, 0.16), transparent 26%),
+    linear-gradient(180deg, rgba(4, 12, 16, 0.98), rgba(6, 16, 22, 0.9));
+  border: 1px solid rgba(137, 240, 218, 0.12);
+}
+
+.structure-scene {
+  position: absolute;
+  inset: 0;
+}
+
+.structure-scene.compact {
+  position: relative;
+  height: 100%;
+}
+
+.viewer-canvas,
+.structure-scene .viewer-canvas {
+  position: absolute;
+  inset: 0;
+}
+
+.viewer-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  gap: 10px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(3, 11, 15, 0.1), rgba(3, 11, 15, 0.42));
+}
+
+.viewer-caption {
+  margin-top: 14px;
+}
+
+.stats-grid,
+.detail-columns,
+.reference-list,
+.spectrum-tabs,
+.peak-strip {
+  display: grid;
+  gap: 14px;
+}
+
+.spectrum-tabs,
+.peak-strip {
+  grid-template-columns: repeat(auto-fit, minmax(120px, max-content));
+}
+
+.stats-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin: 18px 0;
+}
+
+.stat-card,
+.subpanel,
+.reference-card,
+.stage-card {
+  border-radius: 22px;
+  background: var(--panel-strong);
+  border: 1px solid rgba(137, 240, 218, 0.1);
+}
+
+.stat-card {
+  padding: 16px;
+}
+
+.stat-card span,
+.subpanel h3,
+.external-link span,
+.timeline-stop small {
+  display: block;
+  color: var(--muted);
+}
+
+.stat-card strong {
+  margin-top: 8px;
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.45rem;
+}
+
+.detail-columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.subpanel {
+  padding: 18px;
+}
+
+.plain-list {
+  margin: 14px 0 0;
+  padding-left: 18px;
+  line-height: 1.7;
+}
+
+.reference-list {
+  margin-top: 14px;
+}
+
+.reference-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  transition: border-color 180ms ease, transform 180ms ease;
+}
+
+.reference-card:hover,
+.external-link:hover {
+  transform: translateY(-1px);
+  border-color: rgba(137, 240, 218, 0.28);
+}
+
+.availability {
+  height: fit-content;
+  padding: 8px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+
+.availability-open {
+  background: rgba(137, 240, 218, 0.12);
+  color: var(--teal);
+}
+
+.availability-planned {
+  background: rgba(243, 189, 98, 0.12);
+  color: var(--acid);
+}
+
+.availability-restricted {
+  background: rgba(255, 136, 115, 0.12);
+  color: var(--red);
+}
+
+.link-grid {
+  margin-top: 14px;
+}
+
+.external-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.spectral-panel {
+  overflow: hidden;
+}
+
+.spectral-summary-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 18px;
+  padding: 18px;
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(9, 27, 35, 0.92), rgba(9, 23, 30, 0.8)),
+    radial-gradient(circle at top right, rgba(243, 189, 98, 0.12), transparent 42%);
+  border: 1px solid rgba(137, 240, 218, 0.12);
+}
+
+.spectral-kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  color: var(--teal);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+}
+
+.spectral-summary-card h3 {
+  margin: 0 0 8px;
+  font-size: 1.4rem;
+}
+
+.spectral-summary-card p {
+  margin: 0;
+  max-width: 64ch;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.spectral-stats {
+  display: grid;
+  gap: 12px;
+  min-width: 180px;
+}
+
+.spectral-stats span,
+.spectrum-axis-text {
+  fill: var(--muted);
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.spectral-stats strong {
+  display: block;
+  margin-top: 4px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.1rem;
+}
+
+.spectral-chart {
+  margin-top: 18px;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(137, 240, 218, 0.12);
+  background:
+    linear-gradient(180deg, rgba(7, 20, 26, 0.96), rgba(7, 18, 24, 0.88)),
+    radial-gradient(circle at 80% 20%, rgba(137, 240, 218, 0.08), transparent 30%);
+}
+
+.spectral-chart svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.spectrum-grid-bg {
+  fill: rgba(255, 255, 255, 0.01);
+}
+
+.spectrum-grid-line {
+  stroke: rgba(137, 240, 218, 0.1);
+  stroke-width: 1;
+}
+
+.spectrum-grid-line.vertical {
+  stroke-dasharray: 4 10;
+}
+
+.spectrum-path {
+  fill: none;
+  stroke: var(--teal);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.spectrum-guide {
+  stroke: rgba(243, 189, 98, 0.28);
+  stroke-width: 1;
+}
+
+.spectrum-stem {
+  stroke: var(--teal);
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+.spectrum-dot {
+  fill: var(--acid);
+}
+
+.peak-strip {
+  margin-top: 18px;
+}
+
+.peak-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.peak-pill span {
+  color: var(--muted);
+}
+
+.peak-pill strong {
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.reaction-panel {
+  margin-top: 24px;
+}
+
+.reaction-summary {
+  margin: 16px 0 18px;
+  max-width: 72ch;
+}
+
+.equation-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.equation-node.product {
+  border-color: rgba(243, 189, 98, 0.24);
+  background: rgba(243, 189, 98, 0.08);
+}
+
+.reaction-meta {
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+
+.reaction-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) 340px;
+  gap: 18px;
+  margin-top: 20px;
+}
+
+.stage-card {
+  padding: 24px;
+  min-height: 220px;
+}
+
+.stage-card h3 {
+  margin: 10px 0 12px;
+  font-size: 1.8rem;
+}
+
+.stage-card p {
+  max-width: 56ch;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.focus-molecule {
+  margin-top: 16px;
+  justify-content: flex-start;
+  color: var(--teal);
+}
+
+.reaction-sidecar {
+  display: grid;
+  gap: 12px;
+}
+
+.reaction-3d-panel {
+  padding: 16px;
+  border-radius: 22px;
+  background:
+    linear-gradient(180deg, rgba(9, 28, 35, 0.95), rgba(8, 22, 29, 0.84)),
+    radial-gradient(circle at top right, rgba(137, 240, 218, 0.12), transparent 42%);
+  border: 1px solid rgba(137, 240, 218, 0.1);
+}
+
+.reaction-3d-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+}
+
+.reaction-3d-head h3 {
+  margin: 6px 0 0;
+  font-size: 1.1rem;
+}
+
+.reaction-3d-frame {
+  position: relative;
+  height: 240px;
+  margin-top: 14px;
+  border-radius: 18px;
+  overflow: hidden;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background:
+    radial-gradient(circle at 25% 25%, rgba(137, 240, 218, 0.12), transparent 30%),
+    linear-gradient(180deg, rgba(4, 12, 16, 0.98), rgba(6, 16, 22, 0.9));
+}
+
+.reaction-3d-note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.timeline-rail {
+  display: grid;
+  gap: 10px;
+}
+
+.timeline-stop {
+  display: grid;
+  gap: 4px;
+  padding: 14px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.timeline-stop span {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 1100px) {
+  .hero,
+  .workspace-grid,
+  .reaction-stage,
+  .stats-grid,
+  .detail-columns,
+  .spectral-summary-card {
+    grid-template-columns: 1fr;
+  }
+
+  .app-shell {
+    width: min(100vw - 28px, 1440px);
+    padding-top: 16px;
+  }
+
+  .spectral-summary-card {
+    display: grid;
+  }
+}
+
+@media (max-width: 720px) {
+  .hero-copy,
+  .hero-metrics,
+  .panel {
+    border-radius: 22px;
+    padding: 18px;
+  }
+
+  .hero h1 {
+    max-width: 100%;
+  }
+
+  .viewer-shell {
+    height: 320px;
+  }
+}

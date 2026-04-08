@@ -1,0 +1,9 @@
+node_modules/
+dist/
+output/
+data/pubchem/
+public/data/pubchem/
+*.tsbuildinfo
+vite.config.js
+vite.config.d.ts
+.DS_Store
