@@ -869,6 +869,14 @@ button.equation-node,
   margin-top: 18px;
 }
 
+.atom-stage-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .atom-core {
   display: grid;
   place-items: center;
@@ -880,6 +888,11 @@ button.equation-node,
     radial-gradient(circle at center, rgba(137, 240, 218, 0.16), transparent 34%),
     radial-gradient(circle at center, rgba(243, 189, 98, 0.12), transparent 58%),
     linear-gradient(180deg, rgba(5, 14, 19, 0.98), rgba(8, 20, 27, 0.9));
+}
+
+.atom-core.atom-core-scene {
+  min-height: 420px;
+  padding: 18px;
 }
 
 .atom-core-symbol {
@@ -896,12 +909,332 @@ button.equation-node,
 }
 
 .atom-stage-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 .reaction-sidecar {
   display: grid;
   gap: 12px;
+}
+
+.atom-model-svg {
+  display: block;
+  width: min(100%, 420px);
+  height: auto;
+  overflow: visible;
+}
+
+.atom-shell-scene,
+.atom-valence-scene,
+.atom-periodic-card {
+  width: min(100%, 520px);
+}
+
+.atom-shell-group {
+  transform-origin: 200px 200px;
+  animation: atomOrbitSpin 18s linear infinite;
+}
+
+.atom-shell-group.reverse {
+  animation-direction: reverse;
+}
+
+.atom-shell-ring {
+  fill: none;
+  stroke: rgba(137, 240, 218, 0.18);
+  stroke-width: 2;
+}
+
+.atom-shell-ring-highlight {
+  stroke: rgba(243, 189, 98, 0.35);
+  stroke-width: 3;
+}
+
+.atom-electron {
+  fill: var(--teal);
+  filter: drop-shadow(0 0 8px rgba(137, 240, 218, 0.35));
+}
+
+.atom-electron-highlight {
+  fill: var(--acid);
+  filter: drop-shadow(0 0 10px rgba(243, 189, 98, 0.3));
+}
+
+.atom-nucleus {
+  fill: rgba(243, 189, 98, 0.18);
+  stroke: rgba(243, 189, 98, 0.34);
+  stroke-width: 2;
+}
+
+.atom-nucleus-secondary {
+  fill: rgba(137, 240, 218, 0.16);
+  stroke: rgba(137, 240, 218, 0.34);
+  stroke-width: 2;
+}
+
+.atom-nucleus-symbol {
+  fill: var(--text);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 64px;
+  font-weight: 700;
+}
+
+.atom-nucleus-caption {
+  fill: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.atom-shell-legend,
+.atom-valence-meta,
+.atom-periodic-meta {
+  display: grid;
+  gap: 12px;
+}
+
+.atom-shell-legend {
+  grid-template-columns: repeat(auto-fit, minmax(88px, 1fr));
+  margin-top: 14px;
+}
+
+.atom-shell-pill {
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(137, 240, 218, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.atom-shell-pill span,
+.atom-periodic-top small,
+.atom-periodic-meta article span {
+  display: block;
+  color: var(--muted);
+}
+
+.atom-shell-pill strong,
+.atom-periodic-card strong,
+.atom-periodic-meta article strong {
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.atom-valence-meta {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: 14px;
+}
+
+.atom-periodic-card {
+  padding: 24px;
+  border-radius: 28px;
+  border: 1px solid rgba(137, 240, 218, 0.12);
+  background:
+    linear-gradient(180deg, rgba(10, 31, 39, 0.96), rgba(8, 22, 29, 0.82)),
+    radial-gradient(circle at top right, rgba(243, 189, 98, 0.18), transparent 40%);
+}
+
+.atom-periodic-top {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: start;
+}
+
+.atom-periodic-top span {
+  font-family: "IBM Plex Mono", monospace;
+  letter-spacing: 0.1em;
+  color: var(--teal);
+}
+
+.atom-periodic-card > strong {
+  display: block;
+  margin-top: 22px;
+  font-size: clamp(4.8rem, 10vw, 6.4rem);
+  line-height: 0.94;
+}
+
+.atom-periodic-card h3 {
+  margin: 10px 0 0;
+  font-size: 1.6rem;
+}
+
+.atom-periodic-meta {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 24px;
+}
+
+.atom-periodic-meta article {
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.reaction-flow-scene {
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 22px;
+  border: 1px solid rgba(137, 240, 218, 0.12);
+  background:
+    linear-gradient(180deg, rgba(9, 25, 32, 0.95), rgba(9, 22, 29, 0.82)),
+    radial-gradient(circle at top right, rgba(243, 189, 98, 0.12), transparent 34%);
+}
+
+.reaction-flow-head,
+.reaction-context-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+  flex-wrap: wrap;
+}
+
+.reaction-flow-head h3 {
+  margin: 6px 0 0;
+  font-size: 1.2rem;
+}
+
+.reaction-truth-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(243, 189, 98, 0.22);
+  background: rgba(243, 189, 98, 0.12);
+  color: var(--acid);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+}
+
+.reaction-flow-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 1.2fr) minmax(0, 1fr);
+  gap: 18px;
+  margin-top: 18px;
+  align-items: stretch;
+}
+
+.reaction-lane {
+  display: grid;
+  gap: 10px;
+  align-content: start;
+}
+
+.reaction-lane.products {
+  text-align: right;
+}
+
+.reaction-lane-label,
+.reaction-core-kicker {
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.reaction-species-card {
+  display: grid;
+  gap: 6px;
+  width: 100%;
+  padding: 14px;
+  text-align: left;
+  color: var(--text);
+  border-radius: 18px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+}
+
+.reaction-species-card.product {
+  border-color: rgba(243, 189, 98, 0.18);
+  background: rgba(243, 189, 98, 0.08);
+}
+
+.reaction-species-card.focus {
+  border-color: rgba(137, 240, 218, 0.34);
+  box-shadow: inset 0 0 0 1px rgba(137, 240, 218, 0.12);
+}
+
+.reaction-species-card strong {
+  font-size: 1rem;
+}
+
+.reaction-species-card span,
+.reaction-honesty-note,
+.reaction-core-body p,
+.reaction-context-strip span {
+  color: var(--muted);
+}
+
+.reaction-core {
+  position: relative;
+  display: grid;
+  place-items: center;
+  min-height: 250px;
+  padding: 20px;
+  overflow: hidden;
+  border-radius: 24px;
+  border: 1px solid rgba(137, 240, 218, 0.12);
+  background:
+    radial-gradient(circle at center, rgba(137, 240, 218, 0.12), transparent 36%),
+    radial-gradient(circle at center, rgba(243, 189, 98, 0.12), transparent 58%),
+    linear-gradient(180deg, rgba(5, 14, 19, 0.96), rgba(8, 19, 25, 0.86));
+}
+
+.reaction-core-ring {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  border: 2px solid rgba(137, 240, 218, 0.22);
+}
+
+.reaction-core-ring.secondary {
+  width: 230px;
+  height: 230px;
+  border-color: rgba(243, 189, 98, 0.16);
+}
+
+.reaction-core-body {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 10px;
+  max-width: 34ch;
+  text-align: center;
+}
+
+.reaction-core-body strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.45rem;
+}
+
+.reaction-core-body p,
+.reaction-honesty-note {
+  line-height: 1.6;
+}
+
+.reaction-context-strip {
+  position: relative;
+  z-index: 1;
+  margin-top: 18px;
+  justify-content: center;
+}
+
+.reaction-context-strip span {
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+  font-size: 0.84rem;
+}
+
+.reaction-honesty-note {
+  margin: 14px 0 0;
 }
 
 .reaction-3d-panel {
@@ -961,14 +1294,27 @@ button.equation-node,
   font-size: 1.2rem;
 }
 
+@keyframes atomOrbitSpin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (max-width: 1100px) {
   .hero,
   .workspace-grid,
   .reaction-stage,
+  .reaction-flow-grid,
   .stats-grid,
   .detail-columns,
   .spectral-summary-card,
   .atom-stage-grid,
+  .atom-valence-meta,
+  .atom-periodic-meta,
   .browser-section-tabs {
     grid-template-columns: 1fr;
   }

@@ -1,5 +1,8 @@
+import { useMemo, useState } from "react";
 import { ArrowRight, Atom as AtomIcon } from "lucide-react";
 import type { AtomRecord, MoleculeRecord, ReactionRecord } from "../types/chemistry";
+import { AtomModelScene, type AtomVisualizationMode } from "./AtomModelScene";
+import { estimateNeutronCount, getElectronShellOccupancy, getValenceElectronCount } from "../lib/atom-models";
 
 interface AtomPanelProps {
   atom: AtomRecord;
@@ -16,6 +19,14 @@ export function AtomPanel({
   onSelectMolecule,
   onSelectReaction
 }: AtomPanelProps) {
+  const [visualizationMode, setVisualizationMode] = useState<AtomVisualizationMode>("shell");
+  const shellOccupancy = useMemo(() => getElectronShellOccupancy(atom.atomicNumber), [atom.atomicNumber]);
+  const valenceElectrons = useMemo(() => getValenceElectronCount(atom.atomicNumber), [atom.atomicNumber]);
+  const neutronEstimate = useMemo(
+    () => estimateNeutronCount(atom.atomicWeight, atom.atomicNumber),
+    [atom.atomicNumber, atom.atomicWeight]
+  );
+
   return (
     <>
       <section className="panel viewer-panel atom-viewer-panel">
@@ -31,9 +42,28 @@ export function AtomPanel({
         </div>
 
         <div className="atom-stage">
-          <div className="atom-core">
-            <span className="atom-core-symbol">{atom.symbol}</span>
-            <small>atomic number {atom.atomicNumber}</small>
+          <div className="atom-stage-head">
+            <div className="reaction-switcher">
+              {[
+                { id: "shell", label: "Shell model" },
+                { id: "valence", label: "Valence view" },
+                { id: "periodic", label: "Periodic card" }
+              ].map((mode) => (
+                <button
+                  key={mode.id}
+                  type="button"
+                  className={visualizationMode === mode.id ? "chip active" : "chip"}
+                  onClick={() => setVisualizationMode(mode.id as AtomVisualizationMode)}
+                >
+                  {mode.label}
+                </button>
+              ))}
+            </div>
+            <div className="count-chip">modelled visualization</div>
+          </div>
+
+          <div className="atom-core atom-core-scene">
+            <AtomModelScene atom={atom} mode={visualizationMode} />
           </div>
 
           <div className="atom-stage-grid">
@@ -55,11 +85,20 @@ export function AtomPanel({
               <span>Standard phase</span>
               <strong>{atom.phase}</strong>
             </article>
+            <article className="stat-card">
+              <span>Valence electrons</span>
+              <strong>{valenceElectrons}</strong>
+            </article>
+            <article className="stat-card">
+              <span>Estimated neutrons</span>
+              <strong>{neutronEstimate}</strong>
+            </article>
           </div>
         </div>
 
         <div className="viewer-caption">
           <span>{atom.electronConfiguration}</span>
+          <span>shells {shellOccupancy.join(" / ")}</span>
           <span>{atom.oxidationStates.join(", ")}</span>
         </div>
       </section>
@@ -80,8 +119,19 @@ export function AtomPanel({
             <h3>Electronic profile</h3>
             <ul className="plain-list">
               <li>Electron configuration: {atom.electronConfiguration}</li>
+              <li>Modelled shell occupancy: {shellOccupancy.join(" / ")}</li>
+              <li>Valence electrons: {valenceElectrons}</li>
               <li>Common oxidation states: {atom.oxidationStates.join(", ")}</li>
               <li>Category: {atom.category}</li>
+            </ul>
+          </article>
+
+          <article className="subpanel">
+            <h3>Visual honesty</h3>
+            <ul className="plain-list">
+              <li>Shell and valence views are modelled educational visualisations.</li>
+              <li>Exact claims are limited here to atomic metadata and electron configuration text.</li>
+              <li>Estimated neutrons are derived from rounded atomic weight, not isotope-resolved data.</li>
             </ul>
           </article>
 

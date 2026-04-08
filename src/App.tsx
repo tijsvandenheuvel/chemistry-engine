@@ -153,9 +153,9 @@ export default function App() {
             Molecules, atoms and reactions in one connected chemistry workspace.
           </h1>
           <p className="hero-text">
-            Deze pass maakt de browser compacter en bruikbaarder: de sidebar blijft binnen
-            zijn kaart, de itemlijst scrollt, en je kunt nu tussen molecules, atoms en reactions
-            schakelen zonder het overzicht te verliezen.
+            Deze pass brengt de visualisaties verder: atoms krijgen modelweergaven voor shells,
+            valentie en periodieke context, terwijl reactions een duidelijkere visual pass krijgen
+            waarin input, transitie en output naast de bestaande 3D loop zichtbaar blijven.
           </p>
         </div>
 

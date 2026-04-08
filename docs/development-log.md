@@ -158,6 +158,16 @@ Per `2026-04-08` bevat de MVP:
   - reaction 3D loop context
 - `docs/research-notes.md` verduidelijkt nu expliciet dat spectra momenteel structure-derived previews zijn.
 
+#### Handoff en roadmap vastgezet
+
+- De handoff-context is als vast document opgeslagen in `docs/handoff-report.md`.
+- De eerstvolgende fase is uitgewerkt in `docs/next-phase-roadmap.md`.
+- Die fase prioriteert:
+  - visualisaties van atoommodellen
+  - rijkere reaction visualisaties
+  - een curated databank van ongeveer `50` algemene reactions
+- De documentatie legt nu explicieter vast dat exact bronmateriaal en gemodelleerde visualisaties apart gelabeld moeten blijven.
+
 #### Browser en navigatie herwerkt
 
 - De browser-sidebar is herwerkt zodat ze binnen haar panel blijft en een interne scrollzone gebruikt in plaats van de volledige pagina te verlengen.
@@ -282,13 +292,14 @@ Laatste bekende succesvolle checks:
 
 Prioriteit voor volgende development rondes:
 
-1. Echte spectral ingest uit PubChem-linked records, nmrshiftdb2, MassBank en HMDB.
-2. Catalogus verplaatsen naar runtime JSON fetch in plaats van bundling in de JS entry.
-3. Paginatie of virtualized rendering voor de molecule browser.
-4. Uitbreiding van de atom dataset naar de volledige periodic table in plaats van alleen de momenteel gebruikte elementen.
-5. Backend service voor ingest, refresh en provenance.
-6. Reaction mechanism layer met mapped intermediates en geometrische overgangsanimaties.
-7. Koppeling van papers, patents en reaction provenance per molecule en reaction.
+1. Provenance-model en exactheidslabels invoeren voor reactions, spectra en latere animatiemodes.
+2. Atoomvisualisaties uitbreiden en de atom dataset voorbereiden op de volledige periodic table.
+3. De reaction seed-dataset uitbreiden van `3` naar ongeveer `50` algemene, curated reactions.
+4. Een rijkere reaction explorer of reaction pass bouwen met expliciete exact-vs-modelled labeling.
+5. Echte spectral ingest uit PubChem-linked records, nmrshiftdb2, MassBank en HMDB.
+6. Catalogus verplaatsen naar runtime JSON fetch in plaats van bundling in de JS entry.
+7. Backend service voor ingest, refresh en provenance.
+8. Koppeling van papers, patents en reaction provenance per molecule en reaction.
 
 ## Werkafspraak voor toekomstige updates
 

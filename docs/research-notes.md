@@ -9,10 +9,13 @@ CAS SciFinder is sterk in structure search, reaction search, patent- en literatu
 Voor een eigen systeem is een combinatie van bronnen verstandiger dan proberen SciFinder exact te vervangen:
 
 - `PubChem` voor compound-identiteit, properties, synonyms, 2D/3D records en bulk data.
+- `Rhea` als eerste open bron voor reaction knowledge en reaction normalisatie.
+- `Open Reaction Database` als aanvullende reactionbron voor latere schaal.
 - `ChEMBL` voor bioactivity en curated medicinal chemistry context.
 - `ChEBI` voor stabiele identifiers en ontology.
 - `SureChEMBL` voor open patent chemistry.
 - `OpenAlex` en `Europe PMC` voor paper discovery.
+- `NIST`, `CIAAW` en `NIST Atomic Spectra Database` voor atoomdata en referentiewaarden.
 - `MassBank`, `GNPS`, `HMDB` en `nmrshiftdb2` voor open spectra.
 - `RDKit`, `Open Babel` en `OPSIN` voor parsing, normalization, standardization en structure generation.
 
@@ -30,13 +33,27 @@ Voor een eigen systeem is een combinatie van bronnen verstandiger dan proberen S
 Deze MVP zet stap 1 en 6 neer:
 
 - seed molecule database
+- seed atom database
 - reaction catalog
 - PubChem enrichment script
 - browser + detailpaneel + 3D rendering
 
-De volgende stap is een echte ingest worker die open spectral databases en paper APIs periodiek sync't.
+De volgende stap is eerst een betere inhoudelijke chemistry laag:
+
+- atoomvisualisaties
+- rijkere reaction visualisaties
+- een curated set van ongeveer `50` algemene reactions
+
+Daarna is een echte ingest worker logisch voor spectra, provenance en bredere bronkoppelingen.
 
 Op dit moment toont de frontend al spectrumkaarten, maar die zijn structure-derived previews en niet overal experimenteel gemeten pieken. Een volgende iteratie moet PubChem-linked spectral records, nmrshiftdb2, MassBank en HMDB gebruiken om echte peak lists per molecule in te laden waar beschikbaar.
+
+## Concrete bronprioriteiten
+
+- Molecules: `PubChem PUG REST` en `PubChem PUG View`
+- Reactions: `Rhea` eerst, daarna `Open Reaction Database`
+- Atoms: `NIST`, `CIAAW`, `NIST Atomic Spectra Database`
+- Spectra: `PubChem`, `HMDB`, `nmrshiftdb2`, `MassBank`, `GNPS`
 
 ## Bronlinks
 

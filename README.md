@@ -6,9 +6,16 @@ Een compacte chemistry workbench MVP met:
 - een 3D viewer voor bekende moleculen
 - een spectral panel met structure-derived spectrum previews
 - geanimeerde reaction views
-- een seed-database met molecules en reaction metadata
+- een seed-database met molecules, atoms en reaction metadata
 - een PubChem importscript om de catalogus verder te verrijken
 - een PubChem catalog builder voor honderden molecules
+
+De huidige repo-status op `2026-04-08`:
+
+- `231` molecules in de catalogus
+- `13` atoms in de huidige atom seed-set
+- `3` curated reactions
+- `895` spectral profiles, momenteel vooral structure-derived previews
 
 ## Starten
 
@@ -41,12 +48,21 @@ Dit script vult de catalogus met honderden compounds uit PubChem over verschille
 npm run build:catalog
 ```
 
-## Development documentatie
+## Documentatie
 
-Gedetailleerde procesdocumentatie staat in:
+Repo-brede documentatie staat in:
 
+- `docs/handoff-report.md`
+- `docs/next-phase-roadmap.md`
 - `docs/development-log.md`
 - `docs/research-notes.md`
+
+Gebruik deze documenten als bron van waarheid voor:
+
+- huidige MVP-status
+- architectuurrichting
+- bronstrategie
+- eerstvolgende uitbreidingsfase
 
 ## MVP scope
 
@@ -59,4 +75,16 @@ De huidige versie focust op:
 - structure-derived spectral diagrams onder de 3D viewer
 - reaction storyboards met 3D loop playback
 
-Aanbevolen volgende stap: spectra uit `MassBank`, `nmrshiftdb2`, `GNPS`, `HMDB` en papers automatiseren in een ingest pipeline.
+## Waarheidsregel
+
+- Exacte chemische data moet bronvast en betrouwbaar zijn.
+- Predicted spectra mogen niet als experimentele waarheid worden gepresenteerd.
+- Exacte reaction facts en gemodelleerde visualisaties moeten expliciet onderscheiden worden.
+
+## Volgende fase
+
+De eerstvolgende deliveryfase is vastgelegd in `docs/next-phase-roadmap.md` en focust op:
+
+- visualisaties van atoommodellen
+- rijkere reaction visualisaties met exact-vs-modelled labeling
+- een curated databank van ongeveer `50` algemene chemische reacties

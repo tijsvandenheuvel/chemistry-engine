@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowRight, FlaskConical } from "lucide-react";
 import type { MoleculeRecord, ReactionRecord } from "../types/chemistry";
 import { StructureScene } from "./StructureScene";
+import { ReactionFlowScene } from "./ReactionFlowScene";
 
 interface ReactionTimelineProps {
   reactions: ReactionRecord[];
@@ -125,6 +126,13 @@ export function ReactionTimeline({
         <span>Solvent: {reaction.solvent ?? "not specified"}</span>
         <span>Temperature: {reaction.temperature ?? "not specified"}</span>
       </div>
+
+      <ReactionFlowScene
+        reaction={reaction}
+        molecules={molecules}
+        stepIndex={stepIndex}
+        onSelectMolecule={onSelectMolecule}
+      />
 
       <div className="reaction-stage">
         <AnimatePresence mode="wait">
