@@ -72,6 +72,7 @@ export interface AtomRecord {
   id: string;
   symbol: string;
   name: string;
+  coverage: "curated" | "periodic-table";
   atomicNumber: number;
   atomicWeight: number;
   category: string;

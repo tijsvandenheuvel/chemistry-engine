@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, FlaskConical } from "lucide-react";
+import { ArrowRight, ChevronLeft, ChevronRight, FlaskConical } from "lucide-react";
 import type { MoleculeRecord, ReactionRecord } from "../types/chemistry";
-import { StructureScene } from "./StructureScene";
 import { ReactionFlowScene } from "./ReactionFlowScene";
+import { ReactionAssemblyScene } from "./ReactionAssemblyScene";
 
 interface ReactionTimelineProps {
   reactions: ReactionRecord[];
@@ -51,7 +51,20 @@ export function ReactionTimeline({
     const step = reaction.steps[stepIndex];
     return step.focusMoleculeId ? molecules.get(step.focusMoleculeId) : null;
   }, [molecules, reaction.steps, stepIndex]);
-  const playbackMolecule = focusMolecule ?? molecules.get(reaction.reactants[0]) ?? molecules.get(reaction.products[0]) ?? null;
+  const reactionPosition = reactionIndex + 1;
+  const reactionWindow = useMemo(() => {
+    if (reactions.length <= 8) {
+      return reactions.map((item, index) => ({ item, index }));
+    }
+
+    const maxStart = reactions.length - 8;
+    const start = Math.min(Math.max(reactionIndex - 3, 0), maxStart);
+
+    return reactions.slice(start, start + 8).map((item, offset) => ({
+      item,
+      index: start + offset
+    }));
+  }, [reactionIndex, reactions]);
 
   return (
     <section className="panel reaction-panel">
@@ -60,21 +73,81 @@ export function ReactionTimeline({
           <p className="eyebrow">Animated Reactions</p>
           <h2>{reaction.name}</h2>
         </div>
-        <div className="reaction-switcher">
-          {reactions.map((item, index) => (
-            <button
-              key={item.id}
-              type="button"
-              className={index === reactionIndex ? "chip active" : "chip"}
-              onClick={() => {
-                setReactionIndex(index);
-                onSelectReaction?.(item.id);
+
+        <div className="reaction-navigator">
+          <button
+            type="button"
+            className="chip reaction-nav-button"
+            onClick={() => {
+              const nextIndex = reactionIndex === 0 ? reactions.length - 1 : reactionIndex - 1;
+              setReactionIndex(nextIndex);
+              onSelectReaction?.(reactions[nextIndex].id);
+            }}
+            aria-label="Previous reaction"
+          >
+            <ChevronLeft size={14} />
+            <span>Prev</span>
+          </button>
+
+          <label className="reaction-picker">
+            <span className="reaction-picker-label">reaction</span>
+            <select
+              value={reaction.id}
+              onChange={(event) => {
+                const nextIndex = reactions.findIndex((item) => item.id === event.target.value);
+                if (nextIndex >= 0) {
+                  setReactionIndex(nextIndex);
+                  onSelectReaction?.(reactions[nextIndex].id);
+                }
               }}
             >
-              {item.name}
-            </button>
-          ))}
+              {reactions.map((item, index) => (
+                <option key={item.id} value={item.id}>
+                  {index + 1}. {item.name}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <div className="count-chip">
+            {reactionPosition} / {reactions.length}
+          </div>
+
+          <button
+            type="button"
+            className="chip reaction-nav-button"
+            onClick={() => {
+              const nextIndex = reactionIndex === reactions.length - 1 ? 0 : reactionIndex + 1;
+              setReactionIndex(nextIndex);
+              onSelectReaction?.(reactions[nextIndex].id);
+            }}
+            aria-label="Next reaction"
+          >
+            <span>Next</span>
+            <ChevronRight size={14} />
+          </button>
         </div>
+      </div>
+
+      <div className="reaction-switcher">
+        {reactionWindow.map(({ item, index }) => (
+          <button
+            key={item.id}
+            type="button"
+            className={index === reactionIndex ? "chip active" : "chip"}
+            onClick={() => {
+              setReactionIndex(index);
+              onSelectReaction?.(item.id);
+            }}
+          >
+            {item.name}
+          </button>
+        ))}
+        {reactions.length > 8 ? (
+          <span className="count-chip reaction-switcher-count">
+            +{reactions.length - 8} more in picker
+          </span>
+        ) : null}
       </div>
 
       <p className="reaction-summary">{reaction.summary}</p>
@@ -163,25 +236,12 @@ export function ReactionTimeline({
         </AnimatePresence>
 
         <div className="reaction-sidecar">
-          {playbackMolecule ? (
-            <div className="reaction-3d-panel">
-              <div className="reaction-3d-head">
-                <div>
-                  <p className="eyebrow">3D Reaction Loop</p>
-                  <h3>{playbackMolecule.name}</h3>
-                </div>
-                <div className="count-chip">step {stepIndex + 1}</div>
-              </div>
-              <div className="reaction-3d-frame">
-                <StructureScene molecule={playbackMolecule} compact />
-              </div>
-              <p className="reaction-3d-note">
-                De 3D loop volgt de actieve reaction step en schakelt automatisch tussen
-                reactants, transformation focus en product state.
-              </p>
-              <p className="reaction-3d-note">{reaction.notes}</p>
-            </div>
-          ) : null}
+          <ReactionAssemblyScene
+            reaction={reaction}
+            molecules={molecules}
+            stepIndex={stepIndex}
+            onSelectMolecule={onSelectMolecule}
+          />
 
           <div className="timeline-rail">
             {reaction.steps.map((step, index) => (

@@ -30,6 +30,7 @@ export function AtomModelScene({ atom, mode }: AtomModelSceneProps) {
   const shells = getElectronShellOccupancy(atom.atomicNumber);
   const valenceElectrons = getValenceElectronCount(atom.atomicNumber);
   const neutronEstimate = estimateNeutronCount(atom.atomicWeight, atom.atomicNumber);
+  const oxidationStateLabel = atom.oxidationStates.length > 0 ? atom.oxidationStates.join(", ") : "pending";
 
   if (mode === "periodic") {
     return (
@@ -103,7 +104,7 @@ export function AtomModelScene({ atom, mode }: AtomModelSceneProps) {
           </article>
           <article className="stat-card">
             <span>Oxidation states</span>
-            <strong>{atom.oxidationStates.join(", ")}</strong>
+            <strong>{oxidationStateLabel}</strong>
           </article>
         </div>
       </div>

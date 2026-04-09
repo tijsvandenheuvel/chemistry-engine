@@ -1,157 +1,441 @@
 # Handoff Report
 
-## 1. Productdoel
+## Doel van dit document
 
-De Chemie Engine moet doorgroeien van een molecule-first MVP naar een volledig chemistry platform waarin gebruikers atomen, moleculen, reacties, spectra, productieprocessen en hun onderlinge relaties kunnen bekijken, browsen en visueel begrijpen.
+Dit document bundelt alles wat in deze conversatie is besproken over wat de Chemie Engine moet kunnen, welke productrichting is gekozen, wat al gebouwd is, welke bron- en kwaliteitsvereisten gelden, en welke vervolgstappen nog nodig zijn.
 
-## 2. Oorspronkelijke scope
+Dit document is bedoeld als overdrachtsdocument voor een volgende engineer, agent of product owner.
 
-- Bouw een chemie-engine.
-- Ondersteun 3D molecule rendering.
-- Ondersteun animated reaction views.
-- Genereer op basis van schets, schema en spectrum een 3D rendering van een molecule.
-- Bouw een databank van moleculen.
-- Gebruik APIs om moleculedata en spectra van het internet te verzamelen.
-- Bouw een molecule viewer en molecule browser.
-- Toon molecules, reactions en productieprocessen in een viewer.
-- Onderzoek SciFinder en open source alternatieven.
-- Bouw een eigen open systeem met de beste beschikbare kennis en tools.
-- MVP: basis-molecules met gekende structuur renderen in een mooie interface met overzicht van alle molecules.
+Deze versie vervangt oudere handoff-notities en is afgestemd op de huidige repo-status per `2026-04-09`.
 
-## 3. Huidige status van de app
+## Productvisie
 
-- React/Vite/TypeScript frontend staat.
-- 3D molecule viewer via `3Dmol.js` staat.
-- Molecule browser staat.
-- Spectral panel onder de 3D viewer staat.
-- Animated reaction storyboard staat.
-- Reaction 3D sidecar/loop staat.
-- PubChem-backed molecule catalogus staat.
-- Atoms-browser staat voor de elementen die momenteel in de catalogus voorkomen.
-- Reactions-browser staat.
-- Cross-navigation tussen molecules, atoms en reactions staat.
-- Browserlijst is scrollbaar gemaakt.
-- Categorieblokken zijn collapsebaar gemaakt.
+De Chemie Engine moet evolueren naar een samenhangend chemistry platform waarin gebruikers:
 
-## 4. Huidige data-omvang
+- atomen kunnen bekijken
+- moleculen kunnen bekijken
+- reacties kunnen bekijken
+- productieroutes en proceschemie kunnen bekijken
+- spectra kunnen bekijken
+- van een chemistry item naar gerelateerde items kunnen browsen
+- betrouwbare chemische informatie uit open en bronvaste databronnen kunnen raadplegen
+- moleculen visueel in 3D kunnen renderen
+- reacties als geanimeerde visuele transities kunnen volgen
 
-- `231` molecules uit PubChem.
-- `13` atoms die effectief in de huidige moleculecatalogus voorkomen.
-- `3` reactions in de huidige seed-data.
-- `895` spectral profiles, momenteel vooral structure-derived previews.
+Het systeem moet dus niet alleen een molecule viewer zijn, maar een chemistry graph met browsing, rendering, spectra, reactions en bronverwijzingen.
 
-## 5. Reactions die nu al in de app zitten
+## Oorspronkelijke scope uit de conversatie
 
-- Aspirin Synthesis.
-- Ethyl Acetate Esterification.
-- Ethanol Combustion.
+De oorspronkelijke vraag bestond uit deze productdoelen:
 
-## 6. Wat het systeem uiteindelijk moet kunnen voor molecules
+- een chemie-engine bouwen
+- 3D molecule rendering ondersteunen
+- animated reaction views ondersteunen
+- op basis van schets, schema en spectrum een 3D rendering van een molecule kunnen genereren
+- een databank van moleculen opbouwen
+- APIs gebruiken om informatie en spectra van moleculen van het internet te verzamelen
+- een molecule viewer en molecule browser maken
+- molecules, reacties en productieprocessen in een viewer tonen
+- SciFinder onderzoeken en open source alternatieven in kaart brengen
+- een eigen systeem bouwen met de beste open kennis en tools
+- als MVP: basis-molecules waarvan de structuur gekend is kunnen renderen in een mooie interface met overzicht van alle molecules
 
-- Browsen.
-- Zoeken.
-- Filteren op categorie.
-- In 3D renderen.
-- Chemische metadata tonen.
-- Spectra tonen.
-- Externe bronlinks tonen.
-- Reactions tonen waarin het molecule voorkomt.
-- Gerelateerde atoms tonen.
-- Later ook papers, patents en provenance tonen.
+## UX-richting die besproken en gedeeltelijk gebouwd is
 
-## 7. Wat het systeem uiteindelijk moet kunnen voor atoms
+De interface moet:
 
-- Browsen.
-- Filteren per family.
-- Periodieke metadata tonen.
-- Linken naar molecules waarin het atom voorkomt.
-- Linken naar reactions waarin molecules met dat atom voorkomen.
-- Later verschillende atom render modes ondersteunen.
-- Uiteindelijk de volledige periodic table ondersteunen: `118` elementen.
+- een mooie, intentionele lab-achtige UI hebben
+- een centrale browserkolom hebben
+- niet te lang worden door te veel lijstitems
+- scrollbare lijsten binnen panelen gebruiken
+- molecules, atoms en reactions naast elkaar als browse-entiteiten ondersteunen
+- categorieen per itemtype tonen
+- collapsible filterzones hebben
+- snelle cross-navigation toelaten:
+  - molecule -> reaction
+  - reaction -> molecule
+  - atom -> molecule
+  - atom -> reaction
+  - reaction -> atom
+- een compacte, bruikbare header hebben met snelle navigatie
+- een Mendeleev / periodic-table view hebben om door alle elementen te navigeren
 
-## 8. Wat het systeem uiteindelijk moet kunnen voor reactions
+## Huidige implementatiestatus
 
-- Browsen.
-- Zoeken.
-- Filteren op reaction category.
-- Equation tonen.
-- Reactants, products, catalysts, solvent, temperature tonen.
-- Linken naar molecules.
-- Linken naar betrokken atoms.
-- In een aparte reaction explorer bekeken worden.
-- Geanimeerd afgespeeld worden.
-- Later ook stoichiometrie, yields, conditions, literature en patent links tonen.
+### Reeds gebouwd
 
-## 9. Spectra-vereisten
+Er staat vandaag een werkende React/Vite/TypeScript app in de repo met:
 
-- Spectra moeten onder de 3D renderer getoond kunnen worden.
-- Per molecule meerdere spectrumtypes tonen.
-- Duidelijk onderscheid tussen `measured` en `predicted`.
-- Bronnen en recordlinks tonen.
-- Relevante spectrumtypes: `1H NMR`, `13C NMR`, `IR`, `MS`, `MS/MS`, `UV/Vis`.
+- een molecule browser
+- een 3D molecule viewer op basis van `3Dmol.js`
+- een molecule-rotatie toggle zodat de 3D scene kan stoppen met draaien
+- een spectral panel onder de 3D viewer
+- collapsible dossier-secties voor molecules, atoms en reactions
+- gecombineerde en standaard gesloten source/reference-secties
+- een compacte header met workspace- en Mendeleev-navigatie
+- een Mendeleev / periodic-table view
+- een atom viewer modal die opent vanuit de periodic table
+- een PubChem-backed molecule catalogus
+- een grotere lokaal gegenereerde molecule-dataset
+- een atoms-browser over alle `118` elementen
+- een reactions-browser
+- cross-navigation tussen molecules, atoms en reactions
+- scrollbare browserlijsten
+- collapsible categorieblokken voor molecules, atoms en reactions
+- animated reaction storyboards
+- een reaction flow panel met eerlijke labeling als modeled transition
+- een multi-molecule 3D reaction theatre waarin reactants en products samenkomen of opsplitsen
+- een seed-dataset van `100` eenvoudige reactions
 
-## 10. Kritieke waarheidsregel
+### Huidige data-omvang
 
-- Alles wat als exacte chemische data wordt voorgesteld moet bronvast en betrouwbaar zijn.
-- Predicted spectra mogen niet als experimentele waarheid voorgesteld worden.
-- Exacte reaction facts en gemodelleerde visualisaties moeten expliciet onderscheiden worden.
+De app bevat momenteel:
 
-## 11. Animated reactions
+- `231` molecules uit PubChem
+- `118` atoms in de atom store en Mendeleev view
+- `100` eenvoudige reactions in de huidige seed-set
+- `895` spectral profiles, momenteel vooral structure-derived previews
 
-- Er moet een aparte, mooie geintegreerde reaction pass komen.
-- Reactions moeten in 3D kunnen loopen.
-- Atomen die samenkomen of splitsen moeten visueel getoond kunnen worden.
-- Dat mag alleen als exact worden gepresenteerd wanneer er betrouwbare atom mapping bestaat.
-- Zonder betrouwbare mapping moet het gelabeld worden als `modelled structural transition`.
+### Huidige reaction-dekking in de app
 
-## 12. Input vanuit schets, schema en spectrum
+De reaction viewer bevat nu een bredere seed over meerdere families, onder andere:
 
-- Dit is gevraagd maar nog niet gebouwd.
-- Toekomstige richting: structure parsing via tools zoals RDKit / Open Babel / OPSIN.
-- Spectrum-to-structure is een latere, moeilijkere identificatielaag en hoort niet meer bij de huidige MVP.
+- combustions
+- hydrations en dehydrations
+- esterifications en hydrolyses
+- oxidations
+- neutralizations
+- gas-evolution en capture routes
+- enkele pharma- en process-side voorbeelden zoals:
+  - Aspirin Synthesis
+  - Ethyl Acetate Esterification
+  - Ethanol Combustion
+  - Urea Synthesis
+  - Nitrogen Dioxide Absorption
 
-## 13. Productieprocessen
+Belangrijke nuance:
 
-- Niet alleen losse reactions, maar ook proceschemie en reaction chains moeten later bekeken kunnen worden.
-- Feedstocks, intermediates en products moeten in routes browsebaar worden.
-- De huidige combustion reaction is een eerste process-side voorbeeld, geen volledige procesmodule.
+- deze `100` reactions zijn browsebaar en geanimeerd
+- de reaction facts zijn nog niet volledig provenance-first uitgewerkt
+- de 3D transitions zijn modeled visualisaties, geen exacte atom-mapped mechanistische waarheid
 
-## 14. SciFinder en alternatieven
+## Wat het systeem uiteindelijk moet kunnen
 
-- SciFinder is onderzocht als referentieproduct.
-- Conclusie: sterk, maar commercieel en duur.
-- Niet geschikt als backbone voor een open MVP.
-- Open stack die is besproken: PubChem, ChEMBL, ChEBI, RDKit, Open Babel, OPSIN, Open Reaction Database, Rhea, SureChEMBL, OpenAlex, Europe PMC, HMDB, nmrshiftdb2, GNPS, MassBank.
+## 1. Molecules
 
-## 15. Gewenste bronstrategie
+Het systeem moet molecules kunnen:
 
-- Molecules: primair PubChem PUG REST + PUG View.
-- Reactions: eerst Rhea, later aanvullend Open Reaction Database.
-- Atoms: NIST + CIAAW + NIST Atomic Spectra Database.
-- Spectra: PubChem records, HMDB, nmrshiftdb2, MassBank, GNPS.
+- browsen
+- zoeken
+- filteren op categorie
+- in 3D renderen
+- tonen met structurele metadata
+- linken aan spectra
+- linken aan reactions
+- linken aan externe databronnen
+- linken aan gerelateerde atoms
+- linken aan papers, patents en provenance records
 
-## 16. Datakwaliteit en schaal
+Per molecule moet uiteindelijk bronvaste data getoond kunnen worden zoals:
 
-- Minstens `100+` records per type.
-- Atoms: doel `118`.
-- Molecules: doel `100+`, liefst `500+`.
-- Reactions: doel `100+`.
-- Elk datapunt moet uiteindelijk provenance hebben: bron, bron-id, URL, evidence type, access/licentie, ingest/verificatiedatum.
+- naam
+- IUPAC-naam
+- formule
+- SMILES
+- CID of andere primaire identifier
+- moleculaire massa
+- exact mass
+- TPSA
+- XLogP
+- H-bond donor/acceptor count
+- complexiteit
+- charge
+- bron
+- spectra
+- use cases
+- hazard notes
+- externe links
 
-## 17. Evidence-typen die afgesproken zijn
+## 2. Atoms
+
+Het systeem moet atoms kunnen:
+
+- browsen
+- filteren per familie
+- tonen met periodieke en chemische metadata
+- linken aan molecules waarin ze voorkomen
+- linken aan reactions waarin molecules met die atomen voorkomen
+- in latere fases in verschillende atom rendering modes tonen
+
+De huidige atom dataset ondersteunt al de volledige periodic table, dus `118` elementen.
+
+Voor elk atoom is gewenst:
+
+- naam
+- symbool
+- atoomnummer
+- atoommassa
+- categorie
+- standaardfase
+- groep
+- periode
+- elektronconfiguratie
+- oxidatietoestanden
+- isotopeninformatie waar beschikbaar
+- koppeling naar bron
+
+Belangrijke nuance bij de huidige implementatie:
+
+- niet elk element heeft al dezelfde curatorische diepte
+- een deel van de records is nu periodic-table coverage
+- rijkere brondata, isotopeninformatie en provenance moeten later verder worden verrijkt
+
+## 3. Reactions
+
+Het systeem moet reactions kunnen:
+
+- browsen
+- zoeken
+- filteren op reaction category
+- tonen als reaction equation
+- tonen met reactants, products en catalysts
+- tonen met solvent, temperature en notes
+- linken aan molecules
+- linken aan atoms die in die reaction-context voorkomen
+- in een aparte reaction explorer worden bekeken
+- geanimeerd worden afgespeeld
+
+Reactiondata moet in latere fases ook omvatten:
+
+- stoichiometrie
+- reaction conditions
+- yields
+- reagents
+- catalysts
+- intermediates waar beschikbaar
+- literature/paper links
+- patent links
+- bron- en evidence-informatie
+
+## 4. Spectra
+
+Het systeem moet spectra kunnen:
+
+- tonen onder de 3D renderer
+- per molecule meerdere spectrumtypes tonen
+- bron en meettype expliciet tonen
+- measured versus predicted duidelijk scheiden
+- spectra koppelen aan bronrecords
+
+Spectrumtypes die besproken zijn:
+
+- `1H NMR`
+- `13C NMR`
+- `IR`
+- `MS`
+- `MS/MS`
+- `UV/Vis`
+
+Belangrijke productregel:
+
+- voorspelde spectra mogen niet als experimentele waarheid voorgesteld worden
+- gemeten spectra en predicted spectra moeten expliciet verschillend gelabeld zijn
+
+## 5. Animated reactions
+
+Een centrale wens is om reactions niet alleen tekstueel maar ook visueel te tonen.
+
+Het systeem moet daarom evolueren naar:
+
+- een aparte, mooi geintegreerde reaction pass
+- 3D reaction playback
+- een geanimeerde loop per reaction
+- visuele weergave van hoe atomen samenkomen of splitsen
+
+Belangrijke nuance uit de architectuurplanning:
+
+- exacte brondata en gemodelleerde visualisaties zijn niet hetzelfde
+- een reaction animation is alleen exact op atomniveau als er betrouwbare atom mapping bestaat
+- zonder atom mapping moet de animation expliciet gelabeld worden als `modelled structural transition`
+
+Dus:
+
+- source-backed reaction facts mogen als exact gepresenteerd worden
+- atom-joining en bond-breaking animations moeten provenance-aware en eerlijk gelabeld worden
+
+De huidige status hiervan is:
+
+- er is nu een echte multi-molecule 3D reaction stage
+- reactants en products bewegen visueel naar een reaction core of eruit weg
+- er is een atom-flux overlay op basis van formules
+- dit blijft expliciet een modeled 3D transition zolang betrouwbare atom mapping ontbreekt
+
+## 6. Input vanuit schets, schema en spectrum
+
+De oorspronkelijke productwens bevat ook:
+
+- van schets of schema naar molecule gaan
+- van spectrum naar molecule-identificatie of rendering gaan
+- op basis van schets/schema/spectrum een 3D rendering genereren
+
+Dit is nog niet gebouwd.
+
+Waarschijnlijke toekomstige aanpak:
+
+- schets/schemas:
+  - OPSIN
+  - Open Babel
+  - RDKit
+  - structure parsing / normalization
+- spectrum-to-structure:
+  - veel moeilijker
+  - eerder workflow met candidate retrieval dan direct one-shot reconstruction
+
+Voor de handoff is belangrijk:
+
+- dit hoort in de toekomstige ingest- en identification pipeline
+- dit valt duidelijk buiten de huidige MVP
+
+## 7. Productieprocessen en proceschemie
+
+De wens was ook om niet alleen losse reactions maar bredere productieprocessen te kunnen bekijken.
+
+Daarvoor moet het systeem uiteindelijk:
+
+- process-side reaction chains kunnen tonen
+- feedstocks, intermediates en products kunnen tonen
+- meerdere linked reactions in een route of process flow kunnen weergeven
+- navigatie tussen reaction steps en molecules ondersteunen
+
+Dit is nog niet uitgewerkt als aparte proceslaag, maar process-side reactions zitten wel al in de dataset en viewer.
+
+## Databronstrategie die besproken is
+
+## SciFinder
+
+SciFinder is onderzocht als referentieproduct.
+
+Conclusie:
+
+- SciFinder is sterk in substances, reactions, patents en literature discovery
+- SciFinder is commercieel en duur
+- het is geen geschikte basis voor een open MVP of open data backbone
+
+## Open en relevante alternatieven
+
+De beoogde open stack die besproken is:
+
+- PubChem
+- ChEMBL
+- ChEBI
+- OPSIN
+- RDKit
+- Open Babel
+- Open Reaction Database
+- Rhea
+- SureChEMBL
+- OpenAlex
+- Europe PMC
+- HMDB
+- nmrshiftdb2
+- GNPS
+- MassBank
+
+## Bronnen per domein
+
+### Molecules
+
+Primair:
+
+- PubChem PUG REST
+- PubChem PUG View
+
+Secundair:
+
+- ChEMBL
+- ChEBI
+
+### Reactions
+
+Primair gewenste next step:
+
+- Rhea
+
+Secundair of aanvullend:
+
+- Open Reaction Database
+
+### Atoms
+
+Primair gewenste next step:
+
+- NIST Atomic Weights and Isotopic Compositions
+- CIAAW standard atomic weights
+- NIST Atomic Spectra Database
+
+### Spectra
+
+Gewenste open bronnen:
+
+- PubChem spectral/annotation records
+- HMDB
+- nmrshiftdb2
+- MassBank
+- GNPS
+
+## Betrouwbaarheid en exactheid
+
+Een expliciete eis uit de conversatie was:
+
+- alle informatie in de app moet uit betrouwbare bronnen komen
+- alles wat als chemische data wordt voorgesteld moet exact zijn
+- minstens honderd datapoints per type moeten voorzien worden
+
+De architecturale interpretatie hiervan is:
+
+- `100+ records per type`, niet `100 velden per individueel item`
+
+Doelwaarden:
+
+- atoms: `118`
+- molecules: `100+`, liefst `500+`
+- reactions: `100+`
+
+Belangrijke kwaliteitsregel:
+
+- elk getoond gegeven moet provenance krijgen
+
+Per datapunt moet idealiter vastgelegd worden:
+
+- bron
+- bron-id
+- URL
+- evidence type
+- licentie of access mode
+- datum van ingest of verificatie
+
+Evidence types die besproken zijn:
 
 - `measured`
 - `curated`
 - `source-computed`
 - `app-modelled`
 
-## 18. Gewenste architectuur
+## Grote architectuurrichting
 
-De app moet een chemistry graph worden:
+De app moet doorgroeien van een molecule-first MVP naar een chemistry graph:
 
-`Atoms <-> Molecules <-> Reactions <-> Spectra <-> Sources`
+- `Atoms <-> Molecules <-> Reactions <-> Spectra <-> Sources`
 
-## 19. Gewenste datamodeluitbreidingen
+Dat betekent concreet:
+
+- provenance als eerste-klasse model
+- datasets niet alleen als platte arrays maar als linked graph
+- browse-ervaring rond relaties, niet alleen rond individuele records
+
+## Belangrijke datamodeluitbreidingen die besproken zijn
+
+Minimaal gewenst:
 
 - `AtomRecord`
 - `IsotopeRecord`
@@ -161,58 +445,80 @@ De app moet een chemistry graph worden:
 - `ReactionCondition`
 - `EvidenceRecord`
 
-## 20. UX-vereisten uit de conversatie
+Huidige situatie:
 
-- Mooie, intentionele lab-achtige interface.
-- Sidebar/browser mag niet te lang worden.
-- Item cards moeten binnen hun container blijven.
-- Browserlijst moet intern scrollen.
-- Categorieen moeten per type gegroepeerd zijn.
-- Categorieblokken moeten collapsebaar zijn.
-- Navigatie tussen molecules, atoms en reactions moet snel en logisch zijn.
+- `AtomRecord` is aanwezig en uitgebreid naar volledige periodic-table coverage
+- reactions hebben categorieen, steps en modeled playback-annotatie
+- provenance is nog geen first-class field-level model
+- reaction participants en conditions zijn nog geen volledig losgekoppelde provenance-first modellen
 
-## 21. Technische keuzes die al vastliggen
+## Belangrijke technische keuzes die al genomen zijn
 
-- Frontend: React + TypeScript + Vite.
-- 3D rendering: `3Dmol.js`.
-- UI animation: `framer-motion`.
-- PubChem als primaire moleculebron.
-- Grote moleculecatalogus voorlopig statisch gegenereerd voor snelle lokale browseflows.
+- Frontend stack:
+  - React
+  - TypeScript
+  - Vite
+- 3D rendering:
+  - `3Dmol.js`
+- UI animation:
+  - `framer-motion`
+- catalogusgeneratie:
+  - lokaal via script
+- PubChem wordt gebruikt als primaire molecule-bron
+- grote moleculecatalogus wordt statisch gegenereerd voor snelle browsing zonder runtime rate limiting
 
-## 22. Huidige beperkingen
+## Scripts en dataflows die al bestaan
 
-- Slechts `3` reactions.
-- Atoms nog niet de volledige periodic table.
-- Spectra nog niet overal measured records.
-- Nog geen echte atom-mapped reaction animation.
-- Provenance nog niet als first-class field-level model.
-- Nog geen literature/patent graphlaag.
-- Sketch/schema/spectrum-to-structure nog niet gebouwd.
-- Bundle is groot door `3Dmol.js` en lokale catalogus.
+Er zijn al scripts aanwezig voor:
 
-## 23. Reeds besproken vervolgfases
+- PubChem sync van seed molecules
+- PubChem catalog generation voor een grotere moleculecatalogus
 
-1. Provenance-model en exactheidslabels invoeren.
-2. Atom dataset uitbreiden naar `118` elementen.
-3. Curated reactions uitbreiden naar `100+`.
-4. Echte measured spectra pipeline toevoegen.
-5. Aparte reaction explorer bouwen.
-6. Atom-mapped animations alleen waar data het toelaat.
-7. Later meerdere atom visual models toevoegen.
+Belangrijke commands:
 
-## 24. Operationele notities
+```bash
+npm install
+npm run dev
+npm run build
+npm run sync:pubchem
+npm run build:catalog
+```
 
-- Starten: `npm install`, `npm run dev`.
-- Build: `npm run build`.
-- PubChem sync: `npm run sync:pubchem`.
-- Grote catalogus bouwen: `npm run build:catalog`.
+## Huidige beperkingen en open gaps
 
-## 25. Git/GitHub context
+De belangrijkste actuele beperkingen zijn:
 
-- Gewenste repo: `tijsworld/chemistry-engine`.
-- Lokale git-initialisatie is gebeurd.
-- Commit en remote setup konden in deze sessie niet volledig worden afgewerkt door runtimebeperkingen op `.git/` en ontbrekende GitHub-auth/CLI.
+- spectra zijn nog grotendeels predicted previews en niet breed measured-ingested
+- reaction facts zijn nog niet volledig provenance-first of bronvast op veldniveau
+- reaction animations zijn nog niet exact atom-mapped
+- atom records buiten de curated kern zijn nog niet even rijk verrijkt
+- literature-, patent- en paper-graphlaag ontbreekt nog
+- sketch/schema/spectrum-to-structure pipeline is nog niet gebouwd
+- bundle blijft groot door `3Dmol.js` en de lokale catalogus
+- er is nog geen aparte process-route explorer bovenop losse reactions
 
-## 26. Samenvatting
+## Aanbevolen vervolgstappen
 
-De Chemie Engine is nu een sterke molecule-first MVP met 3D viewer, spectra-preview, atoms-browser en basis reactions. De afgesproken eindrichting is een bronvaste chemistry graph met exacte data, provenance, measured spectra, `100+` reactions, volledige atom coverage en eerlijke scheiding tussen source-backed chemische feiten en gemodelleerde animaties.
+De meest logische volgende fasen zijn:
+
+1. provenance-model en exactheidslabels invoeren op veldniveau
+2. reaction dataset verschuiven van seed-only naar bronvaste Rhea / ORD ingest
+3. measured spectra pipeline toevoegen
+4. atom records verrijken met bron- en isotopendata
+5. reaction explorer uitbreiden met echte routes, conditions en stoichiometrie
+6. atom-mapped animations alleen inschakelen waar de data dit toelaat
+7. later meerdere atom visual models en procesflows toevoegen
+
+## Samenvatting
+
+De Chemie Engine is vandaag geen molecule-only MVP meer, maar een bredere chemistry workspace met:
+
+- `231` molecules
+- `118` atoms
+- `100` reactions
+- `895` spectra
+- 3D molecule rendering
+- atom viewing via periodic table en modal
+- reaction browsing en multi-molecule 3D playback
+
+De afgesproken eindrichting blijft een bronvaste chemistry graph met exacte data, provenance, measured spectra, rijke reactiondekking, volledige atom coverage en een eerlijke scheiding tussen source-backed chemische feiten en gemodelleerde animaties.

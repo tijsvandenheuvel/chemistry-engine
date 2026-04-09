@@ -30,6 +30,11 @@ export function AtomPanel({
     [atom.atomicNumber, atom.atomicWeight]
   );
   const sourceEntries = useMemo(() => getAtomSourceEntries(atom), [atom]);
+  const oxidationStateLabel = atom.oxidationStates.length > 0 ? atom.oxidationStates.join(", ") : "reference pending";
+  const electronConfigurationLabel =
+    atom.electronConfiguration === "reference pending"
+      ? "reference pending for this periodic-table record"
+      : atom.electronConfiguration;
 
   return (
     <>
@@ -41,7 +46,7 @@ export function AtomPanel({
           </div>
           <div className="viewer-status">
             <AtomIcon size={16} />
-            <span>{atom.symbol}</span>
+            <span>{atom.coverage === "curated" ? atom.symbol : `${atom.symbol} reference`}</span>
           </div>
         </div>
 
@@ -101,9 +106,9 @@ export function AtomPanel({
         </div>
 
         <div className="viewer-caption">
-          <span>{atom.electronConfiguration}</span>
+          <span>{electronConfigurationLabel}</span>
           <span>shells {shellOccupancy.join(" / ")}</span>
-          <span>{atom.oxidationStates.join(", ")}</span>
+          <span>{oxidationStateLabel}</span>
         </div>
       </section>
 
@@ -126,9 +131,10 @@ export function AtomPanel({
           >
             <ul className="plain-list">
               <li>Electron configuration: {atom.electronConfiguration}</li>
+              <li>Configuration status: {atom.coverage === "curated" ? "curated" : "periodic-table reference"}</li>
               <li>Modelled shell occupancy: {shellOccupancy.join(" / ")}</li>
               <li>Valence electrons: {valenceElectrons}</li>
-              <li>Common oxidation states: {atom.oxidationStates.join(", ")}</li>
+              <li>Common oxidation states: {oxidationStateLabel}</li>
               <li>Category: {atom.category}</li>
             </ul>
           </DisclosureSection>
@@ -140,7 +146,7 @@ export function AtomPanel({
           >
             <ul className="plain-list">
               <li>Shell and valence views are modelled educational visualisations.</li>
-              <li>Exact claims are limited here to atomic metadata and electron configuration text.</li>
+              <li>Exact claims are limited here to atomic metadata and any explicitly curated electron configuration text.</li>
               <li>Estimated neutrons are derived from rounded atomic weight, not isotope-resolved data.</li>
             </ul>
           </DisclosureSection>

@@ -2,6 +2,7 @@ import { useDeferredValue, useEffect, useMemo, useState } from "react";
 import { Atom, DatabaseZap, Orbit, TableProperties, Workflow } from "lucide-react";
 import {
   atoms,
+  atomMap,
   getCategoryFacets,
   getMoleculesForAtom,
   getMoleculesForReaction,
@@ -24,6 +25,7 @@ import { AtomPanel } from "./components/AtomPanel";
 import { ReactionDetails } from "./components/ReactionDetails";
 import { PeriodicTableView } from "./components/PeriodicTableView";
 import { periodicTable } from "./data/periodic-table";
+import { AtomViewerModal } from "./components/AtomViewerModal";
 
 const browserSections: Array<{ id: BrowserSection; label: string }> = [
   { id: "molecules", label: "Molecules" },
@@ -36,6 +38,7 @@ export default function App() {
   const deferredQuery = useDeferredValue(query);
   const [appView, setAppView] = useState<"workspace" | "periodic-table">("workspace");
   const [selectedPeriodicAtomicNumber, setSelectedPeriodicAtomicNumber] = useState<number>(atoms[0]?.atomicNumber ?? 1);
+  const [atomModalId, setAtomModalId] = useState<string | null>(null);
   const [activeSection, setActiveSection] = useState<BrowserSection>("molecules");
   const [selectedIds, setSelectedIds] = useState<Record<BrowserSection, string>>({
     molecules: molecules[0]?.id ?? "",
@@ -130,6 +133,15 @@ export default function App() {
       ),
     [reactionMolecules]
   );
+  const modalAtom = useMemo(() => (atomModalId ? atomMap.get(atomModalId) ?? null : null), [atomModalId]);
+  const modalAtomMolecules = useMemo(
+    () => (modalAtom ? getMoleculesForAtom(modalAtom.id) : []),
+    [modalAtom]
+  );
+  const modalAtomReactions = useMemo(
+    () => (modalAtom ? getReactionsForAtom(modalAtom.id) : []),
+    [modalAtom]
+  );
 
   useEffect(() => {
     if (selectedAtom) {
@@ -145,18 +157,32 @@ export default function App() {
     setSelectedIds((current) => ({ ...current, molecules: moleculeId }));
     setActiveSection("molecules");
     setAppView("workspace");
+    setAtomModalId(null);
   }
 
   function jumpToAtom(atomId: string) {
     setSelectedIds((current) => ({ ...current, atoms: atomId }));
     setActiveSection("atoms");
     setAppView("workspace");
+    setSelectedPeriodicAtomicNumber(atomMap.get(atomId)?.atomicNumber ?? selectedPeriodicAtomicNumber);
+    setAtomModalId(null);
   }
 
   function jumpToReaction(reactionId: string) {
     setSelectedIds((current) => ({ ...current, reactions: reactionId }));
     setActiveSection("reactions");
     setAppView("workspace");
+    setAtomModalId(null);
+  }
+
+  function openAtomModal(atomId: string) {
+    const atom = atomMap.get(atomId);
+    if (!atom) {
+      return;
+    }
+
+    setSelectedPeriodicAtomicNumber(atom.atomicNumber);
+    setAtomModalId(atom.id);
   }
 
   return (
@@ -195,7 +221,7 @@ export default function App() {
           <article className="metric-card">
             <Atom size={20} />
             <strong>{atoms.length}</strong>
-            <span>tracked atoms in catalog</span>
+            <span>periodic elements</span>
           </article>
           <article className="metric-card">
             <Workflow size={20} />
@@ -213,10 +239,10 @@ export default function App() {
       {appView === "periodic-table" ? (
         <PeriodicTableView
           elements={periodicTable}
-          curatedAtoms={atoms}
+          atoms={atoms}
           selectedAtomicNumber={selectedPeriodicAtomicNumber}
           onSelectAtomicNumber={setSelectedPeriodicAtomicNumber}
-          onOpenCuratedAtom={jumpToAtom}
+          onOpenAtomModal={openAtomModal}
         />
       ) : (
         <section className="workspace-grid">
@@ -301,6 +327,17 @@ export default function App() {
           </div>
         </section>
       )}
+
+      {modalAtom ? (
+        <AtomViewerModal
+          atom={modalAtom}
+          relatedMolecules={modalAtomMolecules}
+          relatedReactions={modalAtomReactions}
+          onSelectMolecule={jumpToMolecule}
+          onSelectReaction={jumpToReaction}
+          onClose={() => setAtomModalId(null)}
+        />
+      ) : null}
     </main>
   );
 }

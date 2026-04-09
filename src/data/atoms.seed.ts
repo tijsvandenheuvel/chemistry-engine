@@ -1,6 +1,6 @@
 import type { AtomRecord } from "../types/chemistry";
 
-type AtomSeedRecord = Omit<AtomRecord, "relatedMoleculeIds" | "relatedReactionIds">;
+type AtomSeedRecord = Omit<AtomRecord, "coverage" | "relatedMoleculeIds" | "relatedReactionIds">;
 
 export const atomSeed: AtomSeedRecord[] = [
   {

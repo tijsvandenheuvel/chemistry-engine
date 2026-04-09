@@ -1,6 +1,7 @@
 import { atomSeed } from "../data/atoms.seed";
+import { periodicTable } from "../data/periodic-table";
 import moleculeCatalog from "../data/molecules.catalog.json";
-import reactionSeed from "../data/reactions.seed.json";
+import reactionSeed from "../data/reactions.seed";
 import type { AtomRecord, BrowserSection, MoleculeRecord, ReactionRecord } from "../types/chemistry";
 
 const formulaTokenPattern = /([A-Z][a-z]?)(\d*)/g;
@@ -9,15 +10,53 @@ export const molecules = moleculeCatalog as MoleculeRecord[];
 export const reactions = reactionSeed as ReactionRecord[];
 export const moleculeMap = new Map(molecules.map((molecule) => [molecule.id, molecule]));
 export const reactionMap = new Map(reactions.map((reaction) => [reaction.id, reaction]));
+const curatedAtomSeedByNumber = new Map(atomSeed.map((atom) => [atom.atomicNumber, atom]));
 
 function extractFormulaSymbols(formula: string) {
   return Array.from(formula.matchAll(formulaTokenPattern), (match) => match[1]);
 }
 
-export const atoms: AtomRecord[] = atomSeed
-  .map((atom) => {
+function createAtomId(name: string) {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+}
+
+function normalizeAtomCategory(category: string) {
+  if (category.includes("nonmetal")) {
+    return "nonmetal";
+  }
+
+  if (category.includes("transition metal")) {
+    return "transition metal";
+  }
+
+  if (category.includes("post-transition metal")) {
+    return "post-transition metal";
+  }
+
+  if (category.includes("alkaline earth")) {
+    return "alkaline earth metal";
+  }
+
+  if (category.includes("alkali metal")) {
+    return "alkali metal";
+  }
+
+  if (category.includes("noble gas")) {
+    return "noble gas";
+  }
+
+  if (category.includes("metalloid")) {
+    return "metalloid";
+  }
+
+  return category;
+}
+
+export const atoms: AtomRecord[] = periodicTable
+  .map((element) => {
+    const curatedAtom = curatedAtomSeedByNumber.get(element.atomicNumber);
     const relatedMoleculeIds = molecules
-      .filter((molecule) => extractFormulaSymbols(molecule.formula).includes(atom.symbol))
+      .filter((molecule) => extractFormulaSymbols(molecule.formula).includes(element.symbol))
       .map((molecule) => molecule.id);
     const relatedReactionIds = reactions
       .filter((reaction) =>
@@ -26,12 +65,25 @@ export const atoms: AtomRecord[] = atomSeed
       .map((reaction) => reaction.id);
 
     return {
-      ...atom,
+      id: curatedAtom?.id ?? createAtomId(element.name),
+      symbol: element.symbol,
+      name: element.name,
+      coverage: curatedAtom ? ("curated" as const) : ("periodic-table" as const),
+      atomicNumber: element.atomicNumber,
+      atomicWeight: curatedAtom?.atomicWeight ?? element.atomicWeight,
+      category: curatedAtom?.category ?? normalizeAtomCategory(element.category),
+      phase: curatedAtom?.phase ?? element.phase,
+      period: curatedAtom?.period ?? element.period,
+      group: curatedAtom?.group ?? element.group,
+      electronConfiguration: curatedAtom?.electronConfiguration ?? "reference pending",
+      oxidationStates: curatedAtom?.oxidationStates ?? [],
+      description:
+        curatedAtom?.description ??
+        `Periodic table reference record for ${element.name}. This element is available in the atom viewer even when it is not yet linked to the current molecule catalog.`,
       relatedMoleculeIds,
       relatedReactionIds
     };
   })
-  .filter((atom) => atom.relatedMoleculeIds.length > 0)
   .sort((left, right) => left.atomicNumber - right.atomicNumber);
 
 export const atomMap = new Map(atoms.map((atom) => [atom.id, atom]));
@@ -66,6 +118,7 @@ export function searchAtoms(query: string, category: string) {
         atom.category,
         atom.phase,
         atom.electronConfiguration,
+        atom.description,
         ...atom.oxidationStates
       ],
       query

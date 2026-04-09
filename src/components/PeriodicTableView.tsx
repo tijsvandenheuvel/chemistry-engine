@@ -1,28 +1,28 @@
-import { ArrowRight, Atom as AtomIcon, Orbit } from "lucide-react";
+import { Atom as AtomIcon, Orbit } from "lucide-react";
 import type { AtomRecord, PeriodicElementRecord } from "../types/chemistry";
 import { SourcesSection } from "./SourcesSection";
-import { getPeriodicElementSourceEntries } from "../lib/sources";
+import { getAtomSourceEntries } from "../lib/sources";
 
 interface PeriodicTableViewProps {
   elements: PeriodicElementRecord[];
-  curatedAtoms: AtomRecord[];
+  atoms: AtomRecord[];
   selectedAtomicNumber: number;
   onSelectAtomicNumber: (atomicNumber: number) => void;
-  onOpenCuratedAtom: (atomId: string) => void;
+  onOpenAtomModal: (atomId: string) => void;
 }
 
 export function PeriodicTableView({
   elements,
-  curatedAtoms,
+  atoms,
   selectedAtomicNumber,
   onSelectAtomicNumber,
-  onOpenCuratedAtom
+  onOpenAtomModal
 }: PeriodicTableViewProps) {
-  const curatedAtomMap = new Map(curatedAtoms.map((atom) => [atom.atomicNumber, atom]));
+  const atomMapByNumber = new Map(atoms.map((atom) => [atom.atomicNumber, atom]));
   const selectedElement =
     elements.find((element) => element.atomicNumber === selectedAtomicNumber) ?? elements[0];
-  const curatedAtom = curatedAtomMap.get(selectedElement.atomicNumber);
-  const sourceEntries = getPeriodicElementSourceEntries(selectedElement);
+  const selectedAtom = atomMapByNumber.get(selectedElement.atomicNumber);
+  const sourceEntries = selectedAtom ? getAtomSourceEntries(selectedAtom) : [];
 
   return (
     <section className="periodic-layout">
@@ -43,7 +43,8 @@ export function PeriodicTableView({
         <div className="periodic-grid">
           {elements.map((element) => {
             const isSelected = element.atomicNumber === selectedElement.atomicNumber;
-            const isCurated = curatedAtomMap.has(element.atomicNumber);
+            const atom = atomMapByNumber.get(element.atomicNumber);
+            const isCurated = atom?.coverage === "curated";
 
             return (
               <button
@@ -62,7 +63,12 @@ export function PeriodicTableView({
                   gridColumn: element.tableColumn,
                   gridRow: element.tableRow
                 }}
-                onClick={() => onSelectAtomicNumber(element.atomicNumber)}
+                onClick={() => {
+                  onSelectAtomicNumber(element.atomicNumber);
+                  if (atom) {
+                    onOpenAtomModal(atom.id);
+                  }
+                }}
               >
                 <span>{element.atomicNumber}</span>
                 <strong>{element.symbol}</strong>
@@ -119,22 +125,21 @@ export function PeriodicTableView({
               <Orbit size={16} />
             </div>
             <p className="detail-intro compact-intro">
-              {curatedAtom
-                ? `${selectedElement.name} is already present in the current curated atom graph and can be opened in the main workspace dossier.`
-                : `${selectedElement.name} is available here for full periodic-table navigation, but does not yet have a full curated dossier in the chemistry graph.`}
+              {selectedAtom?.coverage === "curated"
+                ? `${selectedElement.name} is already present as a curated atom record in the chemistry graph.`
+                : `${selectedElement.name} is now available in the atom viewer through the periodic-table dataset, even when it is not linked to the current molecule catalog.`}
             </p>
 
-            {curatedAtom ? (
+            {selectedAtom ? (
               <button
                 type="button"
                 className="browser-link-card open-dossier-button"
-                onClick={() => onOpenCuratedAtom(curatedAtom.id)}
+                onClick={() => onOpenAtomModal(selectedAtom.id)}
               >
                 <div>
-                  <strong>Open curated atom dossier</strong>
-                  <p>Jump back into the main workspace atom panel.</p>
+                  <strong>Open atom viewer modal</strong>
+                  <p>Open the full atom viewer directly from the periodic table.</p>
                 </div>
-                <ArrowRight size={14} />
               </button>
             ) : null}
           </article>
