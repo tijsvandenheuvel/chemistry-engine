@@ -693,6 +693,346 @@ button.equation-node,
   color: var(--muted);
 }
 
+.safety-sheet {
+  display: grid;
+  gap: 14px;
+}
+
+.safety-toolbar,
+.safety-participant-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.safety-download-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.safety-download-button:disabled {
+  opacity: 0.72;
+  cursor: progress;
+}
+
+.safety-signal-chip {
+  background: rgba(243, 189, 98, 0.1);
+  border-color: rgba(243, 189, 98, 0.18);
+}
+
+.safety-summary-panel {
+  background:
+    linear-gradient(180deg, rgba(10, 31, 39, 0.96), rgba(8, 22, 29, 0.84)),
+    radial-gradient(circle at top right, rgba(243, 189, 98, 0.12), transparent 44%);
+}
+
+.safety-note,
+.safety-property-row small,
+.safety-pictogram-card span,
+.safety-participant-head p,
+.safety-participant-copy p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.safety-grid,
+.safety-participant-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.safety-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.reaction-safety-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.safety-list,
+.safety-property-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.safety-line-item {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.safety-line-item strong,
+.safety-property-row strong,
+.safety-pictogram-card strong,
+.safety-participant-copy strong {
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.safety-line-item p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.safety-pictogram-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(132px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.safety-pictogram-card {
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  text-align: center;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.safety-pictogram-image,
+.safety-participant-pictograms img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.safety-property-row {
+  display: grid;
+  gap: 4px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.safety-property-row span {
+  color: var(--muted);
+}
+
+.compact-reference-list {
+  margin-top: 0;
+}
+
+.compact-reference-list .reference-card {
+  padding: 14px;
+}
+
+.safety-participant-grid {
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-top: 14px;
+}
+
+.safety-participant-card {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  text-align: left;
+  color: var(--text);
+  border-radius: 22px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background:
+    linear-gradient(180deg, rgba(9, 28, 35, 0.96), rgba(8, 22, 29, 0.84)),
+    radial-gradient(circle at top right, rgba(137, 240, 218, 0.08), transparent 42%);
+  cursor: pointer;
+}
+
+.safety-participant-card:hover {
+  border-color: rgba(137, 240, 218, 0.22);
+  transform: translateY(-1px);
+}
+
+.safety-participant-head strong {
+  display: block;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.05rem;
+}
+
+.safety-participant-pictograms,
+.safety-participant-lines {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.safety-participant-lines {
+  margin-top: -2px;
+}
+
+.safety-participant-copy {
+  display: grid;
+  gap: 8px;
+}
+
+.safety-participant-copy p {
+  margin: 0;
+}
+
+.verification-sheet {
+  display: grid;
+  gap: 14px;
+}
+
+.verification-toolbar,
+.verification-field-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.verification-counts {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.verification-badge,
+.verification-source-state {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(137, 240, 218, 0.14);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.verification-badge.verified,
+.verification-source-state.checked {
+  background: rgba(137, 240, 218, 0.12);
+  color: var(--teal);
+}
+
+.verification-badge.conflict {
+  background: rgba(255, 136, 115, 0.12);
+  border-color: rgba(255, 136, 115, 0.18);
+  color: var(--red);
+}
+
+.verification-badge.single-source,
+.verification-source-state.reference {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+}
+
+.verification-badge.pending,
+.verification-source-state.pending {
+  background: rgba(243, 189, 98, 0.12);
+  border-color: rgba(243, 189, 98, 0.18);
+  color: var(--acid);
+}
+
+.verification-badge.modelled {
+  background: rgba(147, 184, 255, 0.12);
+  border-color: rgba(147, 184, 255, 0.18);
+  color: #b8cbff;
+}
+
+.verification-source-state.failed {
+  background: rgba(255, 136, 115, 0.12);
+  border-color: rgba(255, 136, 115, 0.18);
+  color: var(--red);
+}
+
+.verification-summary-panel {
+  background:
+    linear-gradient(180deg, rgba(10, 31, 39, 0.96), rgba(8, 22, 29, 0.84)),
+    radial-gradient(circle at top right, rgba(137, 240, 218, 0.1), transparent 42%);
+}
+
+.verification-source-grid,
+.verification-field-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.verification-source-grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+
+.verification-source-card {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.verification-source-card strong,
+.verification-field-card strong,
+.verification-observation strong {
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.verification-source-card p,
+.verification-field-head p,
+.verification-observation span {
+  margin: 6px 0 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.verification-conflict-panel {
+  border-color: rgba(255, 136, 115, 0.18);
+  background:
+    linear-gradient(180deg, rgba(38, 18, 18, 0.92), rgba(25, 14, 14, 0.88)),
+    radial-gradient(circle at top right, rgba(255, 136, 115, 0.12), transparent 44%);
+}
+
+.verification-field-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 18px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.verification-field-card.conflict {
+  border-color: rgba(255, 136, 115, 0.18);
+}
+
+.verification-field-card.pending {
+  border-color: rgba(243, 189, 98, 0.18);
+}
+
+.verification-field-card.modelled {
+  border-color: rgba(147, 184, 255, 0.18);
+}
+
+.verification-observation-list {
+  display: grid;
+  gap: 10px;
+}
+
+.verification-observation {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(137, 240, 218, 0.08);
+  background: rgba(255, 255, 255, 0.02);
+}
+
 .open-dossier-button {
   margin-top: 14px;
 }
@@ -839,13 +1179,40 @@ button.equation-node,
   margin-top: 24px;
 }
 
+.reaction-hero,
 .reaction-summary {
-  margin: 16px 0 18px;
   max-width: 72ch;
 }
 
-.reaction-navigator,
-.reaction-switcher {
+.reaction-hero {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: start;
+  flex-wrap: wrap;
+}
+
+.reaction-hero-copy {
+  min-width: 0;
+  flex: 1 1 420px;
+}
+
+.reaction-summary {
+  margin: 16px 0 18px;
+}
+
+.reaction-hero-tags,
+.reaction-view-toggle {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.reaction-hero-tags {
+  margin-top: 14px;
+}
+
+.reaction-navigator {
   display: flex;
   gap: 10px;
   align-items: center;
@@ -854,10 +1221,6 @@ button.equation-node,
 
 .reaction-navigator {
   justify-content: flex-end;
-}
-
-.reaction-switcher {
-  margin-top: 14px;
 }
 
 .reaction-nav-button {
@@ -890,12 +1253,64 @@ button.equation-node,
   font: inherit;
 }
 
-.reaction-switcher-count {
-  white-space: nowrap;
+.reaction-overview-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) repeat(2, minmax(0, 0.8fr));
+  gap: 14px;
+  margin-top: 22px;
 }
 
-.reaction-tag-row {
-  margin-bottom: 18px;
+.reaction-overview-card,
+.reaction-theatre-shell,
+.reaction-step-shell {
+  border-radius: 24px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background:
+    linear-gradient(180deg, rgba(9, 28, 35, 0.96), rgba(8, 22, 29, 0.84)),
+    radial-gradient(circle at top right, rgba(137, 240, 218, 0.1), transparent 42%);
+}
+
+.reaction-overview-card {
+  padding: 18px;
+}
+
+.reaction-overview-card strong,
+.reaction-view-card-head strong,
+.reaction-step-card-top strong {
+  display: block;
+  margin-top: 8px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.12rem;
+}
+
+.reaction-overview-card p,
+.reaction-theatre-copy,
+.reaction-step-card p,
+.reaction-step-muted,
+.reaction-dossier-list span {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.reaction-overview-card p {
+  margin: 8px 0 0;
+}
+
+.reaction-overview-label {
+  display: block;
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.reaction-overview-equation .equation-row {
+  margin-top: 14px;
+}
+
+.reaction-equation-row {
+  min-height: 52px;
 }
 
 .equation-row {
@@ -915,28 +1330,88 @@ button.equation-node,
   flex-wrap: wrap;
 }
 
-.reaction-stage {
-  display: grid;
-  grid-template-columns: minmax(280px, 0.78fr) minmax(0, 1.22fr);
+.reaction-theatre-shell,
+.reaction-step-shell {
+  margin-top: 22px;
+  padding: 20px;
+}
+
+.reaction-theatre-head,
+.reaction-step-head,
+.reaction-view-card-head,
+.reaction-theatre-foot {
+  display: flex;
+  justify-content: space-between;
   gap: 18px;
-  margin-top: 20px;
   align-items: start;
+  flex-wrap: wrap;
 }
 
-.stage-card {
-  padding: 24px;
-  min-height: 220px;
+.reaction-theatre-head h3,
+.reaction-step-head h3 {
+  margin: 6px 0 0;
+  font-size: 1.36rem;
 }
 
-.stage-card h3 {
-  margin: 10px 0 12px;
-  font-size: 1.8rem;
+.reaction-theatre-copy {
+  margin: 10px 0 0;
+  max-width: 64ch;
 }
 
-.stage-card p {
-  max-width: 56ch;
+.reaction-theatre-grid {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
+}
+
+.reaction-theatre-grid.split {
+  grid-template-columns: minmax(0, 1.2fr) minmax(340px, 0.92fr);
+}
+
+.reaction-theatre-grid.single {
+  grid-template-columns: 1fr;
+}
+
+.reaction-view-card {
+  padding: 16px;
+  border-radius: 22px;
+  border: 1px solid rgba(137, 240, 218, 0.08);
+  background: rgba(4, 13, 18, 0.5);
+}
+
+.reaction-view-card.secondary {
+  background: rgba(7, 20, 26, 0.64);
+}
+
+.reaction-view-card-head {
+  margin-bottom: 12px;
+}
+
+.reaction-view-card-head strong {
+  margin-top: 6px;
+}
+
+.reaction-theatre-note {
+  display: inline-flex;
+  align-items: start;
+  gap: 8px;
+  max-width: 52ch;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(137, 240, 218, 0.12);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.reaction-theatre-note span {
   color: var(--muted);
-  line-height: 1.7;
+  line-height: 1.5;
+}
+
+.reaction-step-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 14px;
+  margin-top: 16px;
 }
 
 .focus-molecule {
@@ -1005,9 +1480,65 @@ button.equation-node,
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
-.reaction-sidecar {
+.reaction-step-card,
+.reaction-step-stop {
+  border-radius: 22px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.reaction-step-card {
+  padding: 20px;
+  min-height: 220px;
+}
+
+.reaction-step-card-top strong {
+  font-size: 1.32rem;
+}
+
+.reaction-step-card p {
+  margin: 14px 0 0;
+  max-width: 56ch;
+}
+
+.reaction-step-muted {
+  margin-top: 18px;
+}
+
+.reaction-step-rail {
   display: grid;
-  gap: 12px;
+  gap: 10px;
+}
+
+.reaction-step-stop {
+  display: grid;
+  gap: 4px;
+  padding: 14px 16px;
+  text-align: left;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.reaction-step-stop.active {
+  border-color: rgba(243, 189, 98, 0.42);
+  background: rgba(243, 189, 98, 0.12);
+}
+
+.reaction-step-stop span {
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.76rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.reaction-step-stop strong {
+  font-family: "Space Grotesk", sans-serif;
+}
+
+.reaction-step-stop small {
+  color: var(--muted);
+  line-height: 1.45;
 }
 
 .atom-model-svg {
@@ -1374,6 +1905,14 @@ button.equation-node,
     radial-gradient(circle at top right, rgba(243, 189, 98, 0.12), transparent 34%);
 }
 
+.reaction-flow-scene.embedded,
+.reaction-assembly-panel.embedded {
+  margin-top: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
 .reaction-flow-head,
 .reaction-context-strip {
   display: flex;
@@ -1579,6 +2118,11 @@ button.equation-node,
     radial-gradient(circle at top right, rgba(137, 240, 218, 0.12), transparent 42%);
 }
 
+.reaction-assembly-panel.embedded .reaction-assembly-arena {
+  margin-top: 0;
+  min-height: 560px;
+}
+
 .reaction-assembly-head,
 .reaction-assembly-badges,
 .reaction-assembly-footer {
@@ -1781,6 +2325,28 @@ button.equation-node,
   background: rgba(243, 189, 98, 0.08);
 }
 
+.reaction-dossier-panel {
+  margin-top: 18px;
+}
+
+.reaction-dossier-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.reaction-dossier-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.reaction-dossier-list strong {
+  display: block;
+  margin-top: 4px;
+  font-family: "Space Grotesk", sans-serif;
+}
+
 .timeline-rail {
   display: grid;
   gap: 10px;
@@ -1799,6 +2365,585 @@ button.equation-node,
   font-size: 1.2rem;
 }
 
+.reaction-panel .reaction-hero.clean {
+  display: block;
+}
+
+.reaction-overview-grid.compact {
+  grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.95fr);
+  align-items: start;
+}
+
+.reaction-overview-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+  flex-wrap: wrap;
+}
+
+.reaction-view-toggle.compact {
+  justify-content: flex-end;
+}
+
+.reaction-overview-equation > .reaction-overview-head strong,
+.reaction-conditions-card > .reaction-overview-head strong {
+  margin-top: 6px;
+}
+
+.reaction-equation-schema {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  gap: 14px;
+  margin-top: 16px;
+  align-items: center;
+}
+
+.reaction-equation-lane {
+  display: grid;
+  gap: 12px;
+}
+
+.reaction-equation-lane.products .equation-species-card {
+  border-color: rgba(243, 189, 98, 0.16);
+}
+
+.reaction-equation-arrow {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(137, 240, 218, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--teal);
+}
+
+.equation-species-card {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 22px;
+  border: 1px solid rgba(137, 240, 218, 0.12);
+  background:
+    linear-gradient(180deg, rgba(7, 22, 29, 0.86), rgba(6, 18, 24, 0.82)),
+    radial-gradient(circle at top right, rgba(137, 240, 218, 0.12), transparent 42%);
+  color: var(--text);
+  text-align: left;
+  cursor: pointer;
+}
+
+.equation-species-card.selected {
+  border-color: rgba(243, 189, 98, 0.42);
+  box-shadow: inset 0 0 0 1px rgba(243, 189, 98, 0.12);
+}
+
+.equation-species-card-top strong {
+  display: block;
+  margin-top: 6px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.02rem;
+}
+
+.equation-species-3d {
+  position: relative;
+  height: 132px;
+  overflow: hidden;
+  border-radius: 18px;
+  border: 1px solid rgba(137, 240, 218, 0.08);
+  background:
+    radial-gradient(circle at 25% 25%, rgba(137, 240, 218, 0.1), transparent 30%),
+    linear-gradient(180deg, rgba(4, 12, 16, 0.98), rgba(6, 16, 22, 0.9));
+}
+
+.equation-species-3d .structure-scene {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+}
+
+.equation-species-2d {
+  padding: 4px 0 2px;
+}
+
+.equation-atom-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.equation-atom-chip {
+  display: grid;
+  gap: 2px;
+  min-width: 56px;
+  padding: 10px 12px;
+  border-radius: 16px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  text-align: center;
+}
+
+.equation-atom-chip strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1rem;
+}
+
+.equation-atom-chip span,
+.equation-species-meta span,
+.equation-species-meta small {
+  color: var(--muted);
+}
+
+.equation-species-meta span {
+  display: block;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.equation-species-meta small {
+  display: block;
+  margin-top: 6px;
+  line-height: 1.5;
+}
+
+.reaction-conditions-card {
+  display: grid;
+  gap: 14px;
+}
+
+.reaction-condition-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.reaction-condition-tile {
+  display: grid;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.reaction-condition-icon {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  border: 1px solid rgba(137, 240, 218, 0.12);
+  color: var(--teal);
+  background: rgba(137, 240, 218, 0.08);
+}
+
+.reaction-condition-tile span {
+  color: var(--muted);
+}
+
+.reaction-condition-tile strong {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.98rem;
+}
+
+.reaction-theatre-shell.restructured {
+  overflow: hidden;
+}
+
+.reaction-theatre-stage {
+  margin-top: 18px;
+  border-radius: 28px;
+  background: transparent;
+}
+
+.reaction-theatre-stepbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: start;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background:
+    linear-gradient(180deg, rgba(8, 24, 31, 0.88), rgba(7, 18, 24, 0.8)),
+    radial-gradient(circle at top right, rgba(137, 240, 218, 0.08), transparent 40%);
+}
+
+.reaction-theatre-stepbar-copy {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.reaction-theatre-stepbar-copy strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.05rem;
+}
+
+.reaction-theatre-stepbar-copy p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+  max-width: 72ch;
+}
+
+.reaction-theatre-stepbar-focus {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.reaction-participant-focus,
+.reaction-step-controls,
+.reaction-interaction-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.reaction-participant-focus {
+  margin-top: 14px;
+  padding: 14px 16px;
+  border-radius: 20px;
+  border: 1px solid rgba(137, 240, 218, 0.12);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.reaction-participant-focus-copy strong {
+  display: block;
+  margin-top: 6px;
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.1rem;
+}
+
+.reaction-participant-focus-copy p {
+  margin: 6px 0 0;
+  color: var(--muted);
+}
+
+.reaction-open-participant {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.reaction-step-card.static {
+  min-height: 0;
+}
+
+.reaction-assembly-panel.embedded {
+  padding: 0;
+}
+
+.reaction-assembly-panel.embedded .reaction-assembly-arena.clean {
+  margin-top: 0;
+  min-height: 720px;
+  border: 0;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at center, rgba(137, 240, 218, 0.04), transparent 32%),
+    radial-gradient(circle at center, rgba(243, 189, 98, 0.03), transparent 52%),
+    linear-gradient(180deg, rgba(4, 13, 18, 0.86), rgba(6, 16, 22, 0.82));
+}
+
+.reaction-assembly-arena.clean {
+  position: relative;
+}
+
+.reaction-assembly-reactor-glow {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at center, rgba(137, 240, 218, 0.08), transparent 68%);
+  filter: blur(18px);
+}
+
+.reaction-assembly-reactor-glow.outer {
+  width: 280px;
+  height: 280px;
+  background: radial-gradient(circle at center, rgba(243, 189, 98, 0.05), transparent 72%);
+}
+
+.reaction-assembly-core.clean {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  z-index: 1;
+  display: grid;
+  gap: 10px;
+  place-items: center;
+  width: min(280px, 34vw);
+  min-height: 280px;
+  padding: 24px;
+  text-align: center;
+  border-radius: 999px;
+  border: 1px solid rgba(137, 240, 218, 0.12);
+  transform: translate(-50%, -50%);
+  background:
+    radial-gradient(circle at center, rgba(137, 240, 218, 0.1), transparent 42%),
+    radial-gradient(circle at center, rgba(243, 189, 98, 0.08), transparent 66%),
+    linear-gradient(180deg, rgba(5, 15, 20, 0.58), rgba(7, 17, 23, 0.42));
+  backdrop-filter: blur(8px);
+}
+
+.reaction-assembly-core.clean strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.4rem;
+}
+
+.reaction-assembly-core.clean p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+  max-width: 24ch;
+}
+
+.reaction-stage-model {
+  position: absolute;
+  z-index: 2;
+  width: min(244px, 28vw);
+  height: min(224px, 26vw);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+}
+
+.reaction-stage-model-view {
+  height: 100%;
+  overflow: visible;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  filter: drop-shadow(0 18px 34px rgba(1, 8, 12, 0.18));
+}
+
+.reaction-stage-model.selected .reaction-stage-model-view {
+  box-shadow: none;
+  background: transparent;
+  filter: drop-shadow(0 22px 38px rgba(1, 8, 12, 0.24));
+}
+
+.reaction-stage-model .structure-scene {
+  position: relative;
+  height: 100%;
+  min-height: 0;
+}
+
+.reaction-stage-model-label {
+  position: absolute;
+  left: 50%;
+  top: 10px;
+  display: grid;
+  gap: 2px;
+  min-width: 88px;
+  padding: 6px 10px;
+  border-radius: 16px;
+  background: rgba(4, 13, 18, 0.42);
+  backdrop-filter: blur(6px);
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.reaction-stage-model-label strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.92rem;
+}
+
+.reaction-stage-model-label span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  white-space: nowrap;
+}
+
+.reaction-assembly-flux.clean {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: min(70%, 540px);
+  height: auto;
+  transform: translateX(-50%);
+}
+
+.reaction-assembly-flux.clean .reaction-assembly-flux-chip {
+  position: relative;
+  left: auto;
+  top: auto;
+  min-width: 0;
+  transform: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: center;
+}
+
+.reaction-interaction-scene.embedded {
+  padding: 0;
+}
+
+.reaction-interaction-arena {
+  position: relative;
+  min-height: 720px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at center, rgba(137, 240, 218, 0.04), transparent 36%),
+    linear-gradient(180deg, rgba(4, 13, 18, 0.82), rgba(6, 16, 22, 0.78));
+}
+
+.reaction-interaction-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.reaction-flow-scene.embedded .reaction-flow-grid {
+  margin-top: 0;
+  min-height: 720px;
+  padding: 24px;
+  align-items: center;
+  background:
+    radial-gradient(circle at center, rgba(137, 240, 218, 0.04), transparent 34%),
+    linear-gradient(180deg, rgba(4, 13, 18, 0.82), rgba(6, 16, 22, 0.78));
+  border-radius: 28px;
+}
+
+.reaction-flow-scene.embedded .reaction-core {
+  min-height: 320px;
+}
+
+.reaction-interaction-path {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  opacity: 0.56;
+}
+
+.reaction-interaction-path.selected {
+  opacity: 0.92;
+  stroke-width: 4;
+}
+
+.reaction-interaction-core-ring {
+  fill: rgba(137, 240, 218, 0.08);
+  stroke: rgba(137, 240, 218, 0.22);
+  stroke-width: 2;
+}
+
+.reaction-interaction-core-ring.outer {
+  fill: none;
+  stroke: rgba(243, 189, 98, 0.14);
+}
+
+.reaction-interaction-core-copy {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  z-index: 1;
+  display: grid;
+  gap: 10px;
+  width: min(280px, 34vw);
+  padding: 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(137, 240, 218, 0.12);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  background:
+    radial-gradient(circle at center, rgba(137, 240, 218, 0.1), transparent 44%),
+    linear-gradient(180deg, rgba(6, 16, 22, 0.58), rgba(7, 17, 23, 0.42));
+  backdrop-filter: blur(8px);
+}
+
+.reaction-interaction-core-copy strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.34rem;
+}
+
+.reaction-interaction-core-copy p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.reaction-interaction-node {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  gap: 4px;
+  min-width: 92px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 0;
+  background: transparent;
+  color: var(--text);
+  transform: translate(-50%, -50%);
+  text-align: center;
+  cursor: pointer;
+  text-shadow: 0 2px 12px rgba(1, 8, 12, 0.48);
+}
+
+.reaction-interaction-node.product {
+  color: rgba(255, 231, 198, 0.96);
+}
+
+.reaction-interaction-node.selected {
+  border: 1px solid rgba(137, 240, 218, 0.16);
+  background: rgba(6, 17, 23, 0.4);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 0 1px rgba(137, 240, 218, 0.12);
+}
+
+.reaction-interaction-node strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1rem;
+}
+
+.reaction-interaction-node span,
+.reaction-interaction-flux-chip span {
+  color: var(--muted);
+  font-size: 0.72rem;
+}
+
+.reaction-interaction-flux {
+  position: absolute;
+  left: 50%;
+  bottom: 26px;
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: min(72%, 560px);
+  transform: translateX(-50%);
+}
+
+.reaction-interaction-flux-chip {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  text-align: center;
+}
+
+.reaction-interaction-flux-chip strong {
+  font-family: "Space Grotesk", sans-serif;
+}
+
 @keyframes atomOrbitSpin {
   from {
     transform: rotate(0deg);
@@ -1813,8 +2958,16 @@ button.equation-node,
   .app-header,
   .workspace-grid,
   .periodic-layout,
-  .reaction-stage,
+  .reaction-overview-grid,
+  .reaction-equation-schema,
+  .reaction-condition-grid,
+  .reaction-theatre-grid.split,
+  .reaction-step-layout,
+  .reaction-dossier-grid,
+  .reaction-safety-grid,
   .reaction-flow-grid,
+  .safety-grid,
+  .verification-source-grid,
   .stats-grid,
   .detail-columns,
   .spectral-summary-card,
@@ -1841,11 +2994,30 @@ button.equation-node,
   .browser-panel {
     position: static;
     max-height: none;
+    order: 2;
   }
 
   .browser-list-shell,
   .browser-list {
     max-height: none;
+  }
+
+  .main-column {
+    order: 1;
+  }
+
+  .reaction-equation-arrow {
+    justify-self: start;
+  }
+
+  .reaction-theatre-stepbar {
+    display: grid;
+  }
+
+  .reaction-assembly-panel.embedded .reaction-assembly-arena.clean,
+  .reaction-interaction-arena,
+  .reaction-flow-scene.embedded .reaction-flow-grid {
+    min-height: 640px;
   }
 }
 
@@ -1863,14 +3035,67 @@ button.equation-node,
 
   .reaction-navigator {
     justify-content: stretch;
+    width: 100%;
   }
 
   .reaction-navigator > * {
     flex: 1 1 100%;
   }
 
+  .reaction-hero {
+    display: grid;
+  }
+
+  .reaction-theatre-foot {
+    display: grid;
+  }
+
+  .reaction-overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reaction-theatre-stepbar-focus {
+    justify-self: start;
+  }
+
+  .reaction-equation-lane {
+    gap: 10px;
+  }
+
+  .equation-species-3d {
+    height: 112px;
+  }
+
+  .reaction-dossier-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .safety-participant-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .verification-toolbar,
+  .verification-field-head {
+    display: grid;
+  }
+
+  .reaction-step-controls {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .reaction-step-controls > * {
+    flex: 1 1 100%;
+  }
+
   .reaction-assembly-arena {
     min-height: 720px;
+  }
+
+  .reaction-assembly-panel.embedded .reaction-assembly-arena.clean,
+  .reaction-interaction-arena,
+  .reaction-flow-scene.embedded .reaction-flow-grid {
+    min-height: 560px;
   }
 
   .reaction-assembly-node {
@@ -1880,6 +3105,22 @@ button.equation-node,
   .reaction-assembly-core {
     width: min(240px, 62vw);
     min-height: 240px;
+  }
+
+  .reaction-assembly-core.clean,
+  .reaction-interaction-core-copy {
+    width: min(230px, 72vw);
+    min-height: 230px;
+  }
+
+  .reaction-stage-model {
+    width: min(190px, 42vw);
+    height: min(170px, 38vw);
+  }
+
+  .reaction-interaction-node {
+    min-width: 78px;
+    padding: 10px 12px;
   }
 
   .viewer-shell {

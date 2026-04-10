@@ -17,6 +17,22 @@ export function getPubChemViewUrl(cid: number, heading?: string) {
   return `https://pubchem.ncbi.nlm.nih.gov/compound/${cid}${suffix}`;
 }
 
+export function getPubChemPugViewDataUrl(cid: number, heading: string) {
+  return `https://pubchem.ncbi.nlm.nih.gov/rest/pug_view/data/compound/${cid}/JSON/?heading=${encodeURIComponent(heading)}`;
+}
+
+export function getPubChemPropertyUrl(cid: number, fields: string[]) {
+  return `https://pubchem.ncbi.nlm.nih.gov/rest/pug/compound/cid/${cid}/property/${fields.join(",")}/JSON`;
+}
+
+export function getPubChemGhsCodeTableUrl() {
+  return "https://pubchem.ncbi.nlm.nih.gov/ghs/ghscode_11.txt";
+}
+
+export function getPubChemGhsCodeUrl(code: string) {
+  return `https://pubchem.ncbi.nlm.nih.gov/ghs/#${encodeURIComponent(code)}`;
+}
+
 export function getMoleculeExternalLinks(molecule: MoleculeRecord) {
   return [
     molecule.pubchemCid

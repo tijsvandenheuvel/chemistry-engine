@@ -1,8 +1,13 @@
-import { ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, Download, ShieldAlert } from "lucide-react";
 import type { MoleculeRecord, ReactionRecord } from "../types/chemistry";
 import { DisclosureSection } from "./DisclosureSection";
 import { SourcesSection } from "./SourcesSection";
 import { getMoleculeSourceEntries } from "../lib/sources";
+import { downloadMoleculeSafetySheetPdf, fetchMoleculeSafetyRecord } from "../lib/safety";
+import { useMoleculeSafety } from "../hooks/useSafety";
+import { useMoleculeVerification } from "../hooks/useVerification";
+import { VerificationSection } from "./VerificationSection";
 
 interface MoleculeDetailsProps {
   molecule: MoleculeRecord;
@@ -12,6 +17,20 @@ interface MoleculeDetailsProps {
 
 export function MoleculeDetails({ molecule, relatedReactions = [], onSelectReaction }: MoleculeDetailsProps) {
   const sourceEntries = getMoleculeSourceEntries(molecule);
+  const { record: safety, loading: loadingSafety } = useMoleculeSafety(molecule);
+  const { report: verification, loading: loadingVerification } = useMoleculeVerification(molecule);
+  const [downloadingSafety, setDownloadingSafety] = useState(false);
+
+  async function handleDownloadSafety() {
+    setDownloadingSafety(true);
+
+    try {
+      const freshSafety = await fetchMoleculeSafetyRecord(molecule);
+      downloadMoleculeSafetySheetPdf(molecule, freshSafety);
+    } finally {
+      setDownloadingSafety(false);
+    }
+  }
 
   return (
     <section className="panel detail-panel">
@@ -61,16 +80,176 @@ export function MoleculeDetails({ molecule, relatedReactions = [], onSelectReact
           </div>
         </DisclosureSection>
 
+        <VerificationSection
+          report={verification}
+          loading={loadingVerification}
+          preview="Cross-source checks stay folded away until you need to inspect verified fields or disagreements."
+        />
+
         <DisclosureSection
-          title="Hazard notes"
-          count={molecule.hazardNotes.length}
-          preview="Open the current hazard summary and caution notes."
+          title="Safety sheet"
+          count={
+            safety.hazardStatements.length +
+            safety.precautionaryStatements.length +
+            safety.physicalProperties.length +
+            safety.sourceLinks.length
+          }
+          preview="Source-backed GHS, physical properties and PDF export stay closed until needed."
         >
-          <ul className="plain-list">
-            {molecule.hazardNotes.map((hazard) => (
-              <li key={hazard}>{hazard}</li>
-            ))}
-          </ul>
+          <div className="safety-sheet">
+            <div className="safety-toolbar">
+              <div className="tag-row">
+                <span className={safety.status === "source-backed" ? "availability availability-open" : "availability availability-neutral"}>
+                  {safety.status === "source-backed" ? "source-backed" : safety.status === "summary-only" ? "summary + lookup" : "source needed"}
+                </span>
+                {safety.signalWord ? <span className="count-chip safety-signal-chip">{safety.signalWord}</span> : null}
+                {loadingSafety ? <span className="availability availability-neutral">syncing PubChem</span> : null}
+              </div>
+
+              <button
+                type="button"
+                className="chip safety-download-button"
+                onClick={handleDownloadSafety}
+                disabled={downloadingSafety}
+              >
+                <Download size={14} />
+                <span>{downloadingSafety ? "Building PDF..." : "Download safety PDF"}</span>
+              </button>
+            </div>
+
+            <article className="subpanel safety-summary-panel">
+              <div className="subpanel-head">
+                <h3>Safety overview</h3>
+                <ShieldAlert size={16} />
+              </div>
+              <p className="detail-intro compact-intro">{safety.summary}</p>
+              {safety.note ? <p className="safety-note">{safety.note}</p> : null}
+            </article>
+
+            <div className="safety-grid">
+              <article className="subpanel">
+                <div className="subpanel-head">
+                  <h3>Hazard statements</h3>
+                  <span className="count-chip">{safety.hazardStatements.length}</span>
+                </div>
+
+                {safety.hazardStatements.length > 0 ? (
+                  <div className="safety-list">
+                    {safety.hazardStatements.map((statement) => (
+                      <div key={statement.code} className="safety-line-item">
+                        <strong>{statement.code}</strong>
+                        <p>{statement.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="detail-intro compact-intro">No source-backed H statements are synced yet for this record.</p>
+                )}
+              </article>
+
+              <article className="subpanel">
+                <div className="subpanel-head">
+                  <h3>Precautionary statements</h3>
+                  <span className="count-chip">{safety.precautionaryStatements.length}</span>
+                </div>
+
+                {safety.precautionaryStatements.length > 0 ? (
+                  <div className="safety-list">
+                    {safety.precautionaryStatements.map((statement) => (
+                      <div key={statement.code} className="safety-line-item">
+                        <strong>{statement.code}</strong>
+                        <p>{statement.text}</p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="detail-intro compact-intro">No source-backed P statements are synced yet for this record.</p>
+                )}
+              </article>
+            </div>
+
+            <div className="safety-grid">
+              <article className="subpanel">
+                <div className="subpanel-head">
+                  <h3>Pictograms</h3>
+                  <span className="count-chip">{safety.pictograms.length}</span>
+                </div>
+
+                {safety.pictograms.length > 0 ? (
+                  <div className="safety-pictogram-grid">
+                    {safety.pictograms.map((pictogram) => (
+                      <div key={pictogram.code} className="safety-pictogram-card">
+                        <img src={pictogram.url} alt={pictogram.label} className="safety-pictogram-image" />
+                        <strong>{pictogram.label}</strong>
+                        <span>{pictogram.code}</span>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="detail-intro compact-intro">No pictograms are available in the current safety summary.</p>
+                )}
+              </article>
+
+              <article className="subpanel">
+                <div className="subpanel-head">
+                  <h3>Physical properties</h3>
+                  <span className="count-chip">{safety.physicalProperties.length}</span>
+                </div>
+
+                {safety.physicalProperties.length > 0 ? (
+                  <div className="safety-property-list">
+                    {safety.physicalProperties.map((property) => (
+                      <div key={property.label} className="safety-property-row">
+                        <span>{property.label}</span>
+                        <strong>{property.value}</strong>
+                        {property.source ? <small>{property.source}</small> : null}
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="detail-intro compact-intro">No physical properties are attached yet.</p>
+                )}
+              </article>
+            </div>
+
+            <div className="safety-grid">
+              <article className="subpanel">
+                <div className="subpanel-head">
+                  <h3>Handling notes</h3>
+                  <span className="count-chip">{safety.handlingNotes.length}</span>
+                </div>
+                <ul className="plain-list">
+                  {safety.handlingNotes.map((note) => (
+                    <li key={note}>{note}</li>
+                  ))}
+                </ul>
+              </article>
+
+              <article className="subpanel">
+                <div className="subpanel-head">
+                  <h3>Safety sources</h3>
+                  <span className="count-chip">{safety.sourceLinks.length}</span>
+                </div>
+                <div className="reference-list compact-reference-list">
+                  {safety.sourceLinks.map((entry) => (
+                    <a
+                      key={entry.label}
+                      href={entry.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="reference-card"
+                    >
+                      <div>
+                        <span className="reference-kind">{entry.kind}</span>
+                        <strong>{entry.label}</strong>
+                        <p>{entry.url}</p>
+                      </div>
+                    </a>
+                  ))}
+                </div>
+              </article>
+            </div>
+          </div>
         </DisclosureSection>
 
         <SourcesSection

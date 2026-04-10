@@ -1,44 +1,45 @@
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import type { MoleculeRecord, ReactionRecord } from "../types/chemistry";
+import { getReactionParticipants } from "../lib/reaction-visuals";
 
 interface ReactionFlowSceneProps {
   reaction: ReactionRecord;
   molecules: Map<string, MoleculeRecord>;
   stepIndex: number;
   onSelectMolecule?: (moleculeId: string) => void;
-}
-
-function getParticipants(ids: string[], molecules: Map<string, MoleculeRecord>) {
-  return ids
-    .map((moleculeId) => molecules.get(moleculeId))
-    .filter((molecule): molecule is MoleculeRecord => Boolean(molecule));
+  minimal?: boolean;
+  selectedMoleculeId?: string | null;
 }
 
 export function ReactionFlowScene({
   reaction,
   molecules,
   stepIndex,
-  onSelectMolecule
+  onSelectMolecule,
+  minimal = false,
+  selectedMoleculeId
 }: ReactionFlowSceneProps) {
-  const reactants = getParticipants(reaction.reactants, molecules);
-  const products = getParticipants(reaction.products, molecules);
+  const reactants = getReactionParticipants(reaction.reactants, molecules);
+  const products = getReactionParticipants(reaction.products, molecules);
   const activeStep = reaction.steps[stepIndex];
   const progress = reaction.steps.length > 1 ? stepIndex / (reaction.steps.length - 1) : 1;
-  const focusMoleculeId = activeStep.focusMoleculeId;
+  const focusMoleculeId = selectedMoleculeId ?? activeStep.focusMoleculeId;
 
   return (
-    <section className="reaction-flow-scene">
-      <div className="reaction-flow-head">
-        <div>
-          <p className="eyebrow">Reaction Pass</p>
-          <h3>Modelled Structural Transition</h3>
+    <section className={minimal ? "reaction-flow-scene embedded" : "reaction-flow-scene"}>
+      {minimal ? null : (
+        <div className="reaction-flow-head">
+          <div>
+            <p className="eyebrow">Reaction Pass</p>
+            <h3>Modelled Structural Transition</h3>
+          </div>
+          <div className="reaction-truth-badge">
+            <Sparkles size={14} />
+            <span>modelled</span>
+          </div>
         </div>
-        <div className="reaction-truth-badge">
-          <Sparkles size={14} />
-          <span>modelled</span>
-        </div>
-      </div>
+      )}
 
       <div className="reaction-flow-grid">
         <div className="reaction-lane">
@@ -75,13 +76,15 @@ export function ReactionFlowScene({
             transition={{ duration: 3.2, repeat: Infinity, ease: "easeInOut", delay: 0.25 }}
           />
 
-          <div className="reaction-core-body">
-            <span className="reaction-core-kicker">
-              step {stepIndex + 1} / {reaction.steps.length}
-            </span>
-            <strong>{activeStep.title}</strong>
-            <p>{activeStep.description}</p>
-          </div>
+          {minimal ? null : (
+            <div className="reaction-core-body">
+              <span className="reaction-core-kicker">
+                step {stepIndex + 1} / {reaction.steps.length}
+              </span>
+              <strong>{activeStep.title}</strong>
+              <p>{activeStep.description}</p>
+            </div>
+          )}
 
           <div className="reaction-context-strip">
             <span>{reaction.catalysts.length > 0 ? `Catalyst: ${reaction.catalysts.join(", ")}` : "Catalyst: none listed"}</span>
@@ -113,11 +116,13 @@ export function ReactionFlowScene({
         </div>
       </div>
 
-      <p className="reaction-honesty-note">
-        Deze visualisatie toont de structurele overgang als gemodelleerde reaction pass.
-        Er is in de huidige dataset nog geen betrouwbare atom mapping geladen om dit als exacte,
-        atoom-resolved mechanistische animatie te presenteren.
-      </p>
+      {minimal ? null : (
+        <p className="reaction-honesty-note">
+          Deze visualisatie toont de structurele overgang als gemodelleerde reaction pass.
+          Er is in de huidige dataset nog geen betrouwbare atom mapping geladen om dit als exacte,
+          atoom-resolved mechanistische animatie te presenteren.
+        </p>
+      )}
     </section>
   );
 }

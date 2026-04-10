@@ -6,7 +6,7 @@ Dit document bundelt alles wat in deze conversatie is besproken over wat de Chem
 
 Dit document is bedoeld als overdrachtsdocument voor een volgende engineer, agent of product owner.
 
-Deze versie vervangt oudere handoff-notities en is afgestemd op de huidige repo-status per `2026-04-09`.
+Deze versie vervangt oudere handoff-notities en is afgestemd op de huidige repo-status per `2026-04-10`.
 
 ## Productvisie
 
@@ -420,6 +420,41 @@ Evidence types die besproken zijn:
 - `curated`
 - `source-computed`
 - `app-modelled`
+
+## Verification-laag
+
+De repo bevat nu ook een expliciete verification-laag die per entity een bronvergelijking en disagreement-weergave kan tonen.
+
+Huidige status per domein:
+
+- molecules:
+  - vergelijking tussen lokale catalog-snapshot en live PubChem property-feed
+  - checks op onder andere formule, IUPAC, molecular weight, exact mass, XLogP, TPSA, H-bond counts, charge en complexity
+  - velden zonder externe counterpart worden expliciet als `single-source` gelabeld
+- atoms:
+  - vergelijking tussen `periodic-table` baseline en `curated atom seed` waar die bestaat
+  - conflicten in atomic weight, category, phase en period/group worden zichtbaar gemaakt
+  - elektronconfiguratie en oxidatietoestanden blijven voorlopig meestal `single-source`
+- reactions:
+  - interne consistency check op basis van atom-balance uit molecuulformules
+  - participant source-coverage wordt zichtbaar gemaakt
+  - exact externe record-match naar Rhea / ORD staat nog als `pending`
+  - playback exactness blijft eerlijk gelabeld als `modelled` zolang er geen atom mapping is
+
+Verification-statussen die nu al in de UI bestaan:
+
+- `verified`
+- `conflict`
+- `single-source`
+- `pending`
+- `modelled`
+
+Belangrijke nuance:
+
+- `verified` betekent alleen dat de momenteel gekoppelde bronnen voor dat specifieke veld overeenkomen
+- `conflict` betekent niet automatisch dat een bron fout is; het kan ook gaan om rounding, brondefinitieverschillen, concentratie/contextverschillen of catalog-drift
+- `single-source` betekent zichtbaar dat er nog geen echte cross-source check is gebeurd
+- `modelled` hoort bij visualisaties of interpretatieve lagen en niet bij exacte chemische waarheid
 
 ## Grote architectuurrichting
 

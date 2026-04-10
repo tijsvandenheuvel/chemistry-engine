@@ -6,6 +6,8 @@ import { estimateNeutronCount, getElectronShellOccupancy, getValenceElectronCoun
 import { DisclosureSection } from "./DisclosureSection";
 import { SourcesSection } from "./SourcesSection";
 import { getAtomSourceEntries } from "../lib/sources";
+import { getAtomVerificationReport } from "../lib/verification";
+import { VerificationSection } from "./VerificationSection";
 
 interface AtomPanelProps {
   atom: AtomRecord;
@@ -30,6 +32,7 @@ export function AtomPanel({
     [atom.atomicNumber, atom.atomicWeight]
   );
   const sourceEntries = useMemo(() => getAtomSourceEntries(atom), [atom]);
+  const verificationReport = useMemo(() => getAtomVerificationReport(atom), [atom]);
   const oxidationStateLabel = atom.oxidationStates.length > 0 ? atom.oxidationStates.join(", ") : "reference pending";
   const electronConfigurationLabel =
     atom.electronConfiguration === "reference pending"
@@ -150,6 +153,11 @@ export function AtomPanel({
               <li>Estimated neutrons are derived from rounded atomic weight, not isotope-resolved data.</li>
             </ul>
           </DisclosureSection>
+
+          <VerificationSection
+            report={verificationReport}
+            preview="Open the source comparison layer for this atom, including single-source fields and disagreements."
+          />
 
           <DisclosureSection
             title="System context"

@@ -44,6 +44,112 @@ export interface SpectrumReference {
   notes: string;
 }
 
+export interface SafetyPictogram {
+  code: string;
+  label: string;
+  url: string;
+}
+
+export interface SafetyStatement {
+  code: string;
+  text: string;
+  url?: string;
+}
+
+export interface SafetyPropertyRecord {
+  label: string;
+  value: string;
+  source?: string;
+}
+
+export interface SafetySourceReference {
+  label: string;
+  url: string;
+  kind: "safety" | "physical" | "regulatory" | "reference";
+}
+
+export interface MoleculeSafetyRecord {
+  status: "source-backed" | "summary-only" | "source-unavailable";
+  sourceLabel: string;
+  summary: string;
+  signalWord?: string;
+  pictograms: SafetyPictogram[];
+  hazardStatements: SafetyStatement[];
+  precautionaryStatements: SafetyStatement[];
+  physicalProperties: SafetyPropertyRecord[];
+  handlingNotes: string[];
+  sourceLinks: SafetySourceReference[];
+  note?: string;
+  fetchedAt?: string;
+}
+
+export interface ReactionParticipantSafetyRecord {
+  moleculeId: string;
+  moleculeName: string;
+  status: MoleculeSafetyRecord["status"];
+  signalWord?: string;
+  pictograms: SafetyPictogram[];
+  hazardStatements: SafetyStatement[];
+  precautionaryStatements: SafetyStatement[];
+}
+
+export interface ReactionSafetyRecord {
+  status: "participant-derived" | "modelled-process";
+  summary: string;
+  primaryHazards: string[];
+  controls: string[];
+  ppe: string[];
+  watchpoints: string[];
+  participants: ReactionParticipantSafetyRecord[];
+  participantCoverage: {
+    sourceBacked: number;
+    total: number;
+  };
+  note: string;
+}
+
+export type VerificationStatus = "verified" | "conflict" | "single-source" | "pending" | "modelled";
+export type VerificationSourceState = "checked" | "reference" | "pending" | "failed";
+
+export interface VerificationSourceRecord {
+  id: string;
+  label: string;
+  detail: string;
+  state: VerificationSourceState;
+  url?: string;
+}
+
+export interface VerificationObservation {
+  sourceId: string;
+  sourceLabel: string;
+  value: string;
+}
+
+export interface VerificationFieldRecord {
+  id: string;
+  label: string;
+  status: VerificationStatus;
+  canonicalValue: string;
+  observations: VerificationObservation[];
+  note?: string;
+}
+
+export interface VerificationReport {
+  kind: "molecule" | "atom" | "reaction";
+  overallStatus: VerificationStatus;
+  summary: string;
+  sources: VerificationSourceRecord[];
+  fields: VerificationFieldRecord[];
+  notes: string[];
+  counts: {
+    verified: number;
+    conflict: number;
+    singleSource: number;
+    pending: number;
+    modelled: number;
+  };
+}
+
 export interface MoleculeRecord {
   id: string;
   name: string;
