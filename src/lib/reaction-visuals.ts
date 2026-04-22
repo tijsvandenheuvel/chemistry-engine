@@ -39,6 +39,35 @@ export function getReactionParticipantRole(reaction: ReactionRecord, moleculeId:
   return "participant";
 }
 
+export function getReactionEquationLine(
+  reaction: ReactionRecord,
+  molecules: Map<string, MoleculeRecord>,
+  arrow = "→"
+) {
+  const left = reaction.reactants
+    .map((moleculeId) => molecules.get(moleculeId)?.formula ?? moleculeId)
+    .join(" + ");
+  const right = reaction.products
+    .map((moleculeId) => molecules.get(moleculeId)?.formula ?? moleculeId)
+    .join(" + ");
+
+  return `${left} ${arrow} ${right}`;
+}
+
+export function getReactionCompactMeta(reaction: ReactionRecord) {
+  const parts = [reaction.categories[0] ?? "reaction"];
+
+  if (reaction.temperature) {
+    parts.push(reaction.temperature);
+  } else if (reaction.solvent) {
+    parts.push(reaction.solvent);
+  } else {
+    parts.push(`${reaction.steps.length} ${reaction.steps.length === 1 ? "stage" : "stages"}`);
+  }
+
+  return parts.join(" · ");
+}
+
 function parseFormula(formula: string) {
   const counts = new Map<string, number>();
 
