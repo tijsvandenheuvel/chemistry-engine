@@ -14,7 +14,7 @@
     "3dmol": "^2.5.4",
     "framer-motion": "^12.38.0",
     "lucide-react": "^1.7.0",
-    "react": "^19.2.4",
+    "react": "^19.2.5",
     "react-dom": "^19.2.4"
   },
   "devDependencies": {
