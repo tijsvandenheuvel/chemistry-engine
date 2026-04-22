@@ -4,9 +4,11 @@ import type { MoleculeRecord, ReactionRecord } from "../types/chemistry";
 import { DisclosureSection } from "./DisclosureSection";
 import { SourcesSection } from "./SourcesSection";
 import { getMoleculeSourceEntries } from "../lib/sources";
+import { getSafeExternalHref } from "../lib/urls";
 import { downloadMoleculeSafetySheetPdf, fetchMoleculeSafetyRecord } from "../lib/safety";
 import { useMoleculeSafety } from "../hooks/useSafety";
 import { useMoleculeVerification } from "../hooks/useVerification";
+import { getReactionCompactMeta } from "../lib/reaction-visuals";
 import { VerificationSection } from "./VerificationSection";
 
 interface MoleculeDetailsProps {
@@ -231,21 +233,38 @@ export function MoleculeDetails({ molecule, relatedReactions = [], onSelectReact
                   <span className="count-chip">{safety.sourceLinks.length}</span>
                 </div>
                 <div className="reference-list compact-reference-list">
-                  {safety.sourceLinks.map((entry) => (
-                    <a
-                      key={entry.label}
-                      href={entry.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="reference-card"
-                    >
-                      <div>
-                        <span className="reference-kind">{entry.kind}</span>
-                        <strong>{entry.label}</strong>
-                        <p>{entry.url}</p>
-                      </div>
-                    </a>
-                  ))}
+                  {safety.sourceLinks.map((entry) => {
+                    const safeHref = getSafeExternalHref(entry.url);
+
+                    if (!safeHref) {
+                      return (
+                        <div key={entry.label} className="reference-card" aria-disabled="true">
+                          <div>
+                            <span className="reference-kind">{entry.kind}</span>
+                            <strong>{entry.label}</strong>
+                            <p>Link blocked because the source URL did not pass public-link validation.</p>
+                          </div>
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <a
+                        key={entry.label}
+                        href={safeHref}
+                        target="_blank"
+                        rel="noopener noreferrer external"
+                        referrerPolicy="no-referrer"
+                        className="reference-card"
+                      >
+                        <div>
+                          <span className="reference-kind">{entry.kind}</span>
+                          <strong>{entry.label}</strong>
+                          <p>{safeHref}</p>
+                        </div>
+                      </a>
+                    );
+                  })}
                 </div>
               </article>
             </div>
@@ -272,7 +291,7 @@ export function MoleculeDetails({ molecule, relatedReactions = [], onSelectReact
               >
                 <div>
                   <strong>{reaction.name}</strong>
-                  <p>{reaction.summary}</p>
+                  <p>{getReactionCompactMeta(reaction)}</p>
                 </div>
                 <ArrowRight size={14} />
               </button>

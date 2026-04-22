@@ -1,4 +1,4 @@
-# Chemie Engine
+# Chemistry Engine
 
 Een compacte chemistry workbench MVP met:
 
@@ -34,7 +34,7 @@ npm run build
 
 ## PubChem sync
 
-Het script leest de seed-database, haalt enrichment op uit PubChem PUG REST en schrijft snapshots weg naar `data/pubchem/`.
+Het script leest de seed-database, haalt enrichment op uit PubChem PUG REST en schrijft lokale snapshots weg naar `data/pubchem/`.
 
 ```bash
 npm run sync:pubchem
@@ -57,12 +57,23 @@ Repo-brede documentatie staat in:
 - `docs/development-log.md`
 - `docs/research-notes.md`
 
-Gebruik deze documenten als bron van waarheid voor:
+Gebruik deze documenten als engineering-notities voor:
 
 - huidige MVP-status
 - architectuurrichting
 - bronstrategie
 - eerstvolgende uitbreidingsfase
+
+## GitHub Pages
+
+De repo bevat een GitHub Actions workflow die `dist/` naar GitHub Pages kan publiceren.
+De productie-build gebruikt een Pages-specifieke base path, zodat assets ook onder `/<repo>/` correct laden.
+
+## Publieke deployment-notities
+
+- Ruwe PubChem snapshots worden niet naar `public/` geschreven en zitten dus niet in de GitHub Pages build.
+- Bronverrijking voor safety- en verification-panels komt live van PubChem tijdens runtime.
+- Externe bronlinks worden in de UI alleen klikbaar gemaakt wanneer ze een veilige `http(s)` URL hebben.
 
 ## MVP scope
 

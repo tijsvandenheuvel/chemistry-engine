@@ -6,11 +6,16 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0"
     />
-    <title>Chemie Engine</title>
+    <title>Chemistry Engine</title>
     <meta
       name="description"
-      content="Chemie Engine MVP with a molecule browser, 3D rendering, and animated reaction views."
+      content="Chemistry Engine with a molecule browser, 3D rendering, atom views, and animated reaction exploration."
     />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; base-uri 'self'; connect-src 'self' ws: wss: https://pubchem.ncbi.nlm.nih.gov; font-src 'self'; frame-ancestors 'none'; img-src 'self' data: https:; object-src 'none'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; form-action 'self'"
+    />
+    <meta name="referrer" content="no-referrer" />
   </head>
   <body>
     <div id="root"></div>

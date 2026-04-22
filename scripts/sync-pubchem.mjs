@@ -6,10 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const rootDir = path.resolve(__dirname, "..");
 const seedPath = path.join(rootDir, "src", "data", "molecules.catalog.json");
-const outputDirs = [
-  path.join(rootDir, "data", "pubchem"),
-  path.join(rootDir, "public", "data", "pubchem")
-];
+const outputDirs = [path.join(rootDir, "data", "pubchem")];
 
 const propertyFields = [
   "MolecularFormula",

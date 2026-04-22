@@ -1,8 +1,6 @@
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Space+Grotesk:wght@500;700&display=swap");
-
 :root {
   color-scheme: dark;
-  font-family: "IBM Plex Sans", sans-serif;
+  font-family: "Avenir Next", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   --bg: #031117;
   --bg-2: #0b1f28;
   --panel: rgba(7, 24, 31, 0.82);
@@ -1179,7 +1177,6 @@ button.equation-node,
   margin-top: 24px;
 }
 
-.reaction-hero,
 .reaction-summary {
   max-width: 72ch;
 }
@@ -1197,19 +1194,42 @@ button.equation-node,
   flex: 1 1 420px;
 }
 
-.reaction-summary {
-  margin: 16px 0 18px;
+.reaction-hero-side {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  flex: 0 0 auto;
 }
 
-.reaction-hero-tags,
+.reaction-summary {
+  margin: 10px 0 0;
+}
+
+.reaction-summary.reaction-summary-compact {
+  color: var(--muted);
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.reaction-hero-meta {
+  display: inline-flex;
+  margin-top: 2px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(137, 240, 218, 0.12);
+  color: var(--muted);
+  font-size: 0.76rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
 .reaction-view-toggle {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
-}
-
-.reaction-hero-tags {
-  margin-top: 14px;
 }
 
 .reaction-navigator {
@@ -1534,6 +1554,15 @@ button.equation-node,
 
 .reaction-step-stop strong {
   font-family: "Space Grotesk", sans-serif;
+}
+
+.reaction-step-stop.compact {
+  min-width: 168px;
+  padding: 12px 14px;
+}
+
+.reaction-step-stop.compact small {
+  display: none;
 }
 
 .reaction-step-stop small {
@@ -2366,12 +2395,18 @@ button.equation-node,
 }
 
 .reaction-panel .reaction-hero.clean {
-  display: block;
+  display: flex;
+  max-width: none;
 }
 
 .reaction-overview-grid.compact {
   grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.95fr);
   align-items: start;
+  gap: 18px;
+}
+
+.reaction-overview-grid.compact.after-theatre {
+  margin-top: 20px;
 }
 
 .reaction-overview-head {
@@ -2463,35 +2498,34 @@ button.equation-node,
 }
 
 .equation-species-2d {
-  padding: 4px 0 2px;
-}
-
-.equation-atom-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.equation-atom-chip {
   display: grid;
-  gap: 2px;
-  min-width: 56px;
-  padding: 10px 12px;
-  border-radius: 16px;
-  border: 1px solid rgba(137, 240, 218, 0.1);
-  background: rgba(255, 255, 255, 0.03);
-  text-align: center;
+  gap: 8px;
+  justify-items: start;
+  padding: 4px 0;
 }
 
-.equation-atom-chip strong {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 1rem;
+.equation-species-formula {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1.24rem;
+  letter-spacing: 0.05em;
 }
 
-.equation-atom-chip span,
+.equation-species-formula sub {
+  font-size: 0.68em;
+  line-height: 0;
+  vertical-align: baseline;
+  position: relative;
+  bottom: -0.2em;
+}
+
+.equation-species-name,
 .equation-species-meta span,
 .equation-species-meta small {
   color: var(--muted);
+}
+
+.equation-species-name {
+  font-size: 0.8rem;
 }
 
 .equation-species-meta span {
@@ -2511,6 +2545,211 @@ button.equation-node,
 .reaction-conditions-card {
   display: grid;
   gap: 14px;
+}
+
+.reaction-scheme {
+  margin-top: 16px;
+}
+
+.reaction-scheme-surface {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) minmax(220px, 240px) minmax(160px, 1fr);
+  gap: 20px;
+  align-items: center;
+  padding: 20px;
+  border-radius: 24px;
+  border: 1px solid rgba(214, 219, 208, 0.7);
+  background:
+    linear-gradient(180deg, rgba(243, 242, 236, 0.98), rgba(227, 232, 223, 0.95)),
+    repeating-linear-gradient(
+      0deg,
+      rgba(40, 56, 64, 0.035) 0,
+      rgba(40, 56, 64, 0.035) 1px,
+      transparent 1px,
+      transparent 28px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(40, 56, 64, 0.028) 0,
+      rgba(40, 56, 64, 0.028) 1px,
+      transparent 1px,
+      transparent 28px
+    );
+  color: #10232b;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  overflow: hidden;
+}
+
+.reaction-scheme.stage {
+  height: 100%;
+}
+
+.reaction-scheme.stage .reaction-scheme-surface {
+  min-height: 640px;
+  padding: 30px;
+}
+
+.reaction-scheme-group {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.reaction-scheme-group.reactants {
+  justify-items: start;
+}
+
+.reaction-scheme-group.products {
+  justify-items: end;
+}
+
+.reaction-scheme-group-label {
+  color: rgba(16, 35, 43, 0.58);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.reaction-scheme-group.products .reaction-scheme-group-label {
+  justify-self: end;
+  text-align: right;
+}
+
+.reaction-scheme-species-list {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.reaction-scheme-species-list.reactants {
+  justify-items: start;
+}
+
+.reaction-scheme-species-list.products {
+  justify-items: end;
+}
+
+.reaction-scheme-operator {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  color: rgba(16, 35, 43, 0.5);
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.35rem;
+  line-height: 1;
+}
+
+.reaction-scheme-species {
+  display: grid;
+  gap: 8px;
+  width: min(100%, 196px);
+  min-width: 0;
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(16, 35, 43, 0.12);
+  background: rgba(255, 255, 255, 0.78);
+  color: #10232b;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(11, 24, 30, 0.08);
+}
+
+.reaction-scheme-species.compact {
+  width: min(100%, 176px);
+  padding: 12px 14px;
+}
+
+.reaction-scheme-species.stage {
+  width: min(100%, 220px);
+  padding: 18px 20px;
+}
+
+.reaction-scheme-species.selected {
+  border-color: rgba(41, 121, 130, 0.42);
+  box-shadow:
+    0 14px 28px rgba(11, 24, 30, 0.12),
+    inset 0 0 0 1px rgba(41, 121, 130, 0.12);
+}
+
+.reaction-scheme-formula {
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 1.38rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.reaction-scheme.stage .reaction-scheme-formula {
+  font-size: 1.7rem;
+}
+
+.reaction-scheme-formula sub {
+  font-size: 0.68em;
+  line-height: 0;
+  vertical-align: baseline;
+  position: relative;
+  bottom: -0.2em;
+}
+
+.reaction-scheme-species strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1rem;
+}
+
+.reaction-scheme-center {
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+  min-width: 0;
+}
+
+.reaction-scheme-context {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 100%;
+}
+
+.reaction-scheme-context-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(16, 35, 43, 0.1);
+  background: rgba(255, 255, 255, 0.72);
+  color: rgba(16, 35, 43, 0.76);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+}
+
+.reaction-scheme-arrow {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-width: 0;
+}
+
+.reaction-scheme-arrow-line {
+  position: relative;
+  width: min(220px, 100%);
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(16, 35, 43, 0.55), rgba(16, 35, 43, 0.9));
+}
+
+.reaction-scheme-arrow-line::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  border-top: 2px solid rgba(16, 35, 43, 0.9);
+  border-right: 2px solid rgba(16, 35, 43, 0.9);
+  transform: translateY(-50%) rotate(45deg);
 }
 
 .reaction-condition-grid {
@@ -2551,12 +2790,15 @@ button.equation-node,
 
 .reaction-theatre-shell.restructured {
   overflow: hidden;
+  display: grid;
+  gap: 16px;
 }
 
 .reaction-theatre-stage {
-  margin-top: 18px;
+  margin-top: 0;
   border-radius: 28px;
   background: transparent;
+  overflow: hidden;
 }
 
 .reaction-theatre-stepbar {
@@ -2564,19 +2806,26 @@ button.equation-node,
   justify-content: space-between;
   gap: 14px;
   align-items: start;
-  margin-top: 14px;
-  padding: 12px 14px;
+  margin-top: 0;
+  padding: 12px 14px 0;
   border-radius: 20px;
-  border: 1px solid rgba(137, 240, 218, 0.1);
-  background:
-    linear-gradient(180deg, rgba(8, 24, 31, 0.88), rgba(7, 18, 24, 0.8)),
-    radial-gradient(circle at top right, rgba(137, 240, 218, 0.08), transparent 40%);
+  border: 0;
+  background: transparent;
 }
 
 .reaction-theatre-stepbar-copy {
   display: grid;
   gap: 6px;
   min-width: 0;
+}
+
+.reaction-theatre-stepbar-tools,
+.reaction-theatre-selection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .reaction-theatre-stepbar-copy strong {
@@ -2596,6 +2845,37 @@ button.equation-node,
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
+}
+
+.reaction-theatre-selection {
+  padding: 6px 6px 6px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(137, 240, 218, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.reaction-theatre-selection-copy {
+  display: grid;
+  gap: 2px;
+}
+
+.reaction-theatre-selection-copy strong {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.96rem;
+}
+
+.reaction-theatre-selection-copy span {
+  color: var(--muted);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.reaction-open-participant.icon-only {
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  justify-content: center;
 }
 
 .reaction-participant-focus,
@@ -2644,17 +2924,41 @@ button.equation-node,
 
 .reaction-assembly-panel.embedded .reaction-assembly-arena.clean {
   margin-top: 0;
-  min-height: 720px;
+  min-height: 680px;
   border: 0;
   border-radius: 28px;
   background:
-    radial-gradient(circle at center, rgba(137, 240, 218, 0.04), transparent 32%),
-    radial-gradient(circle at center, rgba(243, 189, 98, 0.03), transparent 52%),
-    linear-gradient(180deg, rgba(4, 13, 18, 0.86), rgba(6, 16, 22, 0.82));
+    radial-gradient(circle at center, rgba(137, 240, 218, 0.025), transparent 28%),
+    linear-gradient(180deg, rgba(4, 13, 18, 0.78), rgba(6, 16, 22, 0.7));
 }
 
 .reaction-assembly-arena.clean {
   position: relative;
+}
+
+.reaction-assembly-arena.clean.stage-reactants {
+  background:
+    radial-gradient(circle at center, rgba(137, 240, 218, 0.03), transparent 26%),
+    linear-gradient(180deg, rgba(4, 13, 18, 0.82), rgba(6, 16, 22, 0.72));
+}
+
+.reaction-assembly-arena.clean.stage-encounter {
+  background:
+    radial-gradient(circle at center, rgba(137, 240, 218, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(4, 13, 18, 0.84), rgba(6, 16, 22, 0.74));
+}
+
+.reaction-assembly-arena.clean.stage-transition {
+  background:
+    radial-gradient(circle at 53% 50%, rgba(243, 189, 98, 0.06), transparent 22%),
+    radial-gradient(circle at 47% 50%, rgba(137, 240, 218, 0.05), transparent 24%),
+    linear-gradient(180deg, rgba(4, 13, 18, 0.84), rgba(6, 16, 22, 0.74));
+}
+
+.reaction-assembly-arena.clean.stage-products {
+  background:
+    radial-gradient(circle at center, rgba(243, 189, 98, 0.05), transparent 24%),
+    linear-gradient(180deg, rgba(4, 13, 18, 0.82), rgba(6, 16, 22, 0.72));
 }
 
 .reaction-assembly-reactor-glow {
@@ -2672,6 +2976,39 @@ button.equation-node,
   width: 280px;
   height: 280px;
   background: radial-gradient(circle at center, rgba(243, 189, 98, 0.05), transparent 72%);
+}
+
+.reaction-stage-cue {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.reaction-stage-cue.encounter {
+  width: min(260px, 34vw);
+  height: min(260px, 34vw);
+  border-radius: 999px;
+  border: 1px dashed rgba(137, 240, 218, 0.28);
+  background: radial-gradient(circle at center, rgba(137, 240, 218, 0.09), transparent 62%);
+  box-shadow: 0 0 0 14px rgba(137, 240, 218, 0.02);
+}
+
+.reaction-stage-cue.transition {
+  width: min(320px, 40vw);
+  height: 108px;
+  border-radius: 999px;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(137, 240, 218, 0) 0%,
+      rgba(137, 240, 218, 0.18) 32%,
+      rgba(243, 189, 98, 0.2) 68%,
+      rgba(243, 189, 98, 0) 100%
+    );
+  background-size: 200% 100%;
+  filter: blur(8px);
 }
 
 .reaction-assembly-core.clean {
@@ -2720,19 +3057,46 @@ button.equation-node,
   cursor: pointer;
 }
 
+.reaction-stage-model.lead {
+  width: min(286px, 30vw);
+  height: min(252px, 28vw);
+}
+
+.reaction-stage-model.support {
+  width: min(252px, 27vw);
+  height: min(222px, 24vw);
+}
+
+.reaction-stage-model.ghost {
+  width: min(220px, 24vw);
+  height: min(190px, 22vw);
+}
+
 .reaction-stage-model-view {
   height: 100%;
   overflow: visible;
   border-radius: 0;
   background: transparent;
   box-shadow: none;
-  filter: drop-shadow(0 18px 34px rgba(1, 8, 12, 0.18));
+  filter: drop-shadow(0 20px 28px rgba(1, 8, 12, 0.14));
+}
+
+.reaction-stage-model.ghost .reaction-stage-model-view {
+  filter: saturate(0.8) drop-shadow(0 14px 22px rgba(1, 8, 12, 0.12));
 }
 
 .reaction-stage-model.selected .reaction-stage-model-view {
   box-shadow: none;
   background: transparent;
-  filter: drop-shadow(0 22px 38px rgba(1, 8, 12, 0.24));
+  filter: drop-shadow(0 24px 34px rgba(1, 8, 12, 0.2));
+}
+
+.reaction-assembly-arena.clean.stage-transition .reaction-stage-model.ghost {
+  opacity: 0.3;
+}
+
+.reaction-assembly-arena.clean.stage-transition .reaction-stage-model.lead .reaction-stage-model-view {
+  filter: drop-shadow(0 24px 36px rgba(1, 8, 12, 0.2));
 }
 
 .reaction-stage-model .structure-scene {
@@ -2744,16 +3108,29 @@ button.equation-node,
 .reaction-stage-model-label {
   position: absolute;
   left: 50%;
-  top: 10px;
+  top: 6px;
   display: grid;
-  gap: 2px;
-  min-width: 88px;
-  padding: 6px 10px;
-  border-radius: 16px;
-  background: rgba(4, 13, 18, 0.42);
+  gap: 3px;
+  min-width: 104px;
+  padding: 8px 12px;
+  border-radius: 18px;
+  border: 1px solid rgba(137, 240, 218, 0.08);
+  background: rgba(4, 13, 18, 0.48);
   backdrop-filter: blur(6px);
   transform: translateX(-50%);
   text-align: center;
+}
+
+.reaction-stage-model-label.bottom {
+  top: auto;
+  bottom: -6px;
+}
+
+.reaction-stage-model-role {
+  color: rgba(137, 240, 218, 0.78);
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .reaction-stage-model-label strong {
@@ -2761,10 +3138,35 @@ button.equation-node,
   font-size: 0.92rem;
 }
 
+.reaction-stage-model-label strong sub {
+  font-size: 0.68em;
+  line-height: 0;
+  vertical-align: baseline;
+  position: relative;
+  bottom: -0.18em;
+}
+
 .reaction-stage-model-label span {
   color: var(--muted);
   font-size: 0.72rem;
   white-space: nowrap;
+}
+
+.reaction-theatre-steprail {
+  display: flex;
+  gap: 10px;
+  margin-top: 0;
+  overflow-x: auto;
+  padding-bottom: 2px;
+}
+
+.reaction-theatre-steprail::-webkit-scrollbar {
+  height: 8px;
+}
+
+.reaction-theatre-steprail::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(137, 240, 218, 0.12);
 }
 
 .reaction-assembly-flux.clean {
@@ -2960,6 +3362,7 @@ button.equation-node,
   .periodic-layout,
   .reaction-overview-grid,
   .reaction-equation-schema,
+  .reaction-scheme-surface,
   .reaction-condition-grid,
   .reaction-theatre-grid.split,
   .reaction-step-layout,
@@ -3010,12 +3413,27 @@ button.equation-node,
     justify-self: start;
   }
 
+  .reaction-scheme.stage .reaction-scheme-surface,
+  .reaction-scheme.compact .reaction-scheme-surface {
+    min-height: 0;
+  }
+
+  .reaction-scheme-group.reactants,
+  .reaction-scheme-group.products,
+  .reaction-scheme-species-list.reactants,
+  .reaction-scheme-species-list.products {
+    justify-items: start;
+  }
+
   .reaction-theatre-stepbar {
     display: grid;
   }
 
+  .reaction-theatre-stepbar-tools {
+    justify-content: flex-start;
+  }
+
   .reaction-assembly-panel.embedded .reaction-assembly-arena.clean,
-  .reaction-interaction-arena,
   .reaction-flow-scene.embedded .reaction-flow-grid {
     min-height: 640px;
   }
@@ -3046,6 +3464,10 @@ button.equation-node,
     display: grid;
   }
 
+  .reaction-hero-side {
+    justify-content: flex-start;
+  }
+
   .reaction-theatre-foot {
     display: grid;
   }
@@ -3058,8 +3480,26 @@ button.equation-node,
     justify-self: start;
   }
 
+  .reaction-theatre-steprail {
+    margin-right: -4px;
+  }
+
   .reaction-equation-lane {
     gap: 10px;
+  }
+
+  .reaction-scheme-surface {
+    padding: 16px;
+  }
+
+  .reaction-scheme-context {
+    justify-content: flex-start;
+  }
+
+  .reaction-scheme-species,
+  .reaction-scheme-species.stage,
+  .reaction-scheme-species.compact {
+    min-width: min(100%, 220px);
   }
 
   .equation-species-3d {
@@ -3114,6 +3554,13 @@ button.equation-node,
   }
 
   .reaction-stage-model {
+    width: min(190px, 42vw);
+    height: min(170px, 38vw);
+  }
+
+  .reaction-stage-model.lead,
+  .reaction-stage-model.support,
+  .reaction-stage-model.ghost {
     width: min(190px, 42vw);
     height: min(170px, 38vw);
   }

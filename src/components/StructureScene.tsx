@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Atom } from "lucide-react";
 import type { MoleculeRecord } from "../types/chemistry";
 import { getPubChemSdfUrl } from "../lib/pubchem";
+import { getSiteAssetUrl } from "../lib/urls";
 
 interface StructureSceneProps {
   molecule: MoleculeRecord;
@@ -48,7 +49,7 @@ export function StructureScene({ molecule, compact = false, spinning = true }: S
           });
         }
 
-        const localSnapshot = await fetch(`/data/pubchem/${molecule.id}.json`)
+        const localSnapshot = await fetch(getSiteAssetUrl(`data/pubchem/${molecule.id}.json`))
           .then((response) => (response.ok ? response.json() : null))
           .catch(() => null);
 

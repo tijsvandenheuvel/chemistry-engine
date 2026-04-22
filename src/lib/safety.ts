@@ -17,6 +17,7 @@ import {
   getPubChemViewUrl
 } from "./pubchem";
 import { downloadPdfDocument } from "./pdf";
+import { getSafeExternalHref } from "./urls";
 
 interface PubChemMarkup {
   URL?: string;
@@ -116,12 +117,17 @@ function extractPictograms(infoEntries: PubChemInformation[]) {
           continue;
         }
 
+        const safeUrl = getSafeExternalHref(markup.URL);
+        if (!safeUrl) {
+          continue;
+        }
+
         const code = markup.URL.match(/(GHS\d+)/)?.[1] ?? markup.Extra ?? markup.URL;
         if (!pictogramMap.has(code)) {
           pictogramMap.set(code, {
             code,
             label: markup.Extra ?? code,
-            url: markup.URL
+            url: safeUrl
           });
         }
       }
@@ -382,10 +388,15 @@ function buildSourceLinks(
       continue;
     }
 
+    const safeUrl = getSafeExternalHref(reference.URL);
+    if (!safeUrl) {
+      continue;
+    }
+
     sourceMap.set(`ref-${referenceNumber}`, {
       label: reference.SourceName ?? reference.Name ?? `Reference ${referenceNumber}`,
-      url: reference.URL,
-      kind: reference.URL.includes("eur-lex") || reference.URL.includes("echa") ? "regulatory" : "reference"
+      url: safeUrl,
+      kind: safeUrl.includes("eur-lex") || safeUrl.includes("echa") ? "regulatory" : "reference"
     });
   }
 
@@ -653,7 +664,7 @@ export function downloadMoleculeSafetySheetPdf(molecule: MoleculeRecord, safety:
     fileName: `${createSafeFileName(molecule.name)}-safety-sheet.pdf`,
     title: `${molecule.name} Safety Sheet`,
     subtitle:
-      "Chemie Engine safety summary. This PDF is an in-app reference summary and does not replace the current supplier SDS.",
+      "Chemistry Engine safety summary. This PDF is an in-app reference summary and does not replace the current supplier SDS.",
     sections: [
       {
         heading: "Record overview",
@@ -715,7 +726,7 @@ export function downloadReactionSafetySheetPdf(
     fileName: `${createSafeFileName(reaction.name)}-reaction-safety.pdf`,
     title: `${reaction.name} Reaction Safety Sheet`,
     subtitle:
-      "Chemie Engine reaction safety summary. This PDF combines participant hazard data with process watchpoints and does not replace formal process safety review or supplier SDS documents.",
+      "Chemistry Engine reaction safety summary. This PDF combines participant hazard data with process watchpoints and does not replace formal process safety review or supplier SDS documents.",
     sections: [
       {
         heading: "Reaction overview",

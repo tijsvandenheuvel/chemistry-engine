@@ -1,5 +1,6 @@
 import { BadgeCheck, AlertTriangle, Clock3, FileQuestion, FlaskConical } from "lucide-react";
 import type { VerificationReport, VerificationStatus } from "../types/chemistry";
+import { getSafeExternalHref } from "../lib/urls";
 import { DisclosureSection } from "./DisclosureSection";
 
 interface VerificationSectionProps {
@@ -108,13 +109,16 @@ export function VerificationSection({
             <span className="count-chip">{report.sources.length}</span>
           </div>
           <div className="verification-source-grid">
-            {report.sources.map((source) =>
-              source.url ? (
+            {report.sources.map((source) => {
+              const safeHref = source.url ? getSafeExternalHref(source.url) : null;
+
+              return safeHref ? (
                 <a
                   key={source.id}
-                  href={source.url}
+                  href={safeHref}
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener noreferrer external"
+                  referrerPolicy="no-referrer"
                   className="verification-source-card"
                 >
                   <div>
@@ -131,8 +135,8 @@ export function VerificationSection({
                   </div>
                   <span className={`verification-source-state ${source.state}`}>{source.state}</span>
                 </div>
-              )
-            )}
+              );
+            })}
           </div>
         </article>
 

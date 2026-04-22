@@ -2,7 +2,7 @@
 
 ## Doel
 
-Dit document houdt het development proces van Chemie Engine bij:
+Dit document houdt het development proces van Chemistry Engine bij:
 
 - welke features zijn toegevoegd
 - waarom bepaalde technische keuzes zijn gemaakt
@@ -62,7 +62,6 @@ Per `2026-04-08` bevat de MVP:
   - 3D SDF snapshots lokaal bewaren
 - Snapshots worden weggeschreven naar:
   - `data/pubchem/`
-  - `public/data/pubchem/`
 
 #### Eerste frontend versie
 

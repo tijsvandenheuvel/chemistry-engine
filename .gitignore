@@ -1,6 +1,7 @@
 node_modules/
 dist/
 output/
+# Keep raw upstream snapshots out of the repo and Pages artifacts.
 data/pubchem/
 public/data/pubchem/
 *.tsbuildinfo
